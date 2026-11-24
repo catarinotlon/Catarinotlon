@@ -1,6 +1,23 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
+test.describe('default language', () => {
+  test.use({ locale: 'en-US' });
+
+  test('a first visit is in Spanish on an English browser and a chosen language is remembered', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await expect(page).toHaveURL(/\/es$/);
+
+    await page.getByRole('contentinfo').getByRole('link', { name: 'English' }).click();
+    await expect(page).toHaveURL(/\/en$/);
+
+    await page.goto('/');
+    await expect(page).toHaveURL(/\/en$/);
+  });
+});
+
 test.describe('legal and status pages', () => {
   test('the privacy notice is linked from the footer and marked as a draft', async ({ page }) => {
     await page.goto('/es');

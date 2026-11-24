@@ -208,6 +208,7 @@ Rules that follow from it:
 ## Internationalization (next-intl)
 
 - **Locales:** `en` and `es` only, for now. Default locale: `es`. Add a locale only when asked.
+- **Spanish by default:** a first visit always lands on `es`, whatever the browser language. Only the visitor's own choice, remembered in the locale cookie, or a URL that names a locale changes that.
 - **Routing:** locale-prefixed routes under `src/app/[locale]/`, configured once with `defineRouting` in `src/i18n/routing.ts`. `src/proxy.ts` runs the next-intl routing. Validate the `locale` param in the root layout and call `setRequestLocale` in every layout and page, with `generateStaticParams`, so pages stay statically rendered.
 - **Navigation:** import `Link`, `redirect`, `useRouter`, and `usePathname` from `src/i18n/navigation`, never from `next/link` or `next/navigation`.
 - **Messages:** `messages/en.json` is the source of truth for keys and types (`AppConfig` augmentation for `Locale` and `Messages`). `messages/es.json` must have exactly the same keys; a test fails on any mismatch. Namespaces follow the module or component that owns the text. Use ICU syntax for plurals and interpolation; never concatenate translated fragments.

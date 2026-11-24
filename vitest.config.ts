@@ -64,6 +64,7 @@ export default defineConfig({
           environment: 'node',
           include: ['src/**/*.test.{ts,tsx}'],
           exclude: ['src/**/*.integration.test.{ts,tsx}'],
+          server: { deps: { inline: ['next-intl'] } },
         },
       },
       {
