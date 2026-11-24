@@ -140,3 +140,19 @@ export const DashedField: Story = {
     await expect(box?.contains(canvas.getByRole('button'))).toBe(false);
   },
 };
+
+async function expectBusy(button: HTMLElement) {
+  await expect(button).toHaveAttribute('aria-busy', 'true');
+  await expect(button).toBeDisabled();
+}
+
+/** While the file uploads, the button spins and says so. */
+export const UploadPending: Story = {
+  args: { uploader: fn(() => new Promise<{ pathname: string }>(() => {})) },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.upload(canvas.getByLabelText(label), file);
+    await userEvent.click(canvas.getByRole('button', { name: 'Enviar comprobante' }));
+    await expectBusy(await canvas.findByRole('button', { name: 'Enviando…' }));
+  },
+};

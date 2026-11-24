@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { useRef } from 'react';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 
 import type { FormAction } from '@/shared/ui/form-state';
@@ -138,5 +139,97 @@ export const ForgotGoogleNote: Story = {
     await expect(within(canvasElement).getByText(/Si creaste tu cuenta con Google/)).toHaveClass(
       'bg-muted',
     );
+  },
+};
+
+async function expectBusy(button: HTMLElement) {
+  await expect(button).toHaveAttribute('aria-busy', 'true');
+  await expect(button).toBeDisabled();
+}
+
+// Pending actions are released when each story ends: React keeps every
+// unfinished action of the page in one transition, which would hold back the
+// stories that run after it.
+const held: Array<() => void> = [];
+const hang: FormAction = () => new Promise((resolve) => held.push(() => resolve({})));
+const hangGoogle = () => new Promise<void>((resolve) => held.push(resolve));
+const releaseHeld = () => held.splice(0).forEach((release) => release());
+
+/** Creating the account: the button says so and cannot be pressed twice. */
+export const SignUpPending: Story = {
+  render: () => <SignUpForm action={hang} googleAction={google} shirtSizes={['Size A']} open />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: /Crear cuenta e inscribirme/ }));
+    await expectBusy(await canvas.findByRole('button', { name: 'Creando tu cuenta…' }));
+    releaseHeld();
+  },
+};
+
+/** Signing in shows that it is working. */
+export const SignInPending: Story = {
+  render: () => <SignInForm action={hang} googleAction={google} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Iniciar sesión' }));
+    await expectBusy(await canvas.findByRole('button', { name: 'Entrando…' }));
+    releaseHeld();
+  },
+};
+
+/** Opening Google shows that it is working. */
+export const GooglePending: Story = {
+  render: () => <SignInForm action={noop} googleAction={hangGoogle} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Continuar con Google' }));
+    await expectBusy(await canvas.findByRole('button', { name: 'Abriendo Google…' }));
+    releaseHeld();
+  },
+};
+
+/** Requesting a reset link shows that it is working. */
+export const ForgotPending: Story = {
+  render: () => <ForgotPasswordForm action={hang} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.type(canvas.getByLabelText('Correo electrónico'), 'a@example.test');
+    await userEvent.click(canvas.getByRole('button', { name: 'Enviar enlace' }));
+    await expectBusy(await canvas.findByRole('button', { name: 'Enviando enlace…' }));
+    releaseHeld();
+  },
+};
+
+/** Answers the first request, then never answers, to show the resend pending. */
+function ForgotThenWait() {
+  const calls = useRef(0);
+  const action: FormAction = () => {
+    calls.current += 1;
+    return calls.current === 1 ? Promise.resolve({ done: true }) : new Promise(() => {});
+  };
+  return <ForgotPasswordForm action={action} />;
+}
+
+/** Resending the link shows that it is working. */
+export const ForgotResendPending: Story = {
+  render: () => <ForgotThenWait />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.type(canvas.getByLabelText('Correo electrónico'), 'a@example.test');
+    await userEvent.click(canvas.getByRole('button', { name: 'Enviar enlace' }));
+    await expect(await canvas.findByRole('heading', { name: 'Revisa tu correo' })).toBeVisible();
+    await userEvent.click(canvas.getByRole('button', { name: 'Reenviar el enlace' }));
+    await expectBusy(await canvas.findByRole('button', { name: 'Reenviando…' }));
+  },
+};
+
+/** Saving the new password shows that it is working. */
+export const ResetPending: Story = {
+  render: () => <ResetPasswordForm action={hang} token="token-from-link" />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Guardar contraseña' }));
+    await expectBusy(await canvas.findByRole('button', { name: 'Guardando tu contraseña…' }));
+    releaseHeld();
   },
 };

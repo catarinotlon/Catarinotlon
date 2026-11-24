@@ -52,6 +52,7 @@ export function AccountDetailsEditor({
 }: AccountDetailsEditorProps) {
   const t = useTranslations('account');
   const root = useTranslations();
+  const busy = useTranslations('busy');
   const [editing, setEditing] = useState(false);
   const { state, formAction, onSubmit, pending } = useStickyForm(async (previous, data) => {
     const result = await action(previous, data);
@@ -104,7 +105,7 @@ export function AccountDetailsEditor({
         {...fieldError('phone')}
       />
       <div className="flex flex-wrap gap-3">
-        <Button type="submit" variant="inverse" disabled={pending}>
+        <Button type="submit" variant="inverse" pending={pending} pendingLabel={busy('saving')}>
           {t('saveData')}
         </Button>
         <Button type="button" variant="outline" onClick={() => setEditing(false)}>
@@ -134,6 +135,7 @@ export interface ShirtNameEditorProps {
 export function ShirtNameEditor({ registrationId, shirtName, action }: ShirtNameEditorProps) {
   const t = useTranslations('account');
   const root = useTranslations();
+  const busy = useTranslations('busy');
   const [name, setName] = useState(shirtName);
   const { state, formAction, onSubmit, pending } = useStickyForm(action);
   const errorKey = state.fieldErrors?.shirtName;
@@ -151,7 +153,7 @@ export function ShirtNameEditor({ registrationId, shirtName, action }: ShirtName
           autoComplete="off"
           error={errorKey ? root(errorKey as never) : undefined}
         />
-        <Button type="submit" variant="cta" disabled={pending}>
+        <Button type="submit" variant="cta" pending={pending} pendingLabel={busy('saving')}>
           {t('saveName')}
         </Button>
         <Feedback state={state} success={t('nameSaved')} />
@@ -199,6 +201,7 @@ export function SettingForm({
   action,
   children,
 }: SettingFormProps) {
+  const busy = useTranslations('busy');
   const { state, formAction, onSubmit, pending } = useStickyForm(action);
 
   return (
@@ -212,7 +215,7 @@ export function SettingForm({
         options={options}
         defaultValue={value}
       />
-      <Button type="submit" variant="outline" disabled={pending}>
+      <Button type="submit" variant="outline" pending={pending} pendingLabel={busy('saving')}>
         {submitLabel}
       </Button>
       <Feedback state={state} success={success} />

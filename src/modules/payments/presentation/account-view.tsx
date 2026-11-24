@@ -8,6 +8,7 @@ import { cn } from '@/shared/ui/cn';
 import type { FormAction, FormState } from '@/shared/ui/form-state';
 import { firstName } from '@/shared/domain/person-name';
 import { Card, Eyebrow } from '@/shared/ui/page-shell';
+import { SignOutForm } from '@/shared/ui/sign-out-form';
 import { DistancePill, StatusPill } from '@/shared/ui/status-pill';
 
 import type { RunnerStage } from '../application/use-cases/account-overview';
@@ -607,16 +608,7 @@ export function AccountView(props: AccountViewProps) {
                 />
               </dl>
             </AccountDetailsEditor>
-            {props.signOut && (
-              <form action={props.signOut} className="sm:hidden">
-                <button
-                  type="submit"
-                  className="inline-flex min-h-11 cursor-pointer items-center font-semibold underline underline-offset-2"
-                >
-                  {common('signOut')}
-                </button>
-              </form>
-            )}
+            {props.signOut && <SignOutForm action={props.signOut} className="sm:hidden" />}
           </Card>
         </div>
       )}

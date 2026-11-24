@@ -26,6 +26,7 @@ export interface VerifyEmailPanelProps {
  */
 export function VerifyEmailPanel({ email, verified, resendAction }: VerifyEmailPanelProps) {
   const t = useTranslations('auth.verify');
+  const busy = useTranslations('busy');
   const [state, formAction, pending] = useActionState(resendAction, INITIAL_FORM_STATE);
 
   if (verified) {
@@ -51,7 +52,8 @@ export function VerifyEmailPanel({ email, verified, resendAction }: VerifyEmailP
           type="submit"
           variant="cta"
           fullWidth
-          disabled={pending}
+          pending={pending}
+          pendingLabel={busy('resending')}
           className="bg-inverse text-inverse-foreground"
         >
           {t('resend')}

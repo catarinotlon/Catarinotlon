@@ -203,3 +203,57 @@ export const KitNotConfirmed: Story = {
     await expect(canvas.queryByRole('button', { name: 'Marcar kit entregado' })).toBeNull();
   },
 };
+
+async function expectBusy(button: HTMLElement) {
+  await expect(button).toHaveAttribute('aria-busy', 'true');
+  await expect(button).toBeDisabled();
+}
+
+const hang: FormAction = () => new Promise(() => {});
+
+/** Confirming a payment shows that it is working. */
+export const ConfirmPending: Story = {
+  render: () => <PaymentReviewPanel data={review} confirmAction={hang} rejectAction={hang} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Confirmar pago' }));
+    await expectBusy(await canvas.findByRole('button', { name: 'Confirmando pago…' }));
+    await expect(canvas.getByRole('button', { name: 'Rechazar comprobante' })).toBeDisabled();
+  },
+};
+
+/** Rejecting a receipt shows that it is working. */
+export const RejectPending: Story = {
+  render: () => <PaymentReviewPanel data={review} confirmAction={hang} rejectAction={hang} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Rechazar comprobante' }));
+    await expectBusy(await canvas.findByRole('button', { name: 'Rechazando…' }));
+  },
+};
+
+/** Delivering a kit shows that it is working. */
+export const DeliverPending: Story = {
+  render: () => <KitPickupPanel runner={kitRunner} deliverAction={hang} undoAction={hang} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Marcar kit entregado' }));
+    await expectBusy(await canvas.findByRole('button', { name: 'Registrando entrega…' }));
+  },
+};
+
+/** Undoing a delivery shows that it is working. */
+export const UndoPending: Story = {
+  render: () => (
+    <KitPickupPanel
+      runner={{ ...kitRunner, kitDelivered: true }}
+      deliverAction={hang}
+      undoAction={hang}
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Deshacer' }));
+    await expectBusy(await canvas.findByRole('button', { name: 'Deshaciendo…' }));
+  },
+};

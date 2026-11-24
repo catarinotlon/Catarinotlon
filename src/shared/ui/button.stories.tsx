@@ -54,3 +54,29 @@ export const Cta: Story = {
     await expect(button).toHaveStyle({ textTransform: 'uppercase', fontStyle: 'italic' });
   },
 };
+
+/** While the server works: it spins, says what is happening, and cannot be pressed twice. */
+export const Pending: Story = {
+  args: { variant: 'cta', pending: true, pendingLabel: 'Apartando tu lugar…' },
+  play: async ({ args, canvasElement }) => {
+    const button = within(canvasElement).getByRole('button', { name: 'Apartando tu lugar…' });
+    await expect(button).toBeDisabled();
+    await expect(button).toHaveAttribute('aria-busy', 'true');
+    await expect(button.querySelector('[data-slot="spinner"]')).toHaveAttribute(
+      'aria-hidden',
+      'true',
+    );
+    await userEvent.click(button, { pointerEventsCheck: 0 });
+    await expect(args.onClick).not.toHaveBeenCalled();
+  },
+};
+
+/** Without its own label, a pending button keeps its text next to the spinner. */
+export const PendingKeepsLabel: Story = {
+  args: { pending: true },
+  play: async ({ canvasElement }) => {
+    const button = within(canvasElement).getByRole('button', { name: 'Inscríbete' });
+    await expect(button).toHaveAttribute('aria-busy', 'true');
+    await expect(button.querySelector('[data-slot="spinner"]')).not.toBeNull();
+  },
+};

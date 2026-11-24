@@ -154,9 +154,10 @@ export function ReceiptUploadForm({
         variant={SUBMIT_TONES[submitTone].variant}
         className={SUBMIT_TONES[submitTone].className}
         fullWidth
-        disabled={pending}
+        pending={pending}
+        pendingLabel={t('sending')}
       >
-        {pending ? t('sending') : submitLabel}
+        {submitLabel}
       </Button>
     </form>
   );

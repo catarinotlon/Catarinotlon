@@ -1,6 +1,6 @@
 'use client';
 
-import { startTransition, useActionState, type FormEvent } from 'react';
+import { startTransition, useActionState, useState, type FormEvent } from 'react';
 
 import { INITIAL_FORM_STATE, type FormAction, type FormState } from './form-state';
 
@@ -14,6 +14,8 @@ export interface StickyForm {
   readonly onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   /** Whether the action is running. */
   readonly pending: boolean;
+  /** The `value` of the button that sent the latest submission, if it had one. */
+  readonly intent: string | null;
 }
 
 /**
@@ -35,13 +37,15 @@ export interface StickyForm {
  */
 export function useStickyForm(action: FormAction): StickyForm {
   const [state, formAction, pending] = useActionState(action, INITIAL_FORM_STATE);
+  const [intent, setIntent] = useState<string | null>(null);
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const { submitter } = event.nativeEvent as SubmitEvent;
     const data = new FormData(event.currentTarget, submitter);
+    setIntent(submitter instanceof HTMLButtonElement && submitter.value ? submitter.value : null);
     startTransition(() => formAction(data));
   }
 
-  return { state, formAction, onSubmit, pending };
+  return { state, formAction, onSubmit, pending, intent };
 }

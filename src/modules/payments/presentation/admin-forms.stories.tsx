@@ -264,3 +264,38 @@ export const SettingsKitTextArea: Story = {
     await expect(canvas.getByLabelText('Entrega de kits (inglés)').tagName).toBe('TEXTAREA');
   },
 };
+
+async function expectBusy(button: HTMLElement) {
+  await expect(button).toHaveAttribute('aria-busy', 'true');
+  await expect(button).toBeDisabled();
+}
+
+const hang: FormAction = () => new Promise(() => {});
+
+/** Registering someone by hand shows that it is working. */
+export const AdminSavePending: Story = {
+  render: () => <AdminRegistrationForm mode="new" action={hang} shirtSizes={['Size A']} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Inscribir corredor' }));
+    await expectBusy(await canvas.findByRole('button', { name: 'Guardando…' }));
+  },
+};
+
+/** Saving a settings section shows that it is working. */
+export const SettingsSavePending: Story = {
+  render: () => (
+    <EventSettingsForm
+      values={EMPTY_SETTINGS}
+      missing={[]}
+      action={hang}
+      history={[]}
+      adminHasPassword
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Guardar evento' }));
+    await expectBusy(await canvas.findByRole('button', { name: 'Guardando…' }));
+  },
+};

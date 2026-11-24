@@ -1,9 +1,11 @@
-import { useTranslations } from 'next-intl';
+import Form from 'next/form';
+import { useLocale, useTranslations } from 'next-intl';
 
-import { Link } from '@/i18n/navigation';
-import { Button, buttonClasses } from '@/shared/ui/button';
+import { getPathname, Link } from '@/i18n/navigation';
+import { buttonClasses } from '@/shared/ui/button';
 import { Card } from '@/shared/ui/page-shell';
 import { StatusPill } from '@/shared/ui/status-pill';
+import { SubmitButton } from '@/shared/ui/submit-button';
 
 import type {
   AdminRow,
@@ -65,6 +67,8 @@ function FilterSelect({
  */
 export function RegistrationsTable({ rows, totals, filter, totalRows }: RegistrationsTableProps) {
   const t = useTranslations('admin.list');
+  const busy = useTranslations('busy');
+  const locale = useLocale();
   const counts = [
     [t('totalRegistered'), totals.total],
     ['3K', totals.three],
@@ -104,8 +108,8 @@ export function RegistrationsTable({ rows, totals, filter, totalRows }: Registra
       </dl>
 
       <div>
-        <form
-          method="get"
+        <Form
+          action={getPathname({ href: '/admin', locale })}
           className="grid items-end gap-3 md:grid-cols-[minmax(0,2fr)_repeat(3,minmax(0,1fr))_auto]"
         >
           <label className="flex flex-col gap-1 font-semibold">
@@ -148,10 +152,10 @@ export function RegistrationsTable({ rows, totals, filter, totalRows }: Registra
               ['waiting', t('kitState.waiting')],
             ]}
           />
-          <Button type="submit" variant="inverse">
+          <SubmitButton variant="inverse" pendingLabel={busy('searching')}>
             {t('searchButton')}
-          </Button>
-        </form>
+          </SubmitButton>
+        </Form>
       </div>
 
       <Card className="overflow-x-auto p-0 md:p-0">

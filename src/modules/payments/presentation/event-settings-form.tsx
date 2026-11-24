@@ -65,6 +65,7 @@ function Section({
 }) {
   const t = useTranslations('admin.settings');
   const root = useTranslations();
+  const busy = useTranslations('busy');
   const { state, formAction, onSubmit, pending } = useStickyForm(action);
 
   return (
@@ -88,7 +89,13 @@ function Section({
           </p>
         )}
         {editing !== false && canSubmit && (
-          <Button type="submit" variant="inverse" disabled={pending} className="self-start">
+          <Button
+            type="submit"
+            variant="inverse"
+            pending={pending}
+            pendingLabel={busy('saving')}
+            className="self-start"
+          >
             {submitLabel}
           </Button>
         )}

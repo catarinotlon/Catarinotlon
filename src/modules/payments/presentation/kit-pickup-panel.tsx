@@ -73,6 +73,7 @@ export function KitPickupPanel({
   undoAction,
 }: KitPickupPanelProps) {
   const t = useTranslations('admin.kits');
+  const busy = useTranslations('busy');
   const list = useTranslations('admin.list');
   const root = useTranslations();
   const deliver = useStickyForm(deliverAction);
@@ -115,7 +116,13 @@ export function KitPickupPanel({
           {runner.collectedBy && (
             <p className="m-0">{t('collectedLine', { name: runner.collectedBy })}</p>
           )}
-          <Button type="submit" variant="outline" fullWidth disabled={undo.pending}>
+          <Button
+            type="submit"
+            variant="outline"
+            fullWidth
+            pending={undo.pending}
+            pendingLabel={busy('undoing')}
+          >
             {t('undo')}
           </Button>
         </form>
@@ -132,7 +139,13 @@ export function KitPickupPanel({
             help={t('collectedHelp')}
             autoComplete="off"
           />
-          <Button type="submit" variant="cta" fullWidth disabled={deliver.pending}>
+          <Button
+            type="submit"
+            variant="cta"
+            fullWidth
+            pending={deliver.pending}
+            pendingLabel={busy('recordingDelivery')}
+          >
             {t('deliver')}
           </Button>
         </form>

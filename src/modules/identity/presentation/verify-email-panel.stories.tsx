@@ -47,3 +47,18 @@ export const Verified: Story = {
     await expect(canvas.getByRole('link', { name: 'Continuar al pago' })).toBeVisible();
   },
 };
+
+async function expectBusy(button: HTMLElement) {
+  await expect(button).toHaveAttribute('aria-busy', 'true');
+  await expect(button).toBeDisabled();
+}
+
+/** Resending the email shows that it is working. */
+export const ResendPending: Story = {
+  args: { resendAction: () => new Promise<never>(() => {}) },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Reenviar el correo' }));
+    await expectBusy(await canvas.findByRole('button', { name: 'Reenviando…' }));
+  },
+};

@@ -66,7 +66,8 @@ export function RunnerForm({
   const auth = useTranslations('auth');
   const root = useTranslations();
   const preview = useTranslations('shirt');
-  const { state, formAction, onSubmit, pending } = useStickyForm(action);
+  const { state, formAction, onSubmit, pending, intent } = useStickyForm(action);
+  const busy = useTranslations('busy');
   const [shirtName, setShirtName] = useState('');
   const [distance, setDistance] = useState<'3K' | '5K'>('5K');
   const fieldError = (name: string) => {
@@ -136,7 +137,16 @@ export function RunnerForm({
           )}
         </div>
       )}
-      <Button type="submit" name="intent" value="pay" variant="cta" fullWidth disabled={pending}>
+      <Button
+        type="submit"
+        name="intent"
+        value="pay"
+        variant="cta"
+        fullWidth
+        disabled={pending}
+        pending={pending && intent !== 'another'}
+        pendingLabel={busy('reserving')}
+      >
         {intro ? t('submitWithDistance', { label: submitLabel, distance }) : submitLabel}
       </Button>
       <Button
@@ -146,6 +156,8 @@ export function RunnerForm({
         variant="outline"
         fullWidth
         disabled={pending}
+        pending={pending && intent === 'another'}
+        pendingLabel={busy('savingRunner')}
         className="rounded-full border-dashed"
       >
         {anotherLabel}

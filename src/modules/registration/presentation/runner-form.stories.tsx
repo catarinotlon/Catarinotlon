@@ -116,3 +116,33 @@ export const CompleteRegistrationLayout: Story = {
     await expect(canvas.getByRole('figure')).toHaveTextContent('SOFI');
   },
 };
+
+async function expectBusy(button: HTMLElement) {
+  await expect(button).toHaveAttribute('aria-busy', 'true');
+  await expect(button).toBeDisabled();
+}
+
+const hang: FormAction = () => new Promise(() => {});
+
+/** Going to payment: only the pressed button spins; the other waits disabled. */
+export const PayPending: Story = {
+  args: { action: hang },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Continuar al pago' }));
+    await expectBusy(await canvas.findByRole('button', { name: 'Apartando tu lugar…' }));
+    const other = canvas.getByRole('button', { name: 'Guardar y agregar otro corredor' });
+    await expect(other).toBeDisabled();
+    await expect(other).not.toHaveAttribute('aria-busy');
+  },
+};
+
+/** Saving and adding another runner spins on its own button. */
+export const AnotherPending: Story = {
+  args: { action: hang },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Guardar y agregar otro corredor' }));
+    await expectBusy(await canvas.findByRole('button', { name: 'Guardando corredor…' }));
+  },
+};

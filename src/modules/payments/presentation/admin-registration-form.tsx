@@ -85,6 +85,7 @@ export function AdminRegistrationForm({
   const t = useTranslations('admin.form');
   const list = useTranslations('admin.list');
   const root = useTranslations();
+  const busy = useTranslations('busy');
   const [shirtName, setShirtName] = useState(initial?.shirtName ?? '');
   const { state, formAction, onSubmit, pending } = useStickyForm(action);
   const [distance, setDistance] = useState<'3K' | '5K'>(initial?.distance ?? '5K');
@@ -211,7 +212,13 @@ export function AdminRegistrationForm({
         </p>
       )}
       <div className="flex flex-wrap gap-3">
-        <Button type="submit" variant="cta" disabled={pending} className="flex-1">
+        <Button
+          type="submit"
+          variant="cta"
+          pending={pending}
+          pendingLabel={busy('saving')}
+          className="flex-1"
+        >
           {mode === 'edit' ? t('save') : t('create')}
         </Button>
         <Link href="/admin" className={cn(buttonClasses({ variant: 'outline' }), 'rounded-full')}>

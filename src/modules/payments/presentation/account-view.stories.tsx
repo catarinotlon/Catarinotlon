@@ -252,3 +252,31 @@ export const SizeLocked: Story = {
     await expect(within(canvasElement).queryByRole('button', { name: 'Cambiar talla' })).toBeNull();
   },
 };
+
+async function expectBusy(button: HTMLElement) {
+  await expect(button).toHaveAttribute('aria-busy', 'true');
+  await expect(button).toBeDisabled();
+}
+
+const hang = () => new Promise<never>(() => {});
+
+/** Saving the account details shows that it is working. */
+export const SaveDetailsPending: Story = {
+  args: { saveAccount: hang },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Editar datos' }));
+    await userEvent.click(canvas.getByRole('button', { name: 'Guardar datos' }));
+    await expectBusy(await canvas.findByRole('button', { name: 'Guardando…' }));
+  },
+};
+
+/** Saving the shirt name shows that it is working. */
+export const SaveShirtNamePending: Story = {
+  args: { saveShirtName: hang },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Guardar nombre' }));
+    await expectBusy(await canvas.findByRole('button', { name: 'Guardando…' }));
+  },
+};

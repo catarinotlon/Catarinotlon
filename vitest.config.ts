@@ -17,6 +17,7 @@ const storybookProject = (theme: 'light' | 'dark') => ({
       'next-intl',
       'next-intl/navigation',
       'next-intl/routing',
+      'next/form',
       'next-themes',
       'react-email',
       'tailwind-merge',

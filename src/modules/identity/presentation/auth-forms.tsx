@@ -6,6 +6,7 @@ import { useState, type ReactNode } from 'react';
 import { Link } from '@/i18n/navigation';
 import { RunnerFields } from '@/modules/registration';
 import { Button, buttonClasses } from '@/shared/ui/button';
+import { SubmitButton } from '@/shared/ui/submit-button';
 import { FormAlert, TextField } from '@/shared/ui/form-fields';
 import type { FormAction, FormState } from '@/shared/ui/form-state';
 import { Card, DottedStage, SplitLayout } from '@/shared/ui/page-shell';
@@ -34,9 +35,10 @@ function Divider({ children }: { children: string }) {
 
 function GoogleButton({ action }: { action: () => Promise<void> }) {
   const t = useTranslations('auth');
+  const busy = useTranslations('busy');
   return (
     <form action={action}>
-      <Button type="submit" variant="outline" fullWidth>
+      <SubmitButton variant="outline" fullWidth pendingLabel={busy('openingGoogle')}>
         <svg aria-hidden="true" viewBox="0 0 48 48" className="size-5">
           <path
             fill="#EA4335"
@@ -56,7 +58,7 @@ function GoogleButton({ action }: { action: () => Promise<void> }) {
           />
         </svg>
         {t('google')}
-      </Button>
+      </SubmitButton>
     </form>
   );
 }
@@ -89,6 +91,7 @@ export function SignUpForm({ action, googleAction, shirtSizes, open, intro }: Si
   const [distance, setDistance] = useState<'3K' | '5K'>('5K');
   const [shirtName, setShirtName] = useState('');
   const shirt = useTranslations('shirt');
+  const busy = useTranslations('busy');
   const messages = useFormMessages(state);
 
   const form = (
@@ -176,7 +179,13 @@ export function SignUpForm({ action, googleAction, shirtSizes, open, intro }: Si
             </p>
           )}
         </div>
-        <Button type="submit" variant="cta" fullWidth disabled={pending}>
+        <Button
+          type="submit"
+          variant="cta"
+          fullWidth
+          pending={pending}
+          pendingLabel={busy('creatingAccount')}
+        >
           {open ? t('signUp.submit', { distance }) : t('signUp.submitClosed')}
         </Button>
       </form>
@@ -228,6 +237,7 @@ export interface SignInFormProps {
  */
 export function SignInForm({ action, googleAction }: SignInFormProps) {
   const t = useTranslations('auth');
+  const busy = useTranslations('busy');
   const { state, formAction, onSubmit, pending } = useStickyForm(action);
   const messages = useFormMessages(state);
 
@@ -259,7 +269,13 @@ export function SignInForm({ action, googleAction }: SignInFormProps) {
             </Link>
           }
         />
-        <Button type="submit" variant="cta" fullWidth disabled={pending}>
+        <Button
+          type="submit"
+          variant="cta"
+          fullWidth
+          pending={pending}
+          pendingLabel={busy('signingIn')}
+        >
           {t('signIn.submit')}
         </Button>
       </form>
@@ -285,6 +301,7 @@ export function SignInForm({ action, googleAction }: SignInFormProps) {
 export function ForgotPasswordForm({ action }: { action: FormAction }) {
   const t = useTranslations('auth.forgot');
   const auth = useTranslations('auth');
+  const busy = useTranslations('busy');
   const [sent, setSent] = useState({ email: '', times: 0 });
   const { state, formAction, onSubmit, pending } = useStickyForm(async (previous, data) => {
     const email = String(data.get('email') ?? '');
@@ -305,13 +322,9 @@ export function ForgotPasswordForm({ action }: { action: FormAction }) {
         </Link>
         <form action={formAction} onSubmit={onSubmit} className="self-center">
           <input type="hidden" name="email" value={sent.email} />
-          <button
-            type="submit"
-            disabled={pending}
-            className="inline-flex min-h-11 cursor-pointer items-center font-semibold underline underline-offset-2 disabled:opacity-60"
-          >
+          <Button type="submit" variant="link" pending={pending} pendingLabel={busy('resending')}>
             {t('resend')}
-          </button>
+          </Button>
         </form>
         {sent.times > 1 && (
           <p role="status" className="m-0 text-center font-semibold">
@@ -335,7 +348,13 @@ export function ForgotPasswordForm({ action }: { action: FormAction }) {
           autoComplete="email"
           error={messages.field('email')}
         />
-        <Button type="submit" variant="cta" fullWidth disabled={pending}>
+        <Button
+          type="submit"
+          variant="cta"
+          fullWidth
+          pending={pending}
+          pendingLabel={busy('sendingLink')}
+        >
           {t('submit')}
         </Button>
       </form>
@@ -367,6 +386,7 @@ export interface ResetPasswordFormProps {
 export function ResetPasswordForm({ action, token }: ResetPasswordFormProps) {
   const t = useTranslations('auth.reset');
   const auth = useTranslations('auth');
+  const busy = useTranslations('busy');
   const { state, formAction, onSubmit, pending } = useStickyForm(action);
   const messages = useFormMessages(state);
 
@@ -392,7 +412,13 @@ export function ResetPasswordForm({ action, token }: ResetPasswordFormProps) {
           autoComplete="new-password"
           error={messages.field('confirm')}
         />
-        <Button type="submit" variant="cta" fullWidth disabled={pending}>
+        <Button
+          type="submit"
+          variant="cta"
+          fullWidth
+          pending={pending}
+          pendingLabel={busy('savingPassword')}
+        >
           {t('submit')}
         </Button>
       </form>

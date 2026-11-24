@@ -71,6 +71,7 @@ function Detail({ label, children }: { label: string; children: React.ReactNode 
  */
 export function PaymentReviewPanel({ data, confirmAction, rejectAction }: PaymentReviewPanelProps) {
   const t = useTranslations('admin.review');
+  const busy = useTranslations('busy');
   const root = useTranslations();
   const locale = useLocale();
   const format = useFormatter();
@@ -156,7 +157,9 @@ export function PaymentReviewPanel({ data, confirmAction, rejectAction }: Paymen
                 type="submit"
                 variant="cta"
                 fullWidth
-                disabled={confirm.pending || reject.pending}
+                disabled={reject.pending}
+                pending={confirm.pending}
+                pendingLabel={busy('confirmingPayment')}
               >
                 {t('confirm')}
               </Button>
@@ -189,7 +192,9 @@ export function PaymentReviewPanel({ data, confirmAction, rejectAction }: Paymen
                 variant="outline"
                 fullWidth
                 className="rounded-full"
-                disabled={confirm.pending || reject.pending}
+                disabled={confirm.pending}
+                pending={reject.pending}
+                pendingLabel={busy('rejecting')}
               >
                 {t('reject')}
               </Button>

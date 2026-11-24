@@ -11,6 +11,23 @@
     "openingSoonTitle": "Registration opening soon",
     "openingSoonBody": "We are getting everything ready. Come back soon to save your spot."
   },
+  "busy": {
+    "creatingAccount": "Creating your account…",
+    "signingIn": "Signing in…",
+    "openingGoogle": "Opening Google…",
+    "sendingLink": "Sending link…",
+    "resending": "Resending…",
+    "savingPassword": "Saving your password…",
+    "reserving": "Saving your spot…",
+    "savingRunner": "Saving runner…",
+    "saving": "Saving…",
+    "confirmingPayment": "Confirming payment…",
+    "rejecting": "Rejecting…",
+    "recordingDelivery": "Recording delivery…",
+    "undoing": "Undoing…",
+    "signingOut": "Signing out…",
+    "searching": "Searching…"
+  },
   "theme": {
     "toDark": "Switch to dark theme",
     "toLight": "Switch to light theme"

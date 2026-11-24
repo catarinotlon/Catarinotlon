@@ -5,6 +5,7 @@ import { Link } from '@/i18n/navigation';
 import { AccountAvatar } from '@/shared/ui/account-avatar';
 import { buttonClasses } from '@/shared/ui/button';
 import { cn } from '@/shared/ui/cn';
+import { SignOutForm } from '@/shared/ui/sign-out-form';
 
 import { signOutAction } from './auth-actions';
 
@@ -45,14 +46,7 @@ export async function SessionActions({ signedOut = 'links' }: { signedOut?: 'lin
 
   return (
     <>
-      <form action={signOutAction} className="hidden sm:block">
-        <button
-          type="submit"
-          className="inline-flex min-h-11 cursor-pointer items-center px-2 font-semibold text-foreground hover:underline"
-        >
-          {common('signOut')}
-        </button>
-      </form>
+      <SignOutForm action={signOutAction} className="hidden sm:block" />
       <AccountAvatar name={user.value.name} />
     </>
   );

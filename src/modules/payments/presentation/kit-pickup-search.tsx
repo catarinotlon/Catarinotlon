@@ -1,10 +1,11 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import Form from 'next/form';
+import { useLocale, useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 
-import { usePathname, useRouter } from '@/i18n/navigation';
-import { Button } from '@/shared/ui/button';
+import { getPathname, usePathname, useRouter } from '@/i18n/navigation';
+import { SubmitButton } from '@/shared/ui/submit-button';
 import { TextField } from '@/shared/ui/form-fields';
 
 import { TicketScanner } from './ticket-scanner';
@@ -17,6 +18,8 @@ import { TicketScanner } from './ticket-scanner';
  */
 export function KitPickupSearch({ query }: { query: string }) {
   const t = useTranslations('admin.kits');
+  const busy = useTranslations('busy');
+  const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const showTicket = useCallback(
@@ -29,7 +32,10 @@ export function KitPickupSearch({ query }: { query: string }) {
   return (
     <div className="flex flex-col gap-4">
       <TicketScanner onTicket={showTicket} />
-      <form method="get" className="flex flex-col gap-3">
+      <Form
+        action={getPathname({ href: '/admin/kit-pickup', locale })}
+        className="flex flex-col gap-3"
+      >
         <TextField
           label={t('search')}
           name="q"
@@ -37,10 +43,10 @@ export function KitPickupSearch({ query }: { query: string }) {
           defaultValue={query}
           autoComplete="off"
         />
-        <Button type="submit" variant="outline" fullWidth>
+        <SubmitButton variant="outline" fullWidth pendingLabel={busy('searching')}>
           {t('searchButton')}
-        </Button>
-      </form>
+        </SubmitButton>
+      </Form>
     </div>
   );
 }

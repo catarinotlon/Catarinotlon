@@ -11,6 +11,23 @@
     "openingSoonTitle": "Inscripciones próximamente",
     "openingSoonBody": "Estamos terminando de preparar todo. Vuelve pronto para apartar tu lugar."
   },
+  "busy": {
+    "creatingAccount": "Creando tu cuenta…",
+    "signingIn": "Entrando…",
+    "openingGoogle": "Abriendo Google…",
+    "sendingLink": "Enviando enlace…",
+    "resending": "Reenviando…",
+    "savingPassword": "Guardando tu contraseña…",
+    "reserving": "Apartando tu lugar…",
+    "savingRunner": "Guardando corredor…",
+    "saving": "Guardando…",
+    "confirmingPayment": "Confirmando pago…",
+    "rejecting": "Rechazando…",
+    "recordingDelivery": "Registrando entrega…",
+    "undoing": "Deshaciendo…",
+    "signingOut": "Cerrando sesión…",
+    "searching": "Buscando…"
+  },
   "theme": {
     "toDark": "Cambiar a tema oscuro",
     "toLight": "Cambiar a tema claro"
