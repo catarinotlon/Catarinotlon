@@ -9,6 +9,7 @@ import {
   uniqueEmail,
   verifyEmail,
 } from './support/database';
+import { AFTER_SUBMIT } from './support/flows';
 
 const PASSWORD = 'correct-horse-battery';
 
@@ -36,7 +37,7 @@ test.describe('sign up', () => {
     await expect(page.getByTestId('shirt-name')).toHaveText('RUNNER');
     await page.getByRole('button', { name: /Crear cuenta e inscribirme · 3K/ }).click();
 
-    await expect(page).toHaveURL(/\/es\/confirma-tu-correo/);
+    await expect(page).toHaveURL(/\/es\/confirma-tu-correo/, AFTER_SUBMIT);
     await expect(page.getByRole('heading', { name: 'Confirma tu correo' })).toBeVisible();
     expect(await registrationsOf(email)).toMatchObject([
       {
@@ -55,7 +56,7 @@ test.describe('sign up', () => {
     await page.goto('/es/crear-cuenta');
     await fillSignUp(page, email);
     await page.getByRole('button', { name: /Crear cuenta e inscribirme/ }).click();
-    await expect(page).toHaveURL(/confirma-tu-correo/);
+    await expect(page).toHaveURL(/confirma-tu-correo/, AFTER_SUBMIT);
 
     await page.goto('/es/iniciar-sesion');
     await page.getByLabel('Correo electrónico').fill(email);
@@ -65,7 +66,7 @@ test.describe('sign up', () => {
 
     await verifyEmail(email);
     await page.getByRole('button', { name: 'Iniciar sesión', exact: true }).click();
-    await expect(page).toHaveURL(/\/es\/(pago|cuenta)/);
+    await expect(page).toHaveURL(/\/es\/(pago|cuenta)/, AFTER_SUBMIT);
   });
 
   test('shows validation errors without creating anything', async ({ page }) => {
@@ -85,13 +86,13 @@ test.describe('sign up', () => {
     await page.goto('/es/crear-cuenta');
     await fillSignUp(page, email);
     await page.getByRole('button', { name: /Crear cuenta e inscribirme/ }).click();
-    await expect(page).toHaveURL(/confirma-tu-correo/);
+    await expect(page).toHaveURL(/confirma-tu-correo/, AFTER_SUBMIT);
 
     await page.goto('/es/crear-cuenta');
     await fillSignUp(page, email);
     await page.getByRole('button', { name: /Crear cuenta e inscribirme/ }).click();
 
-    await expect(page).toHaveURL(/confirma-tu-correo/);
+    await expect(page).toHaveURL(/confirma-tu-correo/, AFTER_SUBMIT);
     expect(await registrationsOf(email)).toHaveLength(1);
   });
 
