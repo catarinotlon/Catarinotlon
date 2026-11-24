@@ -432,6 +432,21 @@ NEXT_PUBLIC_SENTRY_DSN   SENTRY_AUTH_TOKEN   SENTRY_ORG   SENTRY_PROJECT
 
 Vercel Blob credentials are added when the private store is created and connected (connected projects authenticate with short-lived OIDC credentials and a store id; follow the current Blob docs for the exact variable names). Keep `.env.example` up to date. Never commit `.env*` files with real values.
 
+### Environments
+
+| Environment | Git branch | URL                                  | Database (Turso, `aws-us-east-1`) | Receipts (Vercel Blob, private) |
+| ----------- | ---------- | ------------------------------------ | --------------------------------- | ------------------------------- |
+| Production  | `main`     | `catarinotlon.online` (`www` → apex) | `catarinotlon-production`         | `catarinotlon-receipts`         |
+| Staging     | `staging`  | `staging.catarinotlon.online`        | `catarinotlon-staging`            | `catarinotlon-receipts-staging` |
+| Local       | any        | `http://localhost:3000`              | `file:local.db`                   | local disk                      |
+
+- **Hosting:** the Vercel project `catarinotlon` (team Catarinotlon, region `iad1`, Node 24), connected to the GitHub repository. Vercel's Git integration deploys `main` to production and every other branch as a preview. Standard Deployment Protection keeps every preview, staging included, behind Vercel sign-in; only production domains are public.
+- **Configuration lives in Vercel**, one value per environment (Production for `main`, Preview for the rest). Secrets are stored as sensitive variables and never pass through the chat, the repo, or logs. Production and staging never share a database, a Blob store, or an auth secret.
+- **DNS** for `catarinotlon.online` is hosted by Vercel (the domain stays registered at GoDaddy). It holds the app's records, Resend's sending records (DKIM, the `send` and `rsend` subdomains), and a DMARC policy.
+- **Email:** the app sends through Resend from `contact@catarinotlon.online`. Incoming mail to the domain is forwarded by ImprovMX to the organizer's inbox; do not add a receiving MX for Resend, or forwarding breaks.
+- **Google sign-in:** one OAuth web client in the Google Cloud project `catarinotlon`, with origins and redirect URIs for production, staging, and localhost.
+- **Migrations** are applied to each Turso database with `pnpm db:migrate`, pointing `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN` at it. Apply them to staging first.
+
 ## Personal data and security
 
 Runner data is stored (name, email, phone). Never write it to logs, error messages, or Sentry events (Sentry 11 collects personal data by default, so `sentryOptions` turns off every `dataCollection` category and scrubs in `beforeSend`). Validate all input on the server even if the client already validated it. Never expose secrets through the `NEXT_PUBLIC_` prefix. Passwords, sessions, and OAuth tokens are handled only by Better Auth: never log them, store them yourself, or put them in URLs. A runner can only ever see or change their own registration and ticket.
@@ -452,7 +467,7 @@ Runner data is stored (name, email, phone). Never write it to logs, error messag
 
 ## Not decided yet (do not implement or assume)
 
-- Going to production: CI/CD, environments, domain, Vercel configuration.
+- Going to production: when the production domain opens to the public, CI checks beyond Vercel's Git deployments, Sentry, and what schedules the race reminders.
 - The final, legally reviewed text of the privacy notice and the terms.
 - Whether a runner can hand their place over to another person.
 - How the podium is decided: whether the three places are overall per distance or split by category (gender, age group), and so how many podium medals there really are.
