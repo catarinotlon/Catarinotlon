@@ -37,14 +37,14 @@ test.describe('legal and status pages', () => {
     await expect(page.getByText(/la misma para 3K y para 5K: \$100\.00/)).toBeVisible();
   });
 
-  test('the privacy notice is linked from the footer and marked as a draft', async ({ page }) => {
+  test('the privacy notice is linked from the footer', async ({ page }) => {
     await page.goto('/es');
 
     await page.getByRole('contentinfo').getByRole('link', { name: 'Aviso de privacidad' }).click();
 
     await expect(page).toHaveURL(/\/es\/aviso-de-privacidad$/);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Aviso de privacidad');
-    await expect(page.getByText('Borrador · pendiente de revisión legal')).toBeVisible();
+    await expect(page.getByText('Borrador · pendiente de revisión legal')).toHaveCount(0);
   });
 
   test('the terms switch language on the same page', async ({ page }) => {

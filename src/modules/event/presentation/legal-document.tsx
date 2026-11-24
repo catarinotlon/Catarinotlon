@@ -27,7 +27,7 @@ export interface LegalDocumentProps {
 type Gap = 'eventDate' | 'venue' | 'fee' | 'sizeDeadline' | 'kitPickup' | 'contactEmail';
 
 /**
- * Shows a legal document, always marked as a draft pending legal review.
+ * Shows a legal document.
  *
  * Gaps that match an event setting (date, venue, fee, shirt-size deadline,
  * kit pickup, contact email) show the organizer's current value.
@@ -81,9 +81,6 @@ export function LegalDocument({ document, facts }: LegalDocumentProps) {
         ))}
       </nav>
       <div className="flex flex-col gap-3">
-        <p className="m-0 self-start rounded-full border-2 border-dashed border-input-border px-3 py-1 text-sm font-semibold">
-          {t('draft')}
-        </p>
         <h1 className="m-0 font-heading text-5xl">{t(`${document}.title`)}</h1>
         <p className="m-0 text-sm text-muted-foreground">{t('updated')}</p>
       </div>

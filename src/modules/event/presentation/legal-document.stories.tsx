@@ -14,14 +14,14 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** The privacy notice, always marked as a draft. */
+/** The privacy notice, published as final. */
 export const Privacy: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(
       canvas.getByRole('heading', { level: 1, name: 'Aviso de privacidad' }),
     ).toBeVisible();
-    await expect(canvas.getByText('Borrador · pendiente de revisión legal')).toBeVisible();
+    await expect(canvas.queryByText('Borrador · pendiente de revisión legal')).toBeNull();
     await expect(
       canvas.getByRole('heading', { name: '1. Quién es responsable de tus datos' }),
     ).toBeVisible();
