@@ -785,7 +785,7 @@
           "title": "1. Who is responsible for your data",
           "blocks": [
             {
-              "p": "[NAME OR LEGAL NAME OF THE CONTROLLER], located at [FULL ADDRESS], organizes the Catarinotlón 2026 and is responsible for processing your personal data. For any privacy matter write to [PRIVACY EMAIL]."
+              "p": "Catarinotlón, located at Tecámac, State of Mexico, organizes the Catarinotlón 2026 and is responsible for processing your personal data. For any privacy matter write to contact@catarinotlon.online."
             }
           ]
         },
@@ -823,7 +823,7 @@
               ]
             },
             {
-              "p": "Additional purpose, which you can refuse at any time by writing to [PRIVACY EMAIL]: telling you about future editions of the Catarinotlón."
+              "p": "Additional purpose, which you can refuse at any time by writing to contact@catarinotlon.online: telling you about future editions of the Catarinotlón."
             }
           ]
         },
@@ -859,7 +859,7 @@
           "title": "6. Your rights",
           "blocks": [
             {
-              "p": "You can access, rectify, cancel, or object to the use of your data (ARCO rights), and revoke your consent or limit its use or disclosure. Send your request to [PRIVACY EMAIL] with your name, your account email, and what you are requesting. We will respond within [RESPONSE PERIOD]."
+              "p": "You can access, rectify, cancel, or object to the use of your data (ARCO rights), and revoke your consent or limit its use or disclosure. Send your request to contact@catarinotlon.online with your name, your account email, and what you are requesting. We will respond within [RESPONSE PERIOD]."
             },
             {
               "p": "If you believe we did not address your request, you can go to the personal data protection authority: [COMPETENT AUTHORITY]."
@@ -899,7 +899,7 @@
           "title": "1. Acceptance",
           "blocks": [
             {
-              "p": "By creating an account or registering for the Catarinotlón 2026 you accept these terms and our Privacy notice. The event is organized by [NAME OR LEGAL NAME OF THE ORGANIZER]."
+              "p": "By creating an account or registering for the Catarinotlón 2026 you accept these terms and our Privacy notice. The event is organized by Catarinotlón."
             }
           ]
         },

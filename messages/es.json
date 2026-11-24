@@ -785,7 +785,7 @@
           "title": "1. Quién es responsable de tus datos",
           "blocks": [
             {
-              "p": "[NOMBRE O RAZÓN SOCIAL DEL RESPONSABLE], con domicilio en [DOMICILIO COMPLETO], organiza el Catarinotlón 2026 y es responsable del tratamiento de tus datos personales. Para cualquier asunto de privacidad escribe a [CORREO DE PRIVACIDAD]."
+              "p": "Catarinotlón, con domicilio en Tecámac, Estado de México, organiza el Catarinotlón 2026 y es responsable del tratamiento de tus datos personales. Para cualquier asunto de privacidad escribe a contact@catarinotlon.online."
             }
           ]
         },
@@ -823,7 +823,7 @@
               ]
             },
             {
-              "p": "Finalidad adicional, que puedes rechazar en cualquier momento escribiendo a [CORREO DE PRIVACIDAD]: avisarte de futuras ediciones del Catarinotlón."
+              "p": "Finalidad adicional, que puedes rechazar en cualquier momento escribiendo a contact@catarinotlon.online: avisarte de futuras ediciones del Catarinotlón."
             }
           ]
         },
@@ -859,7 +859,7 @@
           "title": "6. Tus derechos",
           "blocks": [
             {
-              "p": "Puedes acceder a tus datos, rectificarlos, cancelarlos u oponerte a su uso (derechos ARCO), así como revocar tu consentimiento o limitar su uso o divulgación. Envía tu solicitud a [CORREO DE PRIVACIDAD] con tu nombre, el correo de tu cuenta y lo que solicitas. Te responderemos en un plazo de [PLAZO DE RESPUESTA]."
+              "p": "Puedes acceder a tus datos, rectificarlos, cancelarlos u oponerte a su uso (derechos ARCO), así como revocar tu consentimiento o limitar su uso o divulgación. Envía tu solicitud a contact@catarinotlon.online con tu nombre, el correo de tu cuenta y lo que solicitas. Te responderemos en un plazo de [PLAZO DE RESPUESTA]."
             },
             {
               "p": "Si consideras que no atendimos tu solicitud, puedes acudir a la autoridad de protección de datos personales: [AUTORIDAD COMPETENTE]."
@@ -899,7 +899,7 @@
           "title": "1. Aceptación",
           "blocks": [
             {
-              "p": "Al crear una cuenta o inscribirte al Catarinotlón 2026 aceptas estos términos y nuestro Aviso de privacidad. El evento lo organiza [NOMBRE O RAZÓN SOCIAL DEL ORGANIZADOR]."
+              "p": "Al crear una cuenta o inscribirte al Catarinotlón 2026 aceptas estos términos y nuestro Aviso de privacidad. El evento lo organiza Catarinotlón."
             }
           ]
         },
