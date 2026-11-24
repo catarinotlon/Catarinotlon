@@ -797,7 +797,7 @@
                 "Account: your password (stored encrypted, never in readable text) or the identifier Google shares with us if you sign in with your Google account.",
                 "Registration: distance, shirt size, and the name you choose for your shirt.",
                 "Payment: the receipt of your SPEI bank transfer. That document may show the account holder's name, the bank, part of your account number, the amount, and the date.",
-                "Site use: chosen language and theme, and technical error logs."
+                "Site usage: your chosen language and theme, technical error logs, and browsing statistics (pages visited, clicks, and recordings of your visit, in which we hide what you type and your personal data)."
               ]
             },
             {
@@ -822,7 +822,7 @@
               ]
             },
             {
-              "p": "Additional purpose, which you can refuse at any time by writing to contact@catarinotlon.online: telling you about future editions of the Catarinotlón."
+              "p": "Additional purposes, which you can refuse at any time by writing to contact@catarinotlon.online: telling you about future editions of the Catarinotlón and measuring how the site is used to improve it."
             }
           ]
         },
@@ -837,6 +837,7 @@
                 "Website hosting, database, and file storage providers.",
                 "Email delivery provider.",
                 "Error monitoring provider.",
+                "Browsing statistics and visit recording provider.",
                 "Google, only if you choose to sign in with your Google account.",
                 "The shirt printer, which receives your shirt name and size."
               ]
@@ -869,7 +870,7 @@
           "title": "7. Cookies",
           "blocks": [
             {
-              "p": "We only use the cookies needed to keep you signed in and remember your language and theme. We do not use advertising cookies."
+              "p": "We use the cookies needed to keep you signed in and remember your language and theme, and an anonymous identifier for browsing statistics. We do not use advertising cookies. If you turn on your browser’s “Do Not Track” option, we collect no browsing statistics."
             }
           ]
         },

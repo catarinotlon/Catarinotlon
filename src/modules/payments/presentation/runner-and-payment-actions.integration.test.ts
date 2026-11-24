@@ -102,7 +102,7 @@ describe('runner server actions', () => {
           'SELECT privacy_version, terms_version FROM legal_acceptances WHERE user_id = ? ORDER BY rowid DESC LIMIT 1',
           [userId],
         ),
-      ).toEqual([{ privacy_version: 'privacy-2026-11-24', terms_version: 'terms-2026-11-24' }]);
+      ).toEqual([{ privacy_version: 'privacy-2026-11-24-2', terms_version: 'terms-2026-11-24' }]);
     });
 
     it('requires the phone and consent', async () => {

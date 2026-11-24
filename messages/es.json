@@ -797,7 +797,7 @@
                 "Cuenta: tu contraseña (guardada cifrada, nunca en texto legible) o el identificador que nos comparte Google si entras con tu cuenta de Google.",
                 "Inscripción: distancia, talla de playera y el nombre que eliges para tu playera.",
                 "Pago: el comprobante de tu Transferencia (SPEI). Ese documento puede mostrar el nombre del titular, el banco, parte de tu número de cuenta, el monto y la fecha.",
-                "Uso del sitio: idioma y tema elegidos, y registros técnicos de errores."
+                "Uso del sitio: idioma y tema elegidos, registros técnicos de errores y estadísticas de navegación (páginas visitadas, clics y grabaciones de tu visita al sitio, en las que ocultamos lo que escribes y tus datos personales)."
               ]
             },
             {
@@ -822,7 +822,7 @@
               ]
             },
             {
-              "p": "Finalidad adicional, que puedes rechazar en cualquier momento escribiendo a contact@catarinotlon.online: avisarte de futuras ediciones del Catarinotlón."
+              "p": "Finalidades adicionales, que puedes rechazar en cualquier momento escribiendo a contact@catarinotlon.online: avisarte de futuras ediciones del Catarinotlón y medir cómo se usa el sitio para mejorarlo."
             }
           ]
         },
@@ -837,6 +837,7 @@
                 "Proveedores de alojamiento del sitio, base de datos y almacenamiento de archivos.",
                 "Proveedor de envío de correos.",
                 "Proveedor de monitoreo de errores.",
+                "Proveedor de estadísticas de navegación y grabación de visitas.",
                 "Google, únicamente si eliges entrar con tu cuenta de Google.",
                 "La imprenta de las playeras, que recibe el nombre para tu playera y tu talla."
               ]
@@ -869,7 +870,7 @@
           "title": "7. Cookies",
           "blocks": [
             {
-              "p": "Usamos solo las cookies necesarias para mantener tu sesión iniciada y recordar tu idioma y tu tema. No usamos cookies de publicidad."
+              "p": "Usamos cookies necesarias para mantener tu sesión iniciada y recordar tu idioma y tu tema, y un identificador anónimo para las estadísticas de navegación. No usamos cookies de publicidad. Si activas la opción «No rastrear» de tu navegador, no recabamos estadísticas de navegación."
             }
           ]
         },
