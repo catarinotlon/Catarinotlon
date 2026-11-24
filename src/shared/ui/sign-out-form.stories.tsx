@@ -16,7 +16,9 @@ type Story = StoryObj<typeof meta>;
 /** Signing out is a real button that submits the form. */
 export const Default: Story = {
   play: async ({ args, canvasElement }) => {
-    await userEvent.click(within(canvasElement).getByRole('button', { name: 'Cerrar sesión' }));
+    const button = within(canvasElement).getByRole('button', { name: 'Cerrar sesión' });
+    await expect(getComputedStyle(button).textDecorationLine).toBe('none');
+    await userEvent.click(button);
     await expect(args.action).toHaveBeenCalled();
   },
 };

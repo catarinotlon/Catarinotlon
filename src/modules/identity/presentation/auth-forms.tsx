@@ -322,7 +322,13 @@ export function ForgotPasswordForm({ action }: { action: FormAction }) {
         </Link>
         <form action={formAction} onSubmit={onSubmit} className="self-center">
           <input type="hidden" name="email" value={sent.email} />
-          <Button type="submit" variant="link" pending={pending} pendingLabel={busy('resending')}>
+          <Button
+            type="submit"
+            variant="link"
+            className="underline"
+            pending={pending}
+            pendingLabel={busy('resending')}
+          >
             {t('resend')}
           </Button>
         </form>

@@ -85,3 +85,13 @@ export const Avatar: Story = {
     await expect(link).toHaveTextContent('SR');
   },
 };
+
+/** Signed-out actions look the same as on the landing: pill-shaped. */
+export const HeaderSignedOutPills: Story = {
+  render: () => <SiteHeader />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('link', { name: 'Iniciar sesión' })).toHaveClass('rounded-full');
+    await expect(canvas.getByRole('link', { name: 'Inscríbete' })).toHaveClass('rounded-full');
+  },
+};

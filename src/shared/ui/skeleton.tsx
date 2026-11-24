@@ -2,6 +2,7 @@ import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 
 import { cn } from './cn';
+import { PageShell, type PageShellProps } from './page-shell';
 
 /**
  * A placeholder block in the shape of content that is still loading.
@@ -216,5 +217,27 @@ export function KitPickupSkeleton() {
         </CardShape>
       </div>
     </LoadingRegion>
+  );
+}
+
+/** Props of {@link LoadingShell}. */
+export type LoadingShellProps = Omit<PageShellProps, 'actions' | 'navigation'>;
+
+/**
+ * The page frame shown while a route loads.
+ *
+ * @remarks
+ * The header keeps its place but shows a neutral placeholder where the
+ * session actions go: while loading it cannot know whether someone is signed
+ * in, so it never shows the wrong links.
+ *
+ * @param props - The page frame options and the skeleton.
+ * @returns The frame with the skeleton.
+ */
+export function LoadingShell({ children, ...shell }: LoadingShellProps) {
+  return (
+    <PageShell {...shell} actions={<Skeleton className="size-11 rounded-full" />}>
+      {children}
+    </PageShell>
   );
 }

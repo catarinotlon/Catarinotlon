@@ -1,11 +1,10 @@
-import { PageShell } from '@/shared/ui/page-shell';
-import { KitPickupSkeleton } from '@/shared/ui/skeleton';
+import { LoadingShell, KitPickupSkeleton } from '@/shared/ui/skeleton';
 
 /** Shown at once while this page loads its data. */
 export default function Loading() {
   return (
-    <PageShell admin width="narrow">
+    <LoadingShell admin width="narrow">
       <KitPickupSkeleton />
-    </PageShell>
+    </LoadingShell>
   );
 }

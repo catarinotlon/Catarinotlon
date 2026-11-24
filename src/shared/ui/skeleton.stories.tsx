@@ -8,6 +8,7 @@ import {
   AdminListSkeleton,
   FormPageSkeleton,
   KitPickupSkeleton,
+  LoadingShell,
   PaymentSkeleton,
   Skeleton,
 } from './skeleton';
@@ -58,3 +59,20 @@ export const AdminDetail: Story = region(<AdminDetailSkeleton />, 6);
 
 /** Kit pickup on a phone: search and the runner's kit. */
 export const KitPickup: Story = region(<KitPickupSkeleton />, 4);
+
+/** While a page loads, the header never guesses the session: no sign-in links, no avatar. */
+export const Shell: Story = {
+  render: () => (
+    <LoadingShell>
+      <FormPageSkeleton />
+    </LoadingShell>
+  ),
+  play: async ({ canvasElement }) => {
+    const banner = within(within(canvasElement).getByRole('banner'));
+    await expect(banner.queryByRole('link', { name: 'Iniciar sesión' })).toBeNull();
+    await expect(banner.queryByRole('link', { name: 'Inscríbete' })).toBeNull();
+    await expect(
+      within(canvasElement).getByRole('banner').querySelector('[data-slot="skeleton"]'),
+    ).not.toBeNull();
+  },
+};

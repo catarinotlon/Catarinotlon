@@ -59,21 +59,43 @@ export function SiteHeader({ navigation, actions, badge }: SiteHeaderProps) {
             <LanguageSwitch variant="compact" />
           </span>
           <ThemeSwitch />
-          {actions ?? (
-            <>
-              <Link
-                href="/sign-in"
-                className="hidden min-h-11 items-center px-2 font-semibold text-foreground no-underline hover:underline sm:inline-flex"
-              >
-                {t('signIn')}
-              </Link>
-              <Link href="/sign-up" className={cn(buttonClasses(), 'hidden sm:inline-flex')}>
-                {t('register')}
-              </Link>
-            </>
-          )}
+          {actions ?? <SignedOutActions />}
         </div>
       </div>
     </header>
+  );
+}
+
+/**
+ * Sign-in and registration links for visitors without a session.
+ *
+ * @remarks
+ * Hidden on narrow screens, where the page's own menu offers them.
+ *
+ * @returns The two links.
+ */
+export function SignedOutActions() {
+  const t = useTranslations('common');
+  return (
+    <>
+      <Link
+        href="/sign-in"
+        className={cn(
+          buttonClasses({ variant: 'outline' }),
+          'hidden min-h-11 rounded-full px-4 py-1 font-display text-base font-extrabold uppercase italic sm:inline-flex',
+        )}
+      >
+        {t('signIn')}
+      </Link>
+      <Link
+        href="/sign-up"
+        className={cn(
+          buttonClasses({ variant: 'cta' }),
+          'hidden min-h-11 px-4 py-1 text-base sm:inline-flex',
+        )}
+      >
+        {t('register')}
+      </Link>
+    </>
   );
 }

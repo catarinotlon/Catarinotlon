@@ -17,7 +17,7 @@ export const buttonClasses = cva(
         outline: `${STANDARD} border-2 border-input-border bg-transparent text-foreground hover:bg-muted`,
         inverse: `${STANDARD} bg-inverse text-inverse-foreground hover:opacity-90`,
         ghost: `${STANDARD} bg-transparent text-foreground hover:bg-muted`,
-        link: 'px-1 font-semibold text-foreground underline underline-offset-2 hover:no-underline',
+        link: 'px-1 font-semibold text-foreground underline-offset-2 hover:underline',
         cta: 'min-h-13 rounded-full bg-primary px-6 py-3 font-display text-xl font-extrabold text-primary-foreground uppercase italic hover:brightness-90',
       },
       fullWidth: { true: 'w-full', false: '' },
