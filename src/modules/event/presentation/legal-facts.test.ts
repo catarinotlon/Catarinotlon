@@ -41,4 +41,10 @@ describe('toLegalFacts', () => {
       contactEmail: null,
     });
   });
+
+  it('treats a blank contact email as not set, so the terms keep the gap', () => {
+    const blank = { ...settings, contact: { ...settings.contact!, email: '' } };
+
+    expect(toLegalFacts(blank, 'es').contactEmail).toBeNull();
+  });
 });

@@ -39,6 +39,6 @@ export function toLegalFacts(values: EventSettingsValues, locale: string): Legal
     feeCents: values.feeCents,
     sizeDeadline: values.shirtSizeDeadline,
     kitPickup: localized(values.kitPickup, locale),
-    contactEmail: values.contact?.email ?? null,
+    contactEmail: values.contact?.email.trim() || null,
   };
 }
