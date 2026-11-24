@@ -81,6 +81,10 @@ export type EmailMessage = EmailEnvelope &
         readonly template: 'bank_data_changed';
         readonly data: { changedBy: string; settingsUrl: string };
       }
+    | {
+        readonly template: 'admin_granted';
+        readonly data: { grantedBy: string; signInUrl: string };
+      }
   );
 
 /** Sends transactional email. */

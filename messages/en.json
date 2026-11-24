@@ -281,6 +281,13 @@
       "body": "{changedBy} updated the beneficiary, the bank, or the CLABE that runners transfer to.",
       "cta": "See the change history",
       "note": "If you don't recognize this change, review it right away."
+    },
+    "admin_granted": {
+      "subject": "You now have access to the Catarinotlón admin panel",
+      "title": "You're now on the Catarinotlón team",
+      "body": "{grantedBy} gave you access to the admin panel: registrations, payments, kit pickup, and the event details.",
+      "cta": "Sign in",
+      "note": "Sign in, or create your account, with this same email address and confirm it. Then you'll see the \"Admin\" link in the menu."
     }
   },
   "errors": {

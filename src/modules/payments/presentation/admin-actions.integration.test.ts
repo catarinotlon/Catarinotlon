@@ -525,6 +525,21 @@ describe('admin server actions', () => {
       expect((await getAdminUser()).ok).toBe(true);
     });
 
+    it('emails the new admin a link to sign in', async () => {
+      const email = `welcomed-${++counter}@actions.test`;
+      await asAdmin();
+
+      await grantAdminAction({}, form({ email }));
+
+      expect(outbox().filter((item) => item.to === email)).toMatchObject([
+        {
+          template: 'admin_granted',
+          locale: 'es',
+          data: { signInUrl: expect.stringMatching(/^https?:\/\/[^/]+\/es\/iniciar-sesion$/) },
+        },
+      ]);
+    });
+
     it('an added admin cannot add or remove admins', async () => {
       const email = `helper-${++counter}@actions.test`;
       await asAdmin();

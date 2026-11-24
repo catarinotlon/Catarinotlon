@@ -1,3 +1,5 @@
+import { sendAfterCommit, type EmailSender } from '@/shared/domain/email';
+import type { ErrorReporter } from '@/shared/domain/error-reporter';
 import { err, ok, type DomainError, type Result } from '@/shared/domain/result';
 import type { Clock, IdGenerator } from '@/shared/domain/system-ports';
 
@@ -5,6 +7,8 @@ import { isAdmin } from '../../domain/admin-policy';
 import { createAdminGrant, type AdminGrant, type InvalidEmail } from '../../domain/admin-grant';
 import type { AdminGrantRepository } from '../ports/admin-grant-repository';
 import type { CurrentUser, CurrentUserProvider } from '../ports/current-user-provider';
+
+const ADMIN_LOCALE = 'es';
 
 /** The signed-in user is not an owner. */
 export type NotOwner = DomainError<'identity.not_owner'>;
@@ -23,6 +27,15 @@ export interface AdminTeamDeps {
   readonly ids: IdGenerator;
   /** Source of the current time. */
   readonly clock: Clock;
+  /** Sends the "you are now an admin" email. */
+  readonly emails: EmailSender;
+  /** Receives a failed send, which never undoes the grant. */
+  readonly reporter: ErrorReporter;
+  /** Absolute links the email points to. */
+  readonly links: {
+    /** The sign-in page, in the given locale. */
+    readonly signIn: (locale: string) => string;
+  };
 }
 
 /**
@@ -69,19 +82,21 @@ export async function adminEmailList(
  *
  * @remarks
  * The caller must have checked that the signed-in user is an owner. An added
- * admin can do everything in the panel except manage admins.
+ * admin can do everything in the panel except manage admins. The new admin is
+ * emailed, in Spanish like every admin email, who added them and where to sign
+ * in; a failed send is reported and never undoes the grant.
  *
  * @param deps - The required ports.
- * @param input - The owner and the new admin's address.
+ * @param input - The owner, their name, and the new admin's address.
  * @returns The grant, or why it was refused.
  * @example
  * ```ts
- * await grantAdmin(deps, { ownerId: owner.id, email: 'helper@example.com' });
+ * await grantAdmin(deps, { ownerId: owner.id, ownerName: owner.name, email: 'helper@example.com' });
  * ```
  */
 export async function grantAdmin(
   deps: AdminTeamDeps,
-  input: { readonly ownerId: string; readonly email: string },
+  input: { readonly ownerId: string; readonly ownerName: string; readonly email: string },
 ): Promise<Result<AdminGrant, InvalidEmail | AlreadyAdmin>> {
   const created = createAdminGrant({
     id: deps.ids.uuid(),
@@ -94,6 +109,13 @@ export async function grantAdmin(
     return err('identity.already_admin');
   }
   await deps.grants.add(created.value);
+  await sendAfterCommit(deps, {
+    template: 'admin_granted',
+    to: created.value.email,
+    locale: ADMIN_LOCALE,
+    idempotencyKey: `admin_granted:${created.value.id}`,
+    data: { grantedBy: input.ownerName, signInUrl: deps.links.signIn(ADMIN_LOCALE) },
+  });
   return ok(created.value);
 }
 

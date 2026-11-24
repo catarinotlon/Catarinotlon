@@ -324,5 +324,16 @@ export function buildEmailContent(
         note: t('bank_data_changed.note'),
         footer: t('common.footerAdmin'),
       };
+    case 'admin_granted':
+      return {
+        subject: t('admin_granted.subject'),
+        title: t('admin_granted.title'),
+        badge: t('common.adminBadge'),
+        body: t('admin_granted.body', { grantedBy: message.data.grantedBy }),
+        details: [],
+        cta: { label: t('admin_granted.cta'), url: message.data.signInUrl },
+        note: t('admin_granted.note'),
+        footer: t('common.footerAdmin'),
+      };
   }
 }

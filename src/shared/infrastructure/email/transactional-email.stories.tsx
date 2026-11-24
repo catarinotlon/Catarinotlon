@@ -168,3 +168,15 @@ export const BankDataChanged: Story = {
   },
   play: showsAction('Ver el historial de cambios'),
 };
+
+/** Sent to an address an owner adds to the admin team. */
+export const AdminGranted: Story = {
+  args: {
+    message: {
+      ...envelope,
+      template: 'admin_granted',
+      data: { grantedBy: 'Owner', signInUrl: url },
+    },
+  },
+  play: showsAction('Iniciar sesión'),
+};
