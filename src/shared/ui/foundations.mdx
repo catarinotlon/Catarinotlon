@@ -1,0 +1,33 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Brand tokens" />
+
+# Brand tokens
+
+Components use semantic tokens only, defined as CSS variables in `src/app/globals.css` for the light theme (`:root`) and the dark theme (`.dark`). Do not use raw hex values or palette classes inside components.
+
+| Token              | Light     | Dark      | Use                               |
+| ------------------ | --------- | --------- | --------------------------------- |
+| `background`       | `#FFFFFF` | `#0E0E0F` | Page background                   |
+| `surface`          | `#FFFFFF` | `#18181A` | Cards                             |
+| `surface-raised`   | `#F2F2F3` | `#232327` | Raised surfaces                   |
+| `muted`            | `#F2F2F3` | `#18181A` | Muted sections                    |
+| `foreground`       | `#121212` | `#F5F5F6` | Text                              |
+| `muted-foreground` | `#4A4A4E` | `#B9B9BF` | Secondary text                    |
+| `border`           | `#D5D5D8` | `#34343A` | Borders                           |
+| `primary`          | `#D42016` | `#D42016` | Red buttons and panels            |
+| `primary-text`     | `#D42016` | `#FF5A4D` | Red text, at 4.5:1 in both themes |
+| `gold`             | `#D8B25A` | `#D8B25A` | Medal gold                        |
+| `inverse`          | `#121212` | `#F5F5F6` | High-contrast fills               |
+
+## Typography
+
+Headings use Barlow Condensed, italic and uppercase, through the `font-heading` utility. Body text uses Barlow. Both load with `next/font`.
+
+## Motifs
+
+Black dots on red (the medal ribbon, `dotted-panel`), a dotted route ending in a ladybug pin, and the speed lines of the logo.
+
+## Accessibility
+
+Text contrast is at least 4.5:1, touch targets are at least 44 px, and controls are native and keyboard-navigable.

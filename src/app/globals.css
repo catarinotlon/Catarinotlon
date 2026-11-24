@@ -1,0 +1,133 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #ffffff;
+  --surface: #ffffff;
+  --surface-raised: #f2f2f3;
+  --muted: #f2f2f3;
+  --page: #f2f2f3;
+  --foreground: #121212;
+  --muted-foreground: #4a4a4e;
+  --border: #d5d5d8;
+  --input-border: #121212;
+  --input: #ffffff;
+  --inverse: #121212;
+  --inverse-foreground: #ffffff;
+  --primary: #d42016;
+  --primary-foreground: #ffffff;
+  --primary-text: #d42016;
+  --gold: #d8b25a;
+  --ink: #121212;
+  --studio-light: #f0f0f2;
+  --studio-mid: #dcdce0;
+  --studio-edge: #c4c4c9;
+  --on-ink-accent: #ff5a4d;
+  --focus: #121212;
+  color-scheme: light;
+}
+
+.dark {
+  --background: #0e0e0f;
+  --surface: #18181a;
+  --surface-raised: #232327;
+  --muted: #232327;
+  --page: #0e0e0f;
+  --foreground: #f5f5f6;
+  --muted-foreground: #b9b9bf;
+  --border: #34343a;
+  --input-border: #767680;
+  --input: #1e1e21;
+  --inverse: #f5f5f6;
+  --inverse-foreground: #121212;
+  --primary-text: #ff5a4d;
+  --focus: #f5f5f6;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-muted: var(--muted);
+  --color-page: var(--page);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input-border: var(--input-border);
+  --color-input: var(--input);
+  --color-inverse: var(--inverse);
+  --color-inverse-foreground: var(--inverse-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-text: var(--primary-text);
+  --color-gold: var(--gold);
+  --color-ink: var(--ink);
+  --color-on-ink-accent: var(--on-ink-accent);
+  --color-focus: var(--focus);
+  --font-sans: var(--font-barlow), 'Helvetica Neue', Arial, sans-serif;
+  --font-display: var(--font-barlow-condensed), 'Arial Narrow', Arial, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  details > summary {
+    list-style: none;
+    cursor: pointer;
+  }
+
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@utility font-heading {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+@utility studio-backdrop {
+  background-color: var(--studio-mid);
+  background-image: radial-gradient(
+    ellipse 85% 70% at 50% 38%,
+    var(--studio-light) 0%,
+    var(--studio-mid) 58%,
+    var(--studio-edge) 100%
+  );
+}
+
+@utility dotted-panel {
+  background-color: var(--primary);
+  background-image:
+    radial-gradient(circle at 18% 22%, var(--ink) 7px, transparent 7.5px),
+    radial-gradient(circle at 68% 12%, var(--ink) 5px, transparent 5.5px),
+    radial-gradient(circle at 42% 62%, var(--ink) 8px, transparent 8.5px),
+    radial-gradient(circle at 86% 74%, var(--ink) 5px, transparent 5.5px);
+  background-size: 104px 104px;
+}
