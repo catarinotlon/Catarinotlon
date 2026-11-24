@@ -115,6 +115,26 @@ describe('renderEmail', () => {
     expect(english.subject).toBe('Confirm your email to activate your account');
   });
 
+  it('pads the inbox preview with no invisible characters, which spam filters penalize', async () => {
+    const email = await renderEmail(samples[0] as EmailMessage);
+
+    expect(email.html).not.toMatch(/[​-‍﻿]/);
+  });
+
+  it('previews the opening paragraph in the inbox, before the ribbon', async () => {
+    const email = await renderEmail(samples[0] as EmailMessage);
+    const opening = email.html.indexOf('solo falta un paso');
+
+    expect(opening).toBeGreaterThan(-1);
+    expect(opening).toBeLessThan(email.html.indexOf('●'));
+  });
+
+  it('leaves the decorative ribbon out of the plain-text version', async () => {
+    const email = await renderEmail(samples[0] as EmailMessage);
+
+    expect(email.text).not.toContain('●');
+  });
+
   it('links to the action', async () => {
     const email = await renderEmail(samples[0] as EmailMessage);
 

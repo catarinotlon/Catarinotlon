@@ -8,7 +8,6 @@ import {
   Hr,
   Html,
   Img,
-  Preview,
   Row,
   Section,
   Text,
@@ -238,6 +237,7 @@ export function EmailBody({ content, qrSrc = `cid:${QR_CONTENT_ID}` }: EmailBody
       <Section style={{ background: COLORS.red }}>
         <Text
           aria-hidden="true"
+          data-skip-in-text="true"
           style={{
             color: COLORS.ink,
             fontSize: 12,
@@ -429,13 +429,41 @@ export interface TransactionalEmailProps {
 export function TransactionalEmail({ locale, content }: TransactionalEmailProps) {
   return (
     <Html lang={locale}>
-      <Head />
-      <Preview>{content.title}</Preview>
+      <Head>
+        <title>{content.title}</title>
+      </Head>
       <Body
         style={{ background: COLORS.page, fontFamily: BODY_FONT, margin: 0, padding: '24px 12px' }}
       >
+        <InboxPreview text={content.body} />
         <EmailBody content={content} />
       </Body>
     </Html>
+  );
+}
+
+/**
+ * The hidden line inbox lists show next to the subject.
+ *
+ * @remarks
+ * Replaces React Email's `Preview`, which pads the text with up to 200
+ * invisible characters. Outlook's spam filter penalizes that padding, so the
+ * preview carries only the opening paragraph.
+ */
+function InboxPreview({ text }: { text: string }) {
+  return (
+    <div
+      data-skip-in-text="true"
+      style={{
+        display: 'none',
+        overflow: 'hidden',
+        lineHeight: '1px',
+        opacity: 0,
+        maxHeight: 0,
+        maxWidth: 0,
+      }}
+    >
+      {text}
+    </div>
   );
 }
