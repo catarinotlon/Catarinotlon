@@ -1,5 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
+import { InMemoryEmailSender } from '@/shared/domain/email';
+
 import type { CurrentUser } from '../ports/current-user-provider';
 import { InMemoryAdminGrantRepository } from '../../infrastructure/in-memory-admin-grant-repository';
 import { adminEmailList, grantAdmin, requireOwner, revokeAdmin } from './admin-team';
@@ -12,16 +14,24 @@ const user = (email: string, emailVerified = true): CurrentUser =>
 
 describe('admin team', () => {
   let grants: InMemoryAdminGrantRepository;
+  let emails: InMemoryEmailSender;
+  let reported: unknown[];
   let nextId: number;
   const deps = () => ({
     grants,
     owners: OWNERS,
     ids: { uuid: () => `grant-${(nextId += 1)}` },
     clock: { now: () => NOW },
+    emails,
+    reporter: { report: (error: unknown) => void reported.push(error) },
+    links: { signIn: (locale: string) => `https://app.test/${locale}/sign-in` },
   });
+  const grant = (email: string) => grantAdmin(deps(), { ownerId: 'o', ownerName: 'Owner', email });
 
   beforeEach(() => {
     grants = new InMemoryAdminGrantRepository();
+    emails = new InMemoryEmailSender();
+    reported = [];
     nextId = 0;
   });
 
@@ -34,7 +44,7 @@ describe('admin team', () => {
     });
 
     it('refuses an added admin', async () => {
-      await grantAdmin(deps(), { ownerId: 'o', email: 'helper@example.test' });
+      await grant('helper@example.test');
 
       expect(await owner(user('helper@example.test'))).toEqual({
         ok: false,
@@ -53,7 +63,7 @@ describe('admin team', () => {
 
   describe('adminEmailList', () => {
     it('joins the owners and the added admins', async () => {
-      await grantAdmin(deps(), { ownerId: 'o', email: 'helper@example.test' });
+      await grant('helper@example.test');
 
       expect(await adminEmailList(deps())).toEqual(['owner@example.test', 'helper@example.test']);
     });
@@ -61,7 +71,11 @@ describe('admin team', () => {
 
   describe('grantAdmin', () => {
     it('adds an admin by address, recording who did it and when', async () => {
-      const result = await grantAdmin(deps(), { ownerId: 'owner-1', email: 'Helper@Example.test' });
+      const result = await grantAdmin(deps(), {
+        ownerId: 'owner-1',
+        ownerName: 'Owner',
+        email: 'Helper@Example.test',
+      });
 
       expect(result).toEqual({
         ok: true,
@@ -74,8 +88,40 @@ describe('admin team', () => {
       });
     });
 
+    it('tells the new admin, in Spanish, who added them and where to sign in', async () => {
+      await grant('Helper@Example.test');
+
+      expect(emails.sent).toEqual([
+        {
+          template: 'admin_granted',
+          to: 'helper@example.test',
+          locale: 'es',
+          idempotencyKey: 'admin_granted:grant-1',
+          data: { grantedBy: 'Owner', signInUrl: 'https://app.test/es/sign-in' },
+        },
+      ]);
+    });
+
+    it('keeps the grant when the email cannot be sent', async () => {
+      emails.send = async () => {
+        throw new Error('provider down');
+      };
+
+      expect((await grant('helper@example.test')).ok).toBe(true);
+      expect(await adminEmailList(deps())).toContain('helper@example.test');
+      expect(reported).toHaveLength(1);
+    });
+
+    it('sends nothing when the grant is refused', async () => {
+      await grant('helper@example.test');
+      await grant('owner@example.test');
+      await grant('nope');
+
+      expect(emails.sent.map((sent) => sent.to)).toEqual(['helper@example.test']);
+    });
+
     it('refuses an invalid address', async () => {
-      expect(await grantAdmin(deps(), { ownerId: 'o', email: 'nope' })).toEqual({
+      expect(await grant('nope')).toEqual({
         ok: false,
         error: { code: 'identity.invalid_email' },
       });
@@ -84,9 +130,9 @@ describe('admin team', () => {
     it.each(['owner@example.test', 'HELPER@example.test'])(
       'refuses %s, who is already an admin',
       async (email) => {
-        await grantAdmin(deps(), { ownerId: 'o', email: 'helper@example.test' });
+        await grant('helper@example.test');
 
-        expect(await grantAdmin(deps(), { ownerId: 'o', email })).toEqual({
+        expect(await grant(email)).toEqual({
           ok: false,
           error: { code: 'identity.already_admin' },
         });
@@ -96,7 +142,7 @@ describe('admin team', () => {
 
   describe('revokeAdmin', () => {
     it('removes an added admin', async () => {
-      await grantAdmin(deps(), { ownerId: 'o', email: 'helper@example.test' });
+      await grant('helper@example.test');
 
       expect(await revokeAdmin(deps(), { ownerId: 'o', grantId: 'grant-1' })).toEqual({
         ok: true,

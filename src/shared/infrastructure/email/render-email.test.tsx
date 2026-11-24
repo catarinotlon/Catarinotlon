@@ -82,6 +82,11 @@ const samples: EmailMessage[] = [
     template: 'bank_data_changed',
     data: { changedBy: 'Admin', settingsUrl: 'https://app.test/admin/settings' },
   },
+  {
+    ...envelope,
+    template: 'admin_granted',
+    data: { grantedBy: 'Owner', signInUrl: 'https://app.test/sign-in' },
+  },
 ];
 
 const confirmed = samples[2] as EmailMessage;
@@ -151,6 +156,16 @@ describe('renderEmail', () => {
     const email = await renderEmail(samples[7] as EmailMessage);
 
     expect(email.attachments).toEqual([]);
+  });
+
+  it('tells a new admin who added them and links to sign in', async () => {
+    const email = await renderEmail(
+      samples.find((sample) => sample.template === 'admin_granted') as EmailMessage,
+    );
+
+    expect(email.subject).toBe('Ya tienes acceso al panel de administración del Catarinotlón');
+    expect(email.text).toContain('Owner');
+    expect(email.html).toContain('href="https://app.test/sign-in"');
   });
 
   it('formats the amount as currency in the recipient’s locale', async () => {

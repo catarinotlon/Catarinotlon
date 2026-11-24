@@ -281,6 +281,13 @@
       "body": "{changedBy} actualizó el beneficiario, el banco o la CLABE a la que transfieren los corredores.",
       "cta": "Ver el historial de cambios",
       "note": "Si no reconoces este cambio, revísalo de inmediato."
+    },
+    "admin_granted": {
+      "subject": "Ya tienes acceso al panel de administración del Catarinotlón",
+      "title": "Ya eres parte del equipo del Catarinotlón",
+      "body": "{grantedBy} te dio acceso al panel de administración: inscripciones, pagos, entrega de kits y datos del evento.",
+      "cta": "Iniciar sesión",
+      "note": "Inicia sesión, o crea tu cuenta, con este mismo correo y confírmalo. Después verás el enlace «Admin» en el menú."
     }
   },
   "errors": {

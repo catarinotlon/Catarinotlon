@@ -118,7 +118,15 @@ const currentUser = new BetterAuthCurrentUserProvider(
 
 const adminGrants = new DrizzleAdminGrantRepository(db);
 const owners = () => parseAdminEmails(env.ADMIN_EMAILS);
-const adminTeamDeps = () => ({ grants: adminGrants, owners: owners(), ids, clock });
+const adminTeamDeps = () => ({
+  grants: adminGrants,
+  owners: owners(),
+  ids,
+  clock,
+  emails,
+  reporter,
+  links: { signIn: (locale: string) => absolute('/sign-in', locale) },
+});
 const adminEmails = () => adminEmailList({ grants: adminGrants, owners: owners() });
 
 /** The site's public origin, for links and metadata that must be absolute. */
@@ -239,7 +247,7 @@ export const getAdminTeam = async () => ({
 });
 
 /** Gives an address access to the admin panel. */
-export const addAdmin = (input: { ownerId: string; email: string }) =>
+export const addAdmin = (input: { ownerId: string; ownerName: string; email: string }) =>
   grantAdmin(adminTeamDeps(), input);
 
 /** Removes an added admin. */

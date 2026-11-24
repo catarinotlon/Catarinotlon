@@ -26,7 +26,11 @@ export async function grantAdminAction(_state: FormState, data: FormData): Promi
   const owner = await getOwnerUser();
   if (!owner.ok) return NOT_AUTHORIZED;
 
-  const result = await addAdmin({ ownerId: owner.value.id, email: text(data, 'email') });
+  const result = await addAdmin({
+    ownerId: owner.value.id,
+    ownerName: owner.value.name,
+    email: text(data, 'email'),
+  });
   if (result.ok) return saved();
   return { fieldErrors: { email: `admin.team.errors.${errorName(result.error.code)}` } };
 }
