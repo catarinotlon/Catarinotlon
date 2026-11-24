@@ -25,7 +25,8 @@
   --studio-edge: #c4c4c9;
   --on-ink-accent: #ff5a4d;
   --focus: #121212;
-  color-scheme: light;
+  /* "only" keeps browsers with automatic dark mode from darkening the light theme. */
+  color-scheme: only light;
 }
 
 .dark {
