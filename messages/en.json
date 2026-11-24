@@ -907,7 +907,7 @@
           "title": "2. The event",
           "blocks": [
             {
-              "p": "The Catarinotlón 2026 is a race with 3K and 5K distances. It will take place on [EVENT DATE] at [VENUE]. Schedules, the route, and kit pickup are published on this site."
+              "p": "The Catarinotlón 2026 is a race with 3K and 5K distances. It will take place on {eventDate} at {venue}. Schedules, the route, and kit pickup are published on this site."
             }
           ]
         },
@@ -928,7 +928,7 @@
           "blocks": [
             {
               "ul": [
-                "The registration fee is the same for 3K and 5K: [PRICE].",
+                "The registration fee is the same for 3K and 5K: {fee}.",
                 "The only payment method is a SPEI bank transfer to the account shown in your account, for the exact amount and with the stated concept. One transfer can cover several runners on your account.",
                 "After transferring you must upload your receipt. We validate it within [VALIDATION TIME].",
                 "Your registration is confirmed when we validate your payment. Your ticket is issued at that moment.",
@@ -944,7 +944,7 @@
               "ul": [
                 "You can change your distance whenever you want, even after paying. Since the fee is the same, the change is free.",
                 "You can change your shirt name whenever you want.",
-                "You can change your shirt size only until [SHIRT SIZE CHANGE DEADLINE]."
+                "You can change your shirt size only until {sizeDeadline}."
               ]
             }
           ]
@@ -963,7 +963,7 @@
             {
               "ul": [
                 "Your registration includes a shirt personalized with the name you choose and a finisher medal you receive when you cross the finish line.",
-                "The kit is handed out at [KIT PICKUP DATE, TIME, AND PLACE] when you show your ticket with its QR code. If you can't make it, someone else can collect it for you by showing your ticket.",
+                "The kit is handed out at {kitPickup} when you show your ticket with its QR code. If you can't make it, someone else can collect it for you by showing your ticket.",
                 "Each runner has a unique five-digit bib number."
               ]
             }
@@ -997,11 +997,19 @@
           "title": "11. Governing law and contact",
           "blocks": [
             {
-              "p": "These terms are governed by the laws of Mexico. Any dispute will be resolved before the courts of [CITY AND STATE]. For questions write to [CONTACT EMAIL]."
+              "p": "These terms are governed by the laws of Mexico. Any dispute will be resolved before the courts of [CITY AND STATE]. For questions write to {contactEmail}."
             }
           ]
         }
       ]
+    },
+    "gaps": {
+      "eventDate": "[EVENT DATE]",
+      "venue": "[VENUE]",
+      "fee": "[PRICE]",
+      "sizeDeadline": "[SHIRT SIZE CHANGE DEADLINE]",
+      "kitPickup": "[KIT PICKUP DATE, TIME, AND PLACE]",
+      "contactEmail": "[CONTACT EMAIL]"
     }
   }
 }

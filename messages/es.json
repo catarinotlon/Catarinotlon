@@ -907,7 +907,7 @@
           "title": "2. El evento",
           "blocks": [
             {
-              "p": "El Catarinotlón 2026 es una carrera con distancias de 3K y 5K. Se realizará el [FECHA DEL EVENTO] en [SEDE]. Los horarios, la ruta y la entrega de kits se publican en este sitio."
+              "p": "El Catarinotlón 2026 es una carrera con distancias de 3K y 5K. Se realizará el {eventDate} en {venue}. Los horarios, la ruta y la entrega de kits se publican en este sitio."
             }
           ]
         },
@@ -928,7 +928,7 @@
           "blocks": [
             {
               "ul": [
-                "La cuota de inscripción es la misma para 3K y para 5K: [PRECIO].",
+                "La cuota de inscripción es la misma para 3K y para 5K: {fee}.",
                 "El único medio de pago es Transferencia (SPEI) a la cuenta que se muestra en tu cuenta, por el monto exacto y con el concepto indicado. Una sola transferencia puede cubrir a varios corredores de tu cuenta.",
                 "Después de transferir debes subir tu comprobante. Lo validamos en [TIEMPO DE VALIDACIÓN].",
                 "Tu inscripción queda confirmada cuando validamos tu pago. En ese momento se genera tu boleto.",
@@ -944,7 +944,7 @@
               "ul": [
                 "Puedes cambiar de distancia cuando quieras, incluso después de pagar. Como la cuota es la misma, el cambio no tiene costo.",
                 "Puedes cambiar el nombre de tu playera cuando quieras.",
-                "Puedes cambiar la talla de tu playera solo hasta el [FECHA LÍMITE PARA CAMBIAR DE TALLA]."
+                "Puedes cambiar la talla de tu playera solo hasta el {sizeDeadline}."
               ]
             }
           ]
@@ -963,7 +963,7 @@
             {
               "ul": [
                 "Tu inscripción incluye una playera personalizada con el nombre que elijas y una medalla de finalista que recibes al cruzar la meta.",
-                "El kit se entrega en [FECHA, HORARIO Y LUGAR DE ENTREGA] mostrando tu boleto con código QR. Si no puedes ir, otra persona puede recogerlo por ti mostrando tu boleto.",
+                "El kit se entrega en {kitPickup} mostrando tu boleto con código QR. Si no puedes ir, otra persona puede recogerlo por ti mostrando tu boleto.",
                 "Cada corredor tiene un número de corredor de cinco dígitos, único."
               ]
             }
@@ -997,11 +997,19 @@
           "title": "11. Ley aplicable y contacto",
           "blocks": [
             {
-              "p": "Estos términos se rigen por las leyes de México. Cualquier controversia se resolverá ante los tribunales de [CIUDAD Y ESTADO]. Para dudas escribe a [CORREO DE CONTACTO]."
+              "p": "Estos términos se rigen por las leyes de México. Cualquier controversia se resolverá ante los tribunales de [CIUDAD Y ESTADO]. Para dudas escribe a {contactEmail}."
             }
           ]
         }
       ]
+    },
+    "gaps": {
+      "eventDate": "[FECHA DEL EVENTO]",
+      "venue": "[SEDE]",
+      "fee": "[PRECIO]",
+      "sizeDeadline": "[FECHA LÍMITE PARA CAMBIAR DE TALLA]",
+      "kitPickup": "[FECHA, HORARIO Y LUGAR DE ENTREGA]",
+      "contactEmail": "[CORREO DE CONTACTO]"
     }
   }
 }

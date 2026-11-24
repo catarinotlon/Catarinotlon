@@ -1,7 +1,10 @@
-import { useTranslations } from 'next-intl';
+import { useFormatter, useLocale, useTranslations } from 'next-intl';
 
+import { formatMoney } from '@/i18n/money';
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/shared/ui/cn';
+
+import type { LegalFacts } from './legal-facts';
 
 interface LegalBlock {
   readonly p?: string;
@@ -17,10 +20,17 @@ interface LegalSection {
 export interface LegalDocumentProps {
   /** Which document to show. */
   document: 'privacy' | 'terms';
+  /** The event facts the organizer set; a missing one keeps its bracketed gap. */
+  facts?: LegalFacts;
 }
+
+type Gap = 'eventDate' | 'venue' | 'fee' | 'sizeDeadline' | 'kitPickup' | 'contactEmail';
 
 /**
  * Shows a legal document, always marked as a draft pending legal review.
+ *
+ * Gaps that match an event setting (date, venue, fee, shirt-size deadline,
+ * kit pickup, contact email) show the organizer's current value.
  *
  * @remarks
  * The text lives in the message files, per locale. Its bracketed gaps are
@@ -29,9 +39,27 @@ export interface LegalDocumentProps {
  * @param props - Which document to show.
  * @returns The document.
  */
-export function LegalDocument({ document }: LegalDocumentProps) {
+export function LegalDocument({ document, facts }: LegalDocumentProps) {
   const t = useTranslations('legal');
   const footer = useTranslations('footer');
+  const format = useFormatter();
+  const locale = useLocale();
+  const values: Record<Gap, string | null> = {
+    eventDate: facts?.eventDate
+      ? format.dateTime(new Date(`${facts.eventDate}T12:00:00Z`), { dateStyle: 'long' })
+      : null,
+    venue: facts?.venue ?? null,
+    fee: facts?.feeCents == null ? null : formatMoney(facts.feeCents, locale),
+    sizeDeadline: facts?.sizeDeadline
+      ? format.dateTime(new Date(facts.sizeDeadline), { dateStyle: 'long' })
+      : null,
+    kitPickup: facts?.kitPickup ?? null,
+    contactEmail: facts?.contactEmail ?? null,
+  };
+  const fill = (text: string) =>
+    text.replace(/\{(\w+)\}/g, (token, key: string) =>
+      key in values ? (values[key as Gap] ?? t(`gaps.${key as Gap}`)) : token,
+    );
   const sections = t.raw(`${document}.sections`) as readonly LegalSection[];
   const tabs = ['privacy', 'terms'] as const;
 
@@ -66,12 +94,12 @@ export function LegalDocument({ document }: LegalDocumentProps) {
             block.ul ? (
               <ul key={index} className="m-0 flex list-disc flex-col gap-1 pl-5">
                 {block.ul.map((item) => (
-                  <li key={item}>{item}</li>
+                  <li key={item}>{fill(item)}</li>
                 ))}
               </ul>
             ) : (
               <p key={index} className="m-0">
-                {block.p}
+                {fill(block.p ?? '')}
               </p>
             ),
           )}

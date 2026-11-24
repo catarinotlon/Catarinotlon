@@ -47,3 +47,52 @@ export const Terms: Story = {
     await expect(canvas.getByText(/No hay cancelaciones ni reembolsos/)).toBeVisible();
   },
 };
+
+/** The terms show the event facts the organizer set, and update when they change. */
+export const TermsWithSettings: Story = {
+  args: {
+    document: 'terms',
+    facts: {
+      eventDate: '2030-01-15',
+      venue: 'Deportivo de ejemplo',
+      feeCents: 25000,
+      sizeDeadline: '2030-01-01T18:00:00.000Z',
+      kitPickup: 'el sábado en la sede',
+      contactEmail: 'contact@example.test',
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(
+      canvas.getByText(/Se realizará el 15 de enero de 2030 en Deportivo de ejemplo\./),
+    ).toBeVisible();
+    await expect(canvas.getByText(/la misma para 3K y para 5K: \$250\.00\./)).toBeVisible();
+    await expect(canvas.getByText(/solo hasta el 1 de enero de 2030\./)).toBeVisible();
+    await expect(canvas.getByText(/El kit se entrega en el sábado en la sede/)).toBeVisible();
+    await expect(canvas.getByText(/escribe a contact@example\.test\./)).toBeVisible();
+    await expect(canvas.queryByText(/\[FECHA DEL EVENTO\]|\[PRECIO\]|\[SEDE\]/)).toBeNull();
+  },
+};
+
+/** Until the organizer sets a fact, its gap stays visible as a bracket. */
+export const TermsBeforeSettings: Story = {
+  args: {
+    document: 'terms',
+    facts: {
+      eventDate: null,
+      venue: null,
+      feeCents: null,
+      sizeDeadline: null,
+      kitPickup: null,
+      contactEmail: null,
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(
+      canvas.getByText(/Se realizará el \[FECHA DEL EVENTO\] en \[SEDE\]\./),
+    ).toBeVisible();
+    await expect(canvas.getByText(/: \[PRECIO\]\./)).toBeVisible();
+    await expect(canvas.getByText(/escribe a \[CORREO DE CONTACTO\]\./)).toBeVisible();
+  },
+};

@@ -1,6 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
+import { EMPTY_SETTINGS, setEventSettings, TEST_SETTINGS } from './support/database';
 import { pageLoaded } from './support/flows';
 
 test.describe('default language', () => {
@@ -21,6 +22,21 @@ test.describe('default language', () => {
 });
 
 test.describe('legal and status pages', () => {
+  test('the terms follow the event settings as soon as the organizer saves them', async ({
+    page,
+  }) => {
+    await setEventSettings(EMPTY_SETTINGS);
+    await page.goto('/es/terminos-y-condiciones');
+    await expect(page.getByText(/Se realizará el \[FECHA DEL EVENTO\] en \[SEDE\]/)).toBeVisible();
+
+    await setEventSettings(TEST_SETTINGS);
+    await page.reload();
+    await expect(
+      page.getByText(/Se realizará el 15 de enero de 2030 en SEDE DE PRUEBA/),
+    ).toBeVisible();
+    await expect(page.getByText(/la misma para 3K y para 5K: \$100\.00/)).toBeVisible();
+  });
+
   test('the privacy notice is linked from the footer and marked as a draft', async ({ page }) => {
     await page.goto('/es');
 

@@ -200,7 +200,7 @@ Rules that follow from it:
 
 ### Legal pages
 
-- The privacy notice and the terms in the mocks are **drafts pending legal review**. Do not treat their wording as final or fill their bracketed gaps.
+- The privacy notice and the terms in the mocks are **drafts pending legal review**. Do not treat their wording as final or fill their bracketed gaps yourself. The only exception: a gap that names an event setting (event date, venue, fee, shirt-size deadline, kit pickup, contact email) shows the organizer's current value and keeps its bracket while the setting is missing.
 - Their text is content per locale, not code. Sign-up requires accepting both; store when the runner accepted and which version.
 
 - The shirt preview renders the runner's chosen name over the back-of-shirt photo, uppercase, scaled down for long names. The same component is used on the landing, sign-up, and account pages.
