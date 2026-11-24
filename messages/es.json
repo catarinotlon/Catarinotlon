@@ -1,0 +1,984 @@
+{
+  "common": {
+    "appName": "Catarinotlón",
+    "year": "2026",
+    "homeLabel": "Catarinotlón 2026, ir al inicio",
+    "pending": "Por confirmar",
+    "signIn": "Iniciar sesión",
+    "signOut": "Cerrar sesión",
+    "register": "Inscríbete",
+    "skipToContent": "Saltar al contenido",
+    "openingSoonTitle": "Inscripciones próximamente",
+    "openingSoonBody": "Estamos terminando de preparar todo. Vuelve pronto para apartar tu lugar."
+  },
+  "theme": {
+    "toDark": "Cambiar a tema oscuro",
+    "toLight": "Cambiar a tema claro"
+  },
+  "language": {
+    "label": "Idioma:",
+    "switchTo": "Cambiar idioma",
+    "es": "Español",
+    "en": "English"
+  },
+  "nav": {
+    "main": "Navegación principal",
+    "distances": "Distancias",
+    "kit": "Kit del corredor",
+    "raceDay": "Día de la carrera",
+    "faq": "Preguntas",
+    "account": "Mi cuenta",
+    "menu": "Menú",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú"
+  },
+  "footer": {
+    "tagline": "Carrera 3K y 5K",
+    "event": "Evento",
+    "copyright": "© {year} Catarinotlón",
+    "terms": "Términos y condiciones",
+    "privacy": "Aviso de privacidad",
+    "copyrightAdmin": "© {year} Catarinotlón · Panel de administración"
+  },
+  "shirt": {
+    "previewLabel": "Vista previa de tu playera",
+    "placeholderName": "NOMBRE",
+    "backAlt": "Espalda de la playera oficial con el nombre {name}",
+    "frontAlt": "Playera oficial del Catarinotlón 2026, vista de frente",
+    "previewBadge": "Vista previa de tu playera"
+  },
+  "landing": {
+    "metaTitle": "Catarinotlón 2026 · Carrera 3K y 5K",
+    "metaDescription": "Elige 3 o 5 kilómetros, corre con tu nombre en la espalda y cruza la meta por tu medalla de catarina.",
+    "hero": {
+      "eyebrow": "Carrera 3K y 5K",
+      "body": "Elige 3 o 5 kilómetros, corre con tu nombre en la espalda y cruza la meta por tu medalla de catarina. Así de simple, así de rojo.",
+      "cta": "Inscríbete ahora",
+      "kitCta": "Conoce tu kit",
+      "includes": "Tu inscripción incluye playera personalizada y medalla.",
+      "alreadyRegistered": "¿Ya te inscribiste?",
+      "signIn": "Inicia sesión",
+      "date": "Fecha",
+      "start": "Salida",
+      "venue": "Sede",
+      "distances": "Distancias"
+    },
+    "distances": {
+      "eyebrow": "Distancias",
+      "title": "Dos distancias, una misma meta",
+      "body": "Camínala, trótala o córrela a tope: tú eliges cuántos kilómetros.",
+      "start": "Salida",
+      "fee": "Cuota",
+      "threeTitle": "Para estrenarte",
+      "threeBody": "Tu primera carrera, la salida en familia o el pretexto para volver a moverte. Tres kilómetros que se disfrutan de principio a fin.",
+      "threeCta": "Inscribirme al 3K",
+      "fiveTitle": "Para subirle al ritmo",
+      "fiveBody": "Dos kilómetros más para quien quiere exigirse: buen ritmo, buena ruta y la misma fiesta al cruzar la meta.",
+      "fiveCta": "Inscribirme al 5K",
+      "footnote": "Las dos distancias incluyen el kit completo: playera personalizada y medalla."
+    },
+    "kit": {
+      "eyebrow": "Kit del corredor",
+      "title": "Lo que te llevas puesto y colgado",
+      "body": "Tu inscripción incluye la playera oficial con tu nombre y, al cruzar la meta, tu medalla Catarinotlón 2026.",
+      "front": "Frente",
+      "back": "Espalda",
+      "shirtTitle": "Playera oficial",
+      "shirtBody": "Blanca, con los trazos rojo y negro del Catarinotlón y una ruta punteada que termina en el pin de la catarina.",
+      "nameOnBack": "Tu nombre impreso en la espalda",
+      "logo": "Logo Catarinotlón 2026 al frente y atrás",
+      "sizes": "Tallas: {sizes}"
+    },
+    "medals": {
+      "eyebrow": "Medallas",
+      "title": "Una medalla para cada meta",
+      "body": "Si cruzas la meta, te llevas tu medalla de finalista. Y si llegas entre los tres primeros de tu distancia, te llevas la de podio.",
+      "switchLabel": "Ver las medallas de",
+      "finisherEyebrow": "Al cruzar la meta",
+      "finisherTitle": "Medalla de finalista {distance}",
+      "finisherBody": "Dorada, con la catarina al centro, tu distancia grabada y la cinta roja de puntos negros.",
+      "podiumEyebrow": "Los tres primeros lugares",
+      "podiumTitle": "Medallas de podio {distance}",
+      "podiumBody": "Con laureles y el lugar grabado. Hay un podio de 3K y otro de 5K, cada uno con primero, segundo y tercer lugar.",
+      "first": "Primer lugar",
+      "second": "Segundo lugar",
+      "third": "Tercer lugar",
+      "finisherAlt": "Medalla dorada de finalista {distance} del Catarinotlón 2026",
+      "podiumAlt": "Medalla dorada de {place} {distance} del Catarinotlón 2026"
+    },
+    "raceDay": {
+      "eyebrow": "Día de la carrera",
+      "title": "De la salida a la meta",
+      "routePending": "Aquí publicaremos el recorrido oficial de 3K y 5K.",
+      "routeLink": "Ver el mapa de la ruta",
+      "kitPickup": "Entrega de kits",
+      "start": "Salida 3K y 5K",
+      "startValue": "3K: {three} · 5K: {five}",
+      "finish": "Meta y medallas",
+      "finishBody": "Cruzas la meta y te cuelgas tu medalla Catarinotlón 2026.",
+      "routeStartLabel": "Salida",
+      "routeFinishLabel": "Meta"
+    },
+    "signup": {
+      "eyebrow": "Inscripción",
+      "title": "Aparta tu lugar y ponle nombre a tu playera",
+      "body": "Crea tu cuenta, elige tu distancia y dinos qué nombre va en tu espalda. Tu boleto queda guardado en tu cuenta, y con una sola cuenta puedes inscribir a toda tu familia.",
+      "shirtPerk": "Playera oficial personalizada",
+      "medalPerk": "Medalla de finalista",
+      "tryOn": "Pruébatela",
+      "tryOnLabel": "Escribe tu nombre o apodo",
+      "tryOnHelp": "Así se verá en tu espalda. Lo confirmas al crear tu cuenta.",
+      "step1Title": "Crea tu cuenta.",
+      "step1Body": "Con Google o con tu correo.",
+      "step2Title": "Elige tu carrera.",
+      "step2Body": "Distancia, talla y el nombre de tu playera.",
+      "step3Title": "Recibe tu boleto.",
+      "step3Body": "Queda en tu cuenta y lo descargas en PDF.",
+      "cta": "Crear mi cuenta e inscribirme",
+      "signIn": "Ya tengo cuenta · Iniciar sesión"
+    },
+    "faq": {
+      "eyebrow": "Preguntas frecuentes",
+      "title": "Antes de amarrarte las agujetas",
+      "q1": "¿Qué incluye mi inscripción?",
+      "a1": "Tu playera oficial personalizada con tu nombre y tu medalla de finalista, que recibes al cruzar la meta.",
+      "q2": "¿Dónde y cuándo recojo mi kit?",
+      "a2": "{details} Si no puedes ir, otra persona puede recogerlo mostrando tu boleto.",
+      "q3": "¿Qué nombre puedo poner en mi playera?",
+      "a3": "Tu nombre, tu apodo o el de tu equipo: tú eliges. Puedes cambiarlo desde tu cuenta cuando quieras.",
+      "q4": "¿Pueden participar niñas y niños?",
+      "a4": "Puedes inscribirlos desde tu misma cuenta, cada quien con su playera y su boleto.",
+      "q5": "¿Puedo cambiar de distancia?",
+      "a5": "Sí, puedes cambiar de distancia desde tu cuenta cuando quieras, incluso después de pagar y sin costo."
+    }
+  },
+  "emails": {
+    "common": {
+      "brand": "Catarinotlón 2026",
+      "transfer": "Transferencia (SPEI)",
+      "runners": "Corredores",
+      "amount": "Monto",
+      "reasonLabel": "Motivo",
+      "footerRunner": "Recibiste este correo porque te inscribiste al Catarinotlón 2026.",
+      "footerAccount": "Recibiste este correo porque tienes una cuenta en el Catarinotlón 2026.",
+      "footerAdmin": "Recibes este correo porque administras el Catarinotlón 2026.",
+      "date": "Fecha",
+      "start": "Salida",
+      "venue": "Sede",
+      "size": "Talla",
+      "kitPickup": "Entrega de kits",
+      "pending": "Por confirmar",
+      "receiptSent": "Comprobante enviado",
+      "sent": "Enviado",
+      "questions": "¿Dudas? Escribe a {name} por WhatsApp al {phone}, en horario de {hours}.",
+      "adminBadge": "ADMIN",
+      "registration": "Inscripción",
+      "account": "Cuenta",
+      "runnerWithDistance": "{name} ({distance})",
+      "footerCreated": "Recibiste este correo porque creaste una cuenta en el Catarinotlón 2026."
+    },
+    "verify_email": {
+      "subject": "Confirma tu correo para activar tu cuenta",
+      "title": "Confirma tu correo",
+      "body": "Hola, {name}: solo falta un paso para activar tu cuenta del Catarinotlón 2026.",
+      "cta": "Confirmar mi correo",
+      "note": "Este enlace vence en 1 hora. Si no creaste esta cuenta, puedes ignorar este mensaje."
+    },
+    "reset_password": {
+      "subject": "Restablece tu contraseña",
+      "title": "Restablece tu contraseña",
+      "body": "Hola, {name}: recibimos una solicitud para cambiar la contraseña de tu cuenta. Elige una nueva desde este botón.",
+      "cta": "Crear nueva contraseña",
+      "note": "Este enlace vence en 1 hora. Si no pediste el cambio, ignora este mensaje: tu contraseña seguirá igual."
+    },
+    "registration_confirmed": {
+      "subject": "¡Ya estás dentro! Tu boleto del Catarinotlón 2026",
+      "title": "¡Ya estás dentro, {runnerName}!",
+      "body": "Tu inscripción al Catarinotlón 2026 está confirmada. Este es tu boleto: guárdalo, lo necesitarás para recoger tu kit.",
+      "runner": "Corredor",
+      "bib": "Número",
+      "shirt": "Playera",
+      "qrAlt": "Código QR de tu boleto",
+      "cta": "Descargar boleto (PDF)",
+      "note": "Tu kit incluye la playera con tu nombre. La medalla te espera en la meta. Si no puedes ir por tu kit, otra persona puede recogerlo mostrando tu boleto.",
+      "viewTicket": "Ver mi boleto y mi playera"
+    },
+    "race_reminder": {
+      "subject": "Tu carrera se acerca: recoge tu kit",
+      "title": "Tu carrera se acerca",
+      "body": "{runnerName}, ya casi es tu {distance}. Aquí tienes todo lo que necesitas saber.",
+      "cta": "Ver mi boleto",
+      "step1": "1. Recoge tu kit",
+      "step1Note": "Lleva tu boleto con el código QR. Si no puedes ir, otra persona puede recogerlo mostrando tu boleto.",
+      "step2": "2. Día de la carrera",
+      "step3": "3. Cruza la meta",
+      "step3Body": "Ahí te cuelgas tu medalla Catarinotlón 2026."
+    },
+    "shirt_name_updated": {
+      "subject": "Actualizamos el nombre de tu playera",
+      "title": "Tu playera ya tiene nombre",
+      "body": "{runnerName}, guardamos el cambio. Así se verá el nombre en la espalda de tu playera:",
+      "cta": "Ver mi playera",
+      "note": "Puedes cambiarlo desde tu cuenta cuando quieras.",
+      "noteContact": "Si no hiciste este cambio, escríbenos a {email}."
+    },
+    "receipt_received": {
+      "subject": "Recibimos tu comprobante de pago",
+      "title": "Recibimos tu comprobante",
+      "body": "Ya tenemos el comprobante de tu Transferencia (SPEI). Lo estamos validando; todavía no tienes que hacer nada más.",
+      "cta": "Ver el estado de mi pago",
+      "note": "En cuanto quede confirmado te enviamos otro correo con tu boleto."
+    },
+    "receipt_rejected": {
+      "subject": "Necesitamos un nuevo comprobante de pago",
+      "title": "No pudimos validar tu comprobante",
+      "body": "Revisamos el comprobante de tu Transferencia (SPEI) y no pudimos validarlo. Tu lugar sigue apartado: solo necesitamos que subas uno nuevo.",
+      "cta": "Subir un nuevo comprobante",
+      "nextTitle": "Qué hacer ahora",
+      "nextBody": "Entra a tu cuenta, revisa los datos de la transferencia y sube el comprobante correcto. Si ya transferiste y crees que es un error, escríbenos."
+    },
+    "admin_new_receipt": {
+      "subject": "Nuevo comprobante por revisar: {uploaderName}",
+      "title": "Nuevo comprobante por revisar",
+      "body": "{uploaderName} subió el comprobante de su Transferencia (SPEI). Revísalo contra tu banca y confirma o rechaza el pago.",
+      "concept": "Concepto esperado",
+      "expected": "Monto esperado",
+      "cta": "Revisar pago",
+      "note": "El comprobante no viaja en este correo: se abre desde el panel, con tu sesión de administrador.",
+      "covers": "Corredores que cubre",
+      "coversValue": "{count} · {names}"
+    },
+    "bank_data_changed": {
+      "subject": "Cambiaron los datos de pago del Catarinotlón",
+      "title": "Cambiaron los datos de pago",
+      "body": "{changedBy} actualizó el beneficiario, el banco o la CLABE a la que transfieren los corredores.",
+      "cta": "Ver el historial de cambios",
+      "note": "Si no reconoces este cambio, revísalo de inmediato."
+    }
+  },
+  "errors": {
+    "generic": "Algo salió mal. Inténtalo de nuevo.",
+    "required": "Este campo es obligatorio.",
+    "invalidEmail": "Escribe un correo válido.",
+    "passwordTooShort": "Usa al menos 8 caracteres.",
+    "passwordsDontMatch": "Las contraseñas no coinciden.",
+    "acceptLegal": "Debes aceptar los términos y el aviso de privacidad.",
+    "invalidCredentials": "El correo o la contraseña no son correctos.",
+    "emailNotVerified": "Confirma tu correo antes de iniciar sesión.",
+    "invalidResetLink": "Este enlace ya no es válido. Pide uno nuevo.",
+    "registration": {
+      "not_open": "Las inscripciones todavía no están abiertas.",
+      "invalid_distance": "Elige una distancia.",
+      "invalid_shirt_size": "Elige una talla disponible.",
+      "shirt_name_required": "Escribe el nombre para la playera.",
+      "runner_name_required": "Escribe el nombre del corredor.",
+      "bib_number_exhausted": "No pudimos asignar tu número. Inténtalo de nuevo.",
+      "not_found": "No encontramos esa inscripción.",
+      "shirt_size_deadline_passed": "Ya pasó la fecha límite para cambiar de talla."
+    }
+  },
+  "auth": {
+    "google": "Continuar con Google",
+    "fullName": "Nombre completo",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "phone": "Teléfono",
+    "passwordHelp": "Al menos 8 caracteres.",
+    "signUp": {
+      "metaTitle": "Crea tu cuenta · Catarinotlón 2026",
+      "eyebrow": "Crea tu cuenta",
+      "title": "Inscríbete y ponle nombre a tu playera",
+      "body": "Con tu cuenta guardas tu inscripción, ves cómo quedará tu playera y descargas tu boleto para el día de la carrera.",
+      "divider": "o regístrate con tu correo",
+      "submit": "Crear cuenta e inscribirme · {distance}",
+      "submitClosed": "Crear mi cuenta",
+      "closedNote": "Crea tu cuenta ahora. Podrás elegir tu carrera en cuanto abran las inscripciones.",
+      "haveAccount": "¿Ya tienes cuenta?",
+      "signIn": "Inicia sesión"
+    },
+    "signIn": {
+      "metaTitle": "Inicia sesión · Catarinotlón 2026",
+      "title": "Inicia sesión",
+      "body": "Entra para ver tu boleto, tu playera y los detalles de tu carrera.",
+      "divider": "o entra con tu correo",
+      "forgot": "¿Olvidaste tu contraseña?",
+      "submit": "Iniciar sesión",
+      "noAccount": "¿Aún no tienes cuenta?",
+      "signUp": "Crea tu cuenta"
+    },
+    "forgot": {
+      "metaTitle": "Olvidé mi contraseña · Catarinotlón 2026",
+      "title": "¿Olvidaste tu contraseña?",
+      "body": "Escribe el correo de tu cuenta y te enviamos un enlace para crear una nueva.",
+      "submit": "Enviar enlace",
+      "googleNote": "Si creaste tu cuenta con Google no tienes contraseña: entra con «Continuar con Google».",
+      "back": "Volver a iniciar sesión",
+      "sentTitle": "Revisa tu correo",
+      "sentBody": "Si hay una cuenta con ese correo, te enviamos un enlace para crear una nueva contraseña. El enlace vence en 1 hora.",
+      "resend": "Reenviar el enlace",
+      "resent": "Te enviamos otro enlace."
+    },
+    "reset": {
+      "metaTitle": "Nueva contraseña · Catarinotlón 2026",
+      "title": "Crea tu nueva contraseña",
+      "password": "Nueva contraseña",
+      "confirm": "Confirma tu nueva contraseña",
+      "submit": "Guardar contraseña"
+    },
+    "verify": {
+      "metaTitle": "Confirma tu correo · Catarinotlón 2026",
+      "title": "Confirma tu correo",
+      "body": "Te enviamos un enlace a {email}. Ábrelo para activar tu cuenta y seguir con tu inscripción.",
+      "bodyGeneric": "Te enviamos un enlace a tu correo. Ábrelo para activar tu cuenta y seguir con tu inscripción.",
+      "resend": "Reenviar el correo",
+      "resent": "Te enviamos otro enlace.",
+      "help": "¿No llega? Revisa tu carpeta de correo no deseado. El enlace vence en 1 hora.",
+      "otherEmail": "Usar otro correo",
+      "doneTitle": "¡Correo confirmado!",
+      "doneBody": "Tu cuenta ya está activa. Solo falta tu pago para confirmar tu lugar en el Catarinotlón 2026.",
+      "doneCta": "Continuar al pago"
+    }
+  },
+  "registrationForm": {
+    "runnerName": "Nombre completo del corredor",
+    "runnerHelpFirst": "¿La inscripción es para otra persona? Escribe su nombre. Puedes agregar más corredores antes de pagar.",
+    "runnerHelpOther": "El nombre de quien va a correr, tal como quieres que aparezca en su boleto.",
+    "distance": "Distancia",
+    "feeNote": "Cuota de inscripción (igual para 3K y 5K)",
+    "shirtSize": "Talla de playera",
+    "chooseSize": "Elige tu talla",
+    "shirtName": "Nombre para tu playera",
+    "acceptPrefix": "Acepto los",
+    "terms": "Términos y condiciones",
+    "and": "y el",
+    "privacy": "Aviso de privacidad",
+    "changesNote": "Después podrás cambiar la distancia y el nombre de la playera cuando quieras.",
+    "deadlineNote": "La talla, solo hasta {date}.",
+    "stepAccount": "Cuenta",
+    "stepRace": "Tu carrera",
+    "stepPayment": "Pago",
+    "stepLabel": "Paso {current} de {total}",
+    "feeLabel": "Cuota de inscripción (igual para 3K y 5K)",
+    "stepsLabel": "Pasos de tu inscripción",
+    "changesNoteDeadline": "Después podrás cambiar la distancia y el nombre de la playera cuando quieras. La talla, solo hasta {date}.",
+    "submitWithDistance": "{label} · {distance}"
+  },
+  "register": {
+    "metaTitle": "Completa tu inscripción · Catarinotlón 2026",
+    "eyebrow": "Paso 2 de 3",
+    "title": "Completa tu inscripción",
+    "body": "Ya tienes cuenta, {name}. Ahora elige tu carrera y el nombre que irá en tu playera.",
+    "submit": "Continuar al pago",
+    "submitAnother": "Guardar y agregar otro corredor"
+  },
+  "addRunner": {
+    "metaTitle": "Agrega otro corredor · Catarinotlón 2026",
+    "eyebrow": "Otro corredor",
+    "title": "Agrega otro corredor",
+    "body": "Inscribe a un familiar o a un amigo desde tu cuenta. Tendrá su propia playera, su número y su boleto.",
+    "submit": "Guardar y continuar al pago",
+    "submitAnother": "Guardar y agregar otro corredor más",
+    "back": "Volver a mi cuenta"
+  },
+  "ticket": {
+    "title": "Boleto Catarinotlón 2026",
+    "heading": "Tu boleto",
+    "body": "Descárgalo en PDF. Lo necesitarás en la entrega de kits.",
+    "runner": "Corredor",
+    "bib": "Número",
+    "shirt": "Playera",
+    "size": "Talla",
+    "date": "Fecha",
+    "start": "Salida",
+    "venue": "Sede",
+    "pending": "Por confirmar",
+    "qrAlt": "Código QR del boleto",
+    "download": "Descargar boleto (PDF)",
+    "help": "Llévalo en tu teléfono o impreso a la entrega de kits. Si no puedes ir, otra persona puede recoger tu kit mostrando este boleto.",
+    "bibLabel": "Corredor n.º",
+    "brand": "Catarinotlón",
+    "brandYear": "2026"
+  },
+  "payment": {
+    "metaTitle": "Pago · Catarinotlón 2026",
+    "title": "Paga con Transferencia (SPEI)",
+    "body": "Transfiere desde la app de tu banco y sube tu comprobante. Cuando lo validemos, tu lugar queda confirmado y recibes tu boleto.",
+    "transferHeading": "1. Transfiere a esta cuenta",
+    "beneficiary": "Beneficiario",
+    "bank": "Banco",
+    "clabe": "CLABE (18 dígitos)",
+    "exactAmount": "Monto exacto",
+    "concept": "Concepto",
+    "copyBeneficiary": "Copiar beneficiario",
+    "copiedBeneficiary": "Beneficiario copiado",
+    "copyClabe": "Copiar CLABE",
+    "copiedClabe": "CLABE copiada",
+    "copyConcept": "Copiar concepto",
+    "copiedConcept": "Concepto copiado",
+    "uploadHeading": "2. Sube tu comprobante",
+    "receiptLabel": "Comprobante de tu Transferencia (SPEI)",
+    "receiptHelp": "Sube la imagen o el PDF del comprobante que te da tu banco.",
+    "receiptReady": "Archivo listo: {name}",
+    "submit": "Enviar comprobante",
+    "sending": "Enviando…",
+    "later": "Subirlo después desde mi cuenta",
+    "summaryHeading": "Lo que vas a pagar",
+    "summaryBody": "Una sola transferencia cubre a todos tus corredores por pagar.",
+    "shirtLine": "Playera {name} · {size}",
+    "total": "{count, plural, one {Total a transferir (# corredor)} other {Total a transferir (# corredores)}}",
+    "addRunner": "Agregar otro corredor antes de pagar",
+    "editDetails": "Cambiar distancia, talla o nombre",
+    "contactHeading": "¿Dudas con tu pago?",
+    "contactBody": "Habla directo con quien recibe tu transferencia.",
+    "contactName": "Nombre",
+    "contactPhone": "Teléfono",
+    "contactEmail": "Correo",
+    "contactHours": "Horario de atención",
+    "whatsapp": "Chatear por WhatsApp",
+    "nothingTitle": "No tienes pagos pendientes",
+    "nothingBody": "Todos tus corredores ya están pagados o en revisión.",
+    "toAccount": "Ir a mi cuenta",
+    "errors": {
+      "closed": "El pago todavía no está abierto.",
+      "nothing_to_pay": "No tienes corredores por pagar.",
+      "not_in_review": "Este pago ya fue revisado.",
+      "not_found": "No encontramos ese pago.",
+      "receipt_invalid_type": "Sube una imagen (JPG, PNG o WebP) o un PDF.",
+      "receipt_too_large": "El archivo pesa demasiado.",
+      "receipt_empty": "El archivo está vacío.",
+      "receipt_required": "Elige el archivo de tu comprobante.",
+      "upload_failed": "No pudimos subir el archivo. Inténtalo de nuevo."
+    },
+    "receiptHelpAccount": "Imagen o PDF del comprobante de tu Transferencia (SPEI)."
+  },
+  "account": {
+    "metaTitle": "Mi cuenta · Catarinotlón 2026",
+    "eyebrow": "Mi cuenta",
+    "greeting": "Hola, {name}",
+    "body": "Con esta cuenta puedes inscribirte tú e inscribir a tu familia o amigos. Cada corredor tiene su propia playera, su número y su boleto.",
+    "runnersHeading": "Tus corredores",
+    "addRunner": "Agregar otro corredor",
+    "addRunnerBody": "Inscribe a alguien más con tu cuenta",
+    "bibLine": "{distance} · Número {bib}",
+    "status": {
+      "confirmed": "Inscripción confirmada",
+      "pending_payment": "Pago pendiente",
+      "payment_in_review": "Pago en revisión",
+      "receipt_rejected": "Comprobante rechazado"
+    },
+    "distance": "Distancia",
+    "size": "Talla",
+    "bib": "Número de corredor",
+    "rejectedTitle": "No pudimos validar tu comprobante",
+    "rejectedReason": "Motivo: {reason}",
+    "rejectedBody": "Tu lugar sigue apartado. Sube un comprobante nuevo para continuar.",
+    "pendingTitle": "Te falta un paso",
+    "pendingBody": "Paga con Transferencia (SPEI) y sube tu comprobante para confirmar tu lugar y recibir tu boleto.",
+    "pendingLine": "Inscripción {distance} · {name}",
+    "seeTransfer": "Ver datos para transferir",
+    "alreadyPaid": "¿Ya transferiste? Sube tu comprobante",
+    "reviewTitle": "Estamos validando tu pago",
+    "reviewBody": "Recibimos tu comprobante. En cuanto lo validemos te avisamos por correo y tu boleto aparecerá aquí.",
+    "receiptSent": "Comprobante enviado",
+    "sentAt": "Enviado: {date}",
+    "viewReceipt": "Ver comprobante",
+    "replaceReceipt": "Reemplazar comprobante",
+    "shirtHeading": "Tu playera",
+    "shirtName": "Nombre en tu playera",
+    "saveName": "Guardar nombre",
+    "nameSaved": "Guardamos el nombre de tu playera.",
+    "changeNote": "Puedes cambiar el nombre y la distancia cuando quieras.",
+    "deadlineNote": "La talla, solo hasta {date}.",
+    "changeDistance": "Cambiar distancia",
+    "distanceSaved": "Guardamos la distancia.",
+    "changeSize": "Cambiar talla",
+    "sizeSaved": "Guardamos la talla.",
+    "detailsHeading": "Detalles de la carrera",
+    "date": "Fecha",
+    "start": "Salida {distance}",
+    "venue": "Sede",
+    "kitPickup": "Entrega de kits",
+    "route": "Ruta",
+    "routeLink": "Ver el mapa de la ruta",
+    "yourData": "Tus datos",
+    "name": "Nombre",
+    "email": "Correo",
+    "phone": "Teléfono",
+    "access": "Acceso",
+    "googleAccess": "Cuenta de Google",
+    "passwordAccess": "Correo y contraseña",
+    "editData": "Editar datos",
+    "saveData": "Guardar datos",
+    "cancel": "Cancelar",
+    "dataSaved": "Guardamos tus datos.",
+    "delivery": "Entrega",
+    "withKit": "Con tu kit",
+    "pickerLine": "{status} · N.º {bib}",
+    "pickerStatus": {
+      "confirmed": "Confirmada",
+      "pending_payment": "Pago pendiente",
+      "payment_in_review": "Pago en revisión",
+      "receipt_rejected": "Comprobante rechazado"
+    }
+  },
+  "admin": {
+    "badge": "Admin",
+    "nav": {
+      "label": "Administración",
+      "registrations": "Inscripciones",
+      "kits": "Entrega de kits",
+      "settings": "Configuración"
+    },
+    "back": "Volver a inscripciones",
+    "list": {
+      "metaTitle": "Inscripciones · Admin",
+      "title": "Inscripciones",
+      "add": "Inscribir corredor",
+      "exportRegistrations": "Exportar inscripciones",
+      "exportShirts": "Exportar playeras para imprenta",
+      "totalRegistered": "Inscritos",
+      "inReview": "Pago en revisión",
+      "pending": "Pago pendiente",
+      "kitsDelivered": "Kits entregados",
+      "search": "Buscar por nombre, correo o número de corredor",
+      "searchButton": "Buscar",
+      "distance": "Distancia",
+      "payment": "Pago",
+      "kit": "Kit",
+      "all": "Todas",
+      "allMasculine": "Todos",
+      "tableCaption": "Lista de inscripciones",
+      "runner": "Corredor",
+      "size": "Talla",
+      "shirtName": "Nombre en playera",
+      "bib": "Número",
+      "actions": "Acciones",
+      "edit": "Editar a {name}",
+      "editShort": "Editar",
+      "review": "Revisar pago de {name}",
+      "reviewShort": "Revisar pago",
+      "showing": "Mostrando {shown} de {total} inscripciones.",
+      "empty": "No hay inscripciones con esos filtros.",
+      "state": {
+        "paid": "Pagado",
+        "in_review": "En revisión",
+        "pending": "Pendiente"
+      },
+      "kitState": {
+        "delivered": "Entregado",
+        "waiting": "Por entregar"
+      }
+    },
+    "export": {
+      "bib": "Número",
+      "runner": "Corredor",
+      "distance": "Distancia",
+      "size": "Talla",
+      "shirt": "Nombre en playera",
+      "status": "Estado"
+    },
+    "review": {
+      "metaTitle": "Revisar pago · Admin",
+      "title": "Revisar pago",
+      "receipt": "Comprobante",
+      "receiptFrame": "Comprobante de la Transferencia (SPEI)",
+      "sentAt": "Enviado: {date}",
+      "open": "Abrir en tamaño completo",
+      "account": "Cuenta",
+      "covers": "Corredores que cubre",
+      "coverLine": "{name} ({distance}, n.º {bib})",
+      "expected": "Monto esperado",
+      "clabe": "Cuenta destino (CLABE)",
+      "concept": "Concepto esperado",
+      "hint": "Antes de confirmar, compara el comprobante con el movimiento en tu banca: monto, cuenta destino y fecha.",
+      "confirm": "Confirmar pago",
+      "reason": "Motivo del rechazo (se le envía al corredor)",
+      "reject": "Rechazar comprobante",
+      "confirmed": "Pago confirmado",
+      "rejected": "Comprobante rechazado",
+      "rejectedReason": "Motivo: {reason}",
+      "reviewedBy": "Revisado el {date}",
+      "reasonRequired": "Escribe el motivo del rechazo.",
+      "pdfPreview": "Este comprobante es un PDF. Ábrelo en tamaño completo para compararlo con tu banca."
+    },
+    "form": {
+      "editMeta": "Editar inscripción · Admin",
+      "newMeta": "Inscribir corredor · Admin",
+      "editTitle": "Editar inscripción",
+      "newTitle": "Inscribir corredor",
+      "runnerName": "Nombre completo del corredor",
+      "distance": "Distancia",
+      "size": "Talla de playera",
+      "chooseSize": "Elige una talla",
+      "shirtName": "Nombre para la playera",
+      "sizeNote": "Como administrador puedes cambiar la talla aunque ya haya pasado la fecha límite del corredor.",
+      "contactHeading": "Contacto y pago",
+      "contactEmail": "Correo (para enviarle su boleto)",
+      "contactPhone": "Teléfono",
+      "paymentReceived": "Ya recibí el pago de esta inscripción.",
+      "paymentReceivedHelp": "Queda confirmada y se genera su boleto. Si no lo marcas, queda como pago pendiente.",
+      "account": "Cuenta",
+      "noAccount": "Sin cuenta",
+      "payment": "Pago",
+      "kit": "Kit",
+      "bib": "Número de corredor",
+      "cancel": "Cancelar",
+      "save": "Guardar cambios",
+      "saved": "Guardamos los cambios.",
+      "create": "Inscribir corredor",
+      "changes": "Historial de cambios",
+      "noChanges": "Todavía no hay cambios.",
+      "changeLine": "{field}: {from} → {to}",
+      "fields": {
+        "runnerName": "Nombre",
+        "distance": "Distancia",
+        "shirtSize": "Talla",
+        "shirtName": "Nombre en playera"
+      },
+      "editBody": "Corrige los datos de este corredor. El corredor recibe un correo cuando cambias el nombre de su playera.",
+      "newBody": "Inscribe a alguien a mano, por ejemplo si te pagó en persona. Si tiene correo, le llega su boleto.",
+      "bibOnSave": "Se asigna al guardar"
+    },
+    "kits": {
+      "metaTitle": "Entrega de kits · Admin",
+      "title": "Entrega de kits",
+      "scanHint": "Apunta la cámara al código QR del boleto",
+      "scan": "Escanear boleto",
+      "stopScan": "Detener cámara",
+      "scanUnavailable": "Este navegador no puede leer códigos QR. Busca por nombre o número.",
+      "search": "O busca por nombre o número de corredor",
+      "searchButton": "Buscar",
+      "noResults": "No encontramos a ese corredor.",
+      "ticketRead": "Boleto leído",
+      "size": "Talla",
+      "shirtName": "Nombre en playera",
+      "payment": "Pago",
+      "bib": "Número de corredor",
+      "collectedBy": "¿Recoge otra persona? (opcional)",
+      "collectedHelp": "Cualquier persona puede recoger el kit mostrando el boleto. Anota su nombre si no es el corredor.",
+      "deliver": "Marcar kit entregado",
+      "delivered": "Kit entregado",
+      "collectedLine": "Recogió: {name}",
+      "undo": "Deshacer",
+      "notConfirmed": "Este corredor todavía no tiene el pago confirmado.",
+      "errors": {
+        "registration_not_confirmed": "Solo se entrega el kit de inscripciones confirmadas.",
+        "kit_already_delivered": "Este kit ya se entregó.",
+        "kit_not_delivered": "Este kit no está marcado como entregado.",
+        "not_found": "No encontramos esa inscripción."
+      }
+    },
+    "settings": {
+      "metaTitle": "Configuración · Admin",
+      "title": "Configuración del evento",
+      "body": "Estos datos aparecen en el sitio, en los correos y en los boletos. Los cambios se publican al guardar.",
+      "closedTitle": "El pago todavía no está abierto",
+      "closedBody": "Faltan el precio o los datos de pago. Mientras falten, el sitio muestra «Inscripciones próximamente» y nadie puede pagar.",
+      "missing": "Falta capturar: {items}",
+      "eventHeading": "Evento",
+      "eventDate": "Fecha del evento",
+      "start3k": "Salida 3K",
+      "start5k": "Salida 5K",
+      "venueEs": "Sede (español)",
+      "venueEn": "Sede (inglés)",
+      "kitEs": "Entrega de kits (español)",
+      "kitEn": "Entrega de kits (inglés)",
+      "kitHelp": "Fecha, horario y lugar donde se recogen los kits. Aparece en la cuenta, en los correos y en el boleto.",
+      "routeMap": "Enlace al mapa de la ruta",
+      "saveEvent": "Guardar evento",
+      "contactHeading": "Contacto para pagos",
+      "contactHelp": "Lo ven solo los corredores con sesión iniciada, junto a los datos de pago.",
+      "fullName": "Nombre completo",
+      "email": "Correo",
+      "phone": "Teléfono",
+      "whatsapp": "WhatsApp",
+      "hoursEs": "Horario de atención (español)",
+      "hoursEn": "Horario de atención (inglés)",
+      "saveContact": "Guardar contacto",
+      "registrationHeading": "Inscripción",
+      "fee": "Precio (igual para 3K y 5K)",
+      "deadline": "Fecha límite para cambiar de talla",
+      "feeHelp": "Cambiar el precio solo afecta a las inscripciones nuevas. Las que ya existen conservan el precio que tenían al crearse.",
+      "sizes": "Tallas disponibles",
+      "sizesHelp": "Escribe cada talla separada por comas, en el orden en que quieres que aparezcan.",
+      "saveRegistration": "Guardar inscripción",
+      "bankHeading": "Datos de pago",
+      "protected": "Protegido",
+      "bankHelp": "A esta cuenta transfieren los corredores. Para cambiarla te pedimos tu contraseña y avisamos por correo a todos los administradores.",
+      "beneficiary": "Beneficiario",
+      "bank": "Banco",
+      "clabe": "CLABE (18 dígitos)",
+      "notSet": "Sin capturar",
+      "clabeHelp": "Escríbela dos veces en tu banca para verificarla antes de guardar.",
+      "password": "Tu contraseña, para confirmar el cambio",
+      "saveBank": "Guardar datos de pago",
+      "saved": "Guardamos los cambios.",
+      "historyHeading": "Historial de cambios",
+      "historyHelp": "Cada cambio queda registrado: qué se cambió, quién y cuándo. Nada se sobrescribe ni se borra.",
+      "noHistory": "Todavía no hay cambios.",
+      "historyLine": "{date} · {who}: {fields}",
+      "keys": {
+        "eventDate": "Fecha",
+        "startTimes": "Horarios de salida",
+        "venue": "Sede",
+        "kitPickup": "Entrega de kits",
+        "routeMapUrl": "Mapa de la ruta",
+        "feeCents": "Precio",
+        "shirtSizes": "Tallas",
+        "shirtSizeDeadline": "Fecha límite de talla",
+        "contact": "Contacto",
+        "bank": "Datos de pago"
+      },
+      "errors": {
+        "invalid_fee": "Escribe un precio mayor a cero.",
+        "incomplete_bank_data": "Completa el beneficiario y el banco.",
+        "invalid_shirt_sizes": "Revisa las tallas: no puede haber vacías ni repetidas.",
+        "invalid_clabe": "La CLABE debe tener 18 dígitos y un dígito verificador correcto.",
+        "password_required": "Escribe tu contraseña para cambiar los datos de pago.",
+        "wrong_password": "La contraseña no es correcta."
+      },
+      "captureBank": "Capturar datos de pago",
+      "changeBank": "Cambiar datos de pago",
+      "cancel": "Cancelar"
+    }
+  },
+  "status": {
+    "errorTitle": "Algo salió mal",
+    "errorBody": "No pudimos cargar esta página. Ya registramos el problema; inténtalo de nuevo en un momento. Tus datos y tu inscripción están a salvo.",
+    "retry": "Reintentar",
+    "home": "Ir al inicio",
+    "notFoundTitle": "Te saliste de la ruta",
+    "notFoundBody": "La página que buscas no existe o cambió de lugar.",
+    "backHome": "Volver al inicio",
+    "toAccount": "Ir a mi cuenta"
+  },
+  "legal": {
+    "draft": "Borrador · pendiente de revisión legal",
+    "updated": "Última actualización: [FECHA]",
+    "privacy": {
+      "title": "Aviso de privacidad",
+      "sections": [
+        {
+          "title": "1. Quién es responsable de tus datos",
+          "blocks": [
+            {
+              "p": "[NOMBRE O RAZÓN SOCIAL DEL RESPONSABLE], con domicilio en [DOMICILIO COMPLETO], organiza el Catarinotlón 2026 y es responsable del tratamiento de tus datos personales. Para cualquier asunto de privacidad escribe a [CORREO DE PRIVACIDAD]."
+            }
+          ]
+        },
+        {
+          "title": "2. Qué datos recabamos",
+          "blocks": [
+            {
+              "ul": [
+                "Identificación y contacto: nombre completo, correo electrónico y teléfono.",
+                "Cuenta: tu contraseña (guardada cifrada, nunca en texto legible) o el identificador que nos comparte Google si entras con tu cuenta de Google.",
+                "Inscripción: distancia, talla de playera y el nombre que eliges para tu playera.",
+                "Pago: el comprobante de tu Transferencia (SPEI). Ese documento puede mostrar el nombre del titular, el banco, parte de tu número de cuenta, el monto y la fecha.",
+                "Uso del sitio: idioma y tema elegidos, y registros técnicos de errores."
+              ]
+            },
+            {
+              "p": "No pedimos datos personales sensibles. El comprobante de pago contiene datos financieros: al subirlo nos das tu consentimiento expreso para usarlo con los fines de este aviso."
+            }
+          ]
+        },
+        {
+          "title": "3. Para qué los usamos",
+          "blocks": [
+            {
+              "p": "Finalidades necesarias para darte el servicio:"
+            },
+            {
+              "ul": [
+                "Crear y proteger tu cuenta.",
+                "Registrar tu inscripción y validar tu pago.",
+                "Personalizar tu playera y preparar tu kit.",
+                "Emitir tu boleto y entregarte tu kit y tu medalla.",
+                "Enviarte avisos sobre tu inscripción y sobre el evento.",
+                "Atender tus dudas y cumplir obligaciones legales."
+              ]
+            },
+            {
+              "p": "Finalidad adicional, que puedes rechazar en cualquier momento escribiendo a [CORREO DE PRIVACIDAD]: avisarte de futuras ediciones del Catarinotlón."
+            }
+          ]
+        },
+        {
+          "title": "4. Con quién los compartimos",
+          "blocks": [
+            {
+              "p": "No vendemos tus datos. Solo los compartimos con quienes nos ayudan a operar el evento, bajo nuestras instrucciones:"
+            },
+            {
+              "ul": [
+                "Proveedores de alojamiento del sitio, base de datos y almacenamiento de archivos.",
+                "Proveedor de envío de correos.",
+                "Proveedor de monitoreo de errores.",
+                "Google, únicamente si eliges entrar con tu cuenta de Google.",
+                "La imprenta de las playeras, que recibe el nombre para tu playera y tu talla: [NOMBRE DE LA IMPRENTA]."
+              ]
+            },
+            {
+              "p": "Algunos de estos proveedores procesan la información fuera de México. [REDACCIÓN SOBRE TRANSFERENCIAS INTERNACIONALES]"
+            }
+          ]
+        },
+        {
+          "title": "5. Cuánto tiempo los conservamos",
+          "blocks": [
+            {
+              "p": "Conservamos los datos de tu cuenta y de tu inscripción mientras tu cuenta exista. Los comprobantes de pago se conservan sin un plazo de eliminación definido, como respaldo de los pagos recibidos. Si pides la cancelación de tus datos (sección 6), sustituimos tus datos personales por datos anónimos de forma irreversible. [TRATAMIENTO DE LOS COMPROBANTES ANTE UNA SOLICITUD DE CANCELACIÓN]"
+            }
+          ]
+        },
+        {
+          "title": "6. Tus derechos",
+          "blocks": [
+            {
+              "p": "Puedes acceder a tus datos, rectificarlos, cancelarlos u oponerte a su uso (derechos ARCO), así como revocar tu consentimiento o limitar su uso o divulgación. Envía tu solicitud a [CORREO DE PRIVACIDAD] con tu nombre, el correo de tu cuenta y lo que solicitas. Te responderemos en un plazo de [PLAZO DE RESPUESTA]."
+            },
+            {
+              "p": "Si consideras que no atendimos tu solicitud, puedes acudir a la autoridad de protección de datos personales: [AUTORIDAD COMPETENTE]."
+            }
+          ]
+        },
+        {
+          "title": "7. Cookies",
+          "blocks": [
+            {
+              "p": "Usamos solo las cookies necesarias para mantener tu sesión iniciada y recordar tu idioma y tu tema. No usamos cookies de publicidad."
+            }
+          ]
+        },
+        {
+          "title": "8. Menores de edad",
+          "blocks": [
+            {
+              "p": "[POLÍTICA PARA LA INSCRIPCIÓN Y LOS DATOS DE MENORES DE EDAD]"
+            }
+          ]
+        },
+        {
+          "title": "9. Cambios a este aviso",
+          "blocks": [
+            {
+              "p": "Si este aviso cambia, publicaremos la nueva versión en esta página y, si el cambio es importante, te avisaremos por correo."
+            }
+          ]
+        }
+      ]
+    },
+    "terms": {
+      "title": "Términos y condiciones",
+      "sections": [
+        {
+          "title": "1. Aceptación",
+          "blocks": [
+            {
+              "p": "Al crear una cuenta o inscribirte al Catarinotlón 2026 aceptas estos términos y nuestro Aviso de privacidad. El evento lo organiza [NOMBRE O RAZÓN SOCIAL DEL ORGANIZADOR]."
+            }
+          ]
+        },
+        {
+          "title": "2. El evento",
+          "blocks": [
+            {
+              "p": "El Catarinotlón 2026 es una carrera con distancias de 3K y 5K. Se realizará el [FECHA DEL EVENTO] en [SEDE]. Los horarios, la ruta y la entrega de kits se publican en este sitio."
+            }
+          ]
+        },
+        {
+          "title": "3. Tu cuenta",
+          "blocks": [
+            {
+              "ul": [
+                "Los datos que registres deben ser verdaderos y estar al día.",
+                "Tu cuenta es personal. Cuida tu contraseña y avísanos si alguien más entró a tu cuenta.",
+                "Con una misma cuenta puedes inscribir a varias personas. Cada inscripción corresponde a un solo corredor, con su propia playera, su número y su boleto."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "4. Inscripción y pago",
+          "blocks": [
+            {
+              "ul": [
+                "La cuota de inscripción es la misma para 3K y para 5K: [PRECIO].",
+                "El único medio de pago es Transferencia (SPEI) a la cuenta que se muestra en tu cuenta, por el monto exacto y con el concepto indicado. Una sola transferencia puede cubrir a varios corredores de tu cuenta.",
+                "Después de transferir debes subir tu comprobante. Lo validamos en [TIEMPO DE VALIDACIÓN].",
+                "Tu inscripción queda confirmada cuando validamos tu pago. En ese momento se genera tu boleto.",
+                "Si no podemos validar tu comprobante te diremos el motivo y podrás subir uno nuevo."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Cambios en tu inscripción",
+          "blocks": [
+            {
+              "ul": [
+                "Puedes cambiar de distancia cuando quieras, incluso después de pagar. Como la cuota es la misma, el cambio no tiene costo.",
+                "Puedes cambiar el nombre de tu playera cuando quieras.",
+                "Puedes cambiar la talla de tu playera solo hasta el [FECHA LÍMITE PARA CAMBIAR DE TALLA]."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "6. Cancelaciones y reembolsos",
+          "blocks": [
+            {
+              "p": "No hay cancelaciones ni reembolsos. Una vez que validamos tu pago, la cuota de inscripción no se devuelve, aunque decidas no participar o no puedas asistir."
+            }
+          ]
+        },
+        {
+          "title": "7. Kit, playera y medalla",
+          "blocks": [
+            {
+              "ul": [
+                "Tu inscripción incluye una playera personalizada con el nombre que elijas y una medalla de finalista que recibes al cruzar la meta.",
+                "El kit se entrega en [FECHA, HORARIO Y LUGAR DE ENTREGA] mostrando tu boleto con código QR. Si no puedes ir, otra persona puede recogerlo por ti mostrando tu boleto.",
+                "Cada corredor tiene un número de corredor de cinco dígitos, único."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Tu participación",
+          "blocks": [
+            {
+              "p": "Participas de forma voluntaria y bajo tu propia responsabilidad. Declaras que tu estado de salud te permite completar la distancia que elegiste. [POLÍTICA PARA MENORES DE EDAD] [EXONERACIÓN DE RESPONSABILIDAD]"
+            }
+          ]
+        },
+        {
+          "title": "9. Uso de tu imagen",
+          "blocks": [
+            {
+              "p": "[POLÍTICA DE USO DE FOTOGRAFÍAS Y VIDEO DEL EVENTO]"
+            }
+          ]
+        },
+        {
+          "title": "10. Cambios o cancelación del evento",
+          "blocks": [
+            {
+              "p": "[POLÍTICA ANTE CAMBIOS DE FECHA, SEDE O CANCELACIÓN POR CAUSAS DE FUERZA MAYOR]"
+            }
+          ]
+        },
+        {
+          "title": "11. Ley aplicable y contacto",
+          "blocks": [
+            {
+              "p": "Estos términos se rigen por las leyes de México. Cualquier controversia se resolverá ante los tribunales de [CIUDAD Y ESTADO]. Para dudas escribe a [CORREO DE CONTACTO]."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

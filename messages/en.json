@@ -1,0 +1,984 @@
+{
+  "common": {
+    "appName": "Catarinotlón",
+    "year": "2026",
+    "homeLabel": "Catarinotlón 2026, go to home",
+    "pending": "To be confirmed",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "register": "Register",
+    "skipToContent": "Skip to content",
+    "openingSoonTitle": "Registration opening soon",
+    "openingSoonBody": "We are getting everything ready. Come back soon to save your spot."
+  },
+  "theme": {
+    "toDark": "Switch to dark theme",
+    "toLight": "Switch to light theme"
+  },
+  "language": {
+    "label": "Language:",
+    "switchTo": "Change language",
+    "es": "Español",
+    "en": "English"
+  },
+  "nav": {
+    "main": "Main navigation",
+    "distances": "Distances",
+    "kit": "Runner kit",
+    "raceDay": "Race day",
+    "faq": "FAQ",
+    "account": "My account",
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "footer": {
+    "tagline": "3K and 5K race",
+    "event": "Event",
+    "copyright": "© {year} Catarinotlón",
+    "terms": "Terms and conditions",
+    "privacy": "Privacy notice",
+    "copyrightAdmin": "© {year} Catarinotlón · Admin panel"
+  },
+  "shirt": {
+    "previewLabel": "Preview of your shirt",
+    "placeholderName": "NAME",
+    "backAlt": "Back of the official shirt with the name {name}",
+    "frontAlt": "Official Catarinotlón 2026 shirt, front view",
+    "previewBadge": "Preview of your shirt"
+  },
+  "landing": {
+    "metaTitle": "Catarinotlón 2026 · 3K and 5K race",
+    "metaDescription": "Pick 3 or 5 kilometers, run with your name on your back, and cross the finish line for your ladybug medal.",
+    "hero": {
+      "eyebrow": "3K and 5K race",
+      "body": "Pick 3 or 5 kilometers, run with your name on your back, and cross the finish line for your ladybug medal. That simple, that red.",
+      "cta": "Register now",
+      "kitCta": "See your kit",
+      "includes": "Your registration includes a personalized shirt and a medal.",
+      "alreadyRegistered": "Already registered?",
+      "signIn": "Sign in",
+      "date": "Date",
+      "start": "Start",
+      "venue": "Venue",
+      "distances": "Distances"
+    },
+    "distances": {
+      "eyebrow": "Distances",
+      "title": "Two distances, one finish line",
+      "body": "Walk it, jog it, or run it flat out: you choose how many kilometers.",
+      "start": "Start",
+      "fee": "Fee",
+      "threeTitle": "For your first time",
+      "threeBody": "Your first race, a family outing, or the excuse to get moving again. Three kilometers to enjoy from start to finish.",
+      "threeCta": "Register for the 3K",
+      "fiveTitle": "To pick up the pace",
+      "fiveBody": "Two more kilometers for those who want a challenge: good pace, good route, and the same party at the finish line.",
+      "fiveCta": "Register for the 5K",
+      "footnote": "Both distances include the full kit: personalized shirt and medal."
+    },
+    "kit": {
+      "eyebrow": "Runner kit",
+      "title": "What you wear and what you hang around your neck",
+      "body": "Your registration includes the official shirt with your name and, at the finish line, your Catarinotlón 2026 medal.",
+      "front": "Front",
+      "back": "Back",
+      "shirtTitle": "Official shirt",
+      "shirtBody": "White, with the red and black strokes of the Catarinotlón and a dotted route ending in the ladybug pin.",
+      "nameOnBack": "Your name printed on the back",
+      "logo": "Catarinotlón 2026 logo on the front and back",
+      "sizes": "Sizes: {sizes}"
+    },
+    "medals": {
+      "eyebrow": "Medals",
+      "title": "A medal for every finish",
+      "body": "Cross the finish line and you take home your finisher medal. Finish in the top three of your distance and you take home a podium medal.",
+      "switchLabel": "Show the medals for",
+      "finisherEyebrow": "When you cross the line",
+      "finisherTitle": "{distance} finisher medal",
+      "finisherBody": "Gold, with the ladybug at the center, your distance engraved, and the red ribbon with black dots.",
+      "podiumEyebrow": "The top three places",
+      "podiumTitle": "{distance} podium medals",
+      "podiumBody": "With laurels and the place engraved. There is a 3K podium and a 5K podium, each with first, second, and third place.",
+      "first": "First place",
+      "second": "Second place",
+      "third": "Third place",
+      "finisherAlt": "Gold {distance} finisher medal of the Catarinotlón 2026",
+      "podiumAlt": "Gold {distance} {place} medal of the Catarinotlón 2026"
+    },
+    "raceDay": {
+      "eyebrow": "Race day",
+      "title": "From the start to the finish",
+      "routePending": "The official 3K and 5K route will be published here.",
+      "routeLink": "See the route map",
+      "kitPickup": "Kit pickup",
+      "start": "3K and 5K start",
+      "startValue": "3K: {three} · 5K: {five}",
+      "finish": "Finish and medals",
+      "finishBody": "Cross the finish line and put on your Catarinotlón 2026 medal.",
+      "routeStartLabel": "Start",
+      "routeFinishLabel": "Finish"
+    },
+    "signup": {
+      "eyebrow": "Registration",
+      "title": "Save your spot and put a name on your shirt",
+      "body": "Create your account, choose your distance, and tell us what name goes on your back. Your ticket stays in your account, and one account can register your whole family.",
+      "shirtPerk": "Official personalized shirt",
+      "medalPerk": "Finisher medal",
+      "tryOn": "Try it on",
+      "tryOnLabel": "Type your name or nickname",
+      "tryOnHelp": "This is how it will look on your back. You confirm it when you create your account.",
+      "step1Title": "Create your account.",
+      "step1Body": "With Google or your email.",
+      "step2Title": "Choose your race.",
+      "step2Body": "Distance, size, and the name for your shirt.",
+      "step3Title": "Get your ticket.",
+      "step3Body": "It stays in your account and you can download it as a PDF.",
+      "cta": "Create my account and register",
+      "signIn": "I have an account · Sign in"
+    },
+    "faq": {
+      "eyebrow": "Frequently asked questions",
+      "title": "Before you tie your laces",
+      "q1": "What does my registration include?",
+      "a1": "Your official shirt personalized with your name and your finisher medal, which you get when you cross the finish line.",
+      "q2": "Where and when do I pick up my kit?",
+      "a2": "{details} If you can't make it, someone else can collect it by showing your ticket.",
+      "q3": "What name can I put on my shirt?",
+      "a3": "Your name, your nickname, or your team's: you choose. You can change it from your account whenever you want.",
+      "q4": "Can children take part?",
+      "a4": "You can register them from your own account, each with their own shirt and ticket.",
+      "q5": "Can I change my distance?",
+      "a5": "Yes, you can change your distance from your account whenever you want, even after paying and at no cost."
+    }
+  },
+  "emails": {
+    "common": {
+      "brand": "Catarinotlón 2026",
+      "transfer": "SPEI bank transfer",
+      "runners": "Runners",
+      "amount": "Amount",
+      "reasonLabel": "Reason",
+      "footerRunner": "You received this email because you registered for the Catarinotlón 2026.",
+      "footerAccount": "You received this email because you have a Catarinotlón 2026 account.",
+      "footerAdmin": "You receive this email because you manage the Catarinotlón 2026.",
+      "date": "Date",
+      "start": "Start",
+      "venue": "Venue",
+      "size": "Size",
+      "kitPickup": "Kit pickup",
+      "pending": "To be confirmed",
+      "receiptSent": "Receipt sent",
+      "sent": "Sent",
+      "questions": "Questions? Message {name} on WhatsApp at {phone}, during {hours}.",
+      "adminBadge": "ADMIN",
+      "registration": "Registration",
+      "account": "Account",
+      "runnerWithDistance": "{name} ({distance})",
+      "footerCreated": "You received this email because you created an account for the Catarinotlón 2026."
+    },
+    "verify_email": {
+      "subject": "Confirm your email to activate your account",
+      "title": "Confirm your email",
+      "body": "Hi {name}, just one more step to activate your Catarinotlón 2026 account.",
+      "cta": "Confirm my email",
+      "note": "This link expires in 1 hour. If you did not create this account, you can ignore this message."
+    },
+    "reset_password": {
+      "subject": "Reset your password",
+      "title": "Reset your password",
+      "body": "Hi {name}, we received a request to change your account password. Choose a new one with this button.",
+      "cta": "Create a new password",
+      "note": "This link expires in 1 hour. If you did not ask for this, ignore this message and your password stays the same."
+    },
+    "registration_confirmed": {
+      "subject": "You're in! Your Catarinotlón 2026 ticket",
+      "title": "You're in, {runnerName}!",
+      "body": "Your Catarinotlón 2026 registration is confirmed. This is your ticket: keep it, you will need it to pick up your kit.",
+      "runner": "Runner",
+      "bib": "Bib",
+      "shirt": "Shirt",
+      "qrAlt": "QR code of your ticket",
+      "cta": "Download ticket (PDF)",
+      "note": "Your kit includes the shirt with your name. Your medal is waiting at the finish line. If you can't pick up your kit, someone else can collect it by showing your ticket.",
+      "viewTicket": "See my ticket and my shirt"
+    },
+    "race_reminder": {
+      "subject": "Your race is coming up: pick up your kit",
+      "title": "Your race is coming up",
+      "body": "{runnerName}, your {distance} is almost here. Here is everything you need to know.",
+      "cta": "See my ticket",
+      "step1": "1. Pick up your kit",
+      "step1Note": "Bring your ticket with its QR code. If you can't make it, someone else can collect it by showing your ticket.",
+      "step2": "2. Race day",
+      "step3": "3. Cross the finish line",
+      "step3Body": "That's where you get your Catarinotlón 2026 medal."
+    },
+    "shirt_name_updated": {
+      "subject": "We updated the name on your shirt",
+      "title": "Your shirt has its name",
+      "body": "{runnerName}, we saved the change. This is how the name will look on the back of your shirt:",
+      "cta": "See my shirt",
+      "note": "You can change it from your account whenever you want.",
+      "noteContact": "If you did not make this change, write to us at {email}."
+    },
+    "receipt_received": {
+      "subject": "We received your payment receipt",
+      "title": "We received your receipt",
+      "body": "We have the receipt for your SPEI bank transfer. We are validating it; you don't need to do anything else yet.",
+      "cta": "See my payment status",
+      "note": "Once it is confirmed we will send you another email with your ticket."
+    },
+    "receipt_rejected": {
+      "subject": "We need a new payment receipt",
+      "title": "We couldn't validate your receipt",
+      "body": "We reviewed the receipt for your SPEI bank transfer and couldn't validate it. Your spot is still saved: we just need you to upload a new one.",
+      "cta": "Upload a new receipt",
+      "nextTitle": "What to do now",
+      "nextBody": "Go to your account, check the transfer details, and upload the correct receipt. If you already transferred and think this is a mistake, write to us."
+    },
+    "admin_new_receipt": {
+      "subject": "New receipt to review: {uploaderName}",
+      "title": "New receipt to review",
+      "body": "{uploaderName} uploaded the receipt for their SPEI bank transfer. Check it against your bank and confirm or reject the payment.",
+      "concept": "Expected concept",
+      "expected": "Expected amount",
+      "cta": "Review payment",
+      "note": "The receipt is not attached to this email: open it from the panel, with your admin session.",
+      "covers": "Runners covered",
+      "coversValue": "{count} · {names}"
+    },
+    "bank_data_changed": {
+      "subject": "The Catarinotlón payment details changed",
+      "title": "The payment details changed",
+      "body": "{changedBy} updated the beneficiary, the bank, or the CLABE that runners transfer to.",
+      "cta": "See the change history",
+      "note": "If you don't recognize this change, review it right away."
+    }
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "required": "This field is required.",
+    "invalidEmail": "Enter a valid email.",
+    "passwordTooShort": "Use at least 8 characters.",
+    "passwordsDontMatch": "The passwords don't match.",
+    "acceptLegal": "You must accept the terms and the privacy notice.",
+    "invalidCredentials": "The email or password is incorrect.",
+    "emailNotVerified": "Confirm your email before signing in.",
+    "invalidResetLink": "This link is no longer valid. Request a new one.",
+    "registration": {
+      "not_open": "Registration is not open yet.",
+      "invalid_distance": "Choose a distance.",
+      "invalid_shirt_size": "Choose an available size.",
+      "shirt_name_required": "Enter the name for the shirt.",
+      "runner_name_required": "Enter the runner's name.",
+      "bib_number_exhausted": "We couldn't assign your number. Please try again.",
+      "not_found": "We couldn't find that registration.",
+      "shirt_size_deadline_passed": "The deadline to change the size has passed."
+    }
+  },
+  "auth": {
+    "google": "Continue with Google",
+    "fullName": "Full name",
+    "email": "Email",
+    "password": "Password",
+    "phone": "Phone",
+    "passwordHelp": "At least 8 characters.",
+    "signUp": {
+      "metaTitle": "Create your account · Catarinotlón 2026",
+      "eyebrow": "Create your account",
+      "title": "Register and put a name on your shirt",
+      "body": "With your account you keep your registration, see how your shirt will look, and download your ticket for race day.",
+      "divider": "or sign up with your email",
+      "submit": "Create account and register · {distance}",
+      "submitClosed": "Create my account",
+      "closedNote": "Create your account now. You can choose your race as soon as registration opens.",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in"
+    },
+    "signIn": {
+      "metaTitle": "Sign in · Catarinotlón 2026",
+      "title": "Sign in",
+      "body": "Sign in to see your ticket, your shirt, and your race details.",
+      "divider": "or sign in with your email",
+      "forgot": "Forgot your password?",
+      "submit": "Sign in",
+      "noAccount": "Don't have an account yet?",
+      "signUp": "Create your account"
+    },
+    "forgot": {
+      "metaTitle": "Forgot password · Catarinotlón 2026",
+      "title": "Forgot your password?",
+      "body": "Enter your account email and we'll send you a link to create a new one.",
+      "submit": "Send link",
+      "googleNote": "If you created your account with Google you have no password: use “Continue with Google”.",
+      "back": "Back to sign in",
+      "sentTitle": "Check your inbox",
+      "sentBody": "If there is an account with that email, we sent a link to create a new password. The link expires in 1 hour.",
+      "resend": "Resend the link",
+      "resent": "We sent you another link."
+    },
+    "reset": {
+      "metaTitle": "New password · Catarinotlón 2026",
+      "title": "Create your new password",
+      "password": "New password",
+      "confirm": "Confirm your new password",
+      "submit": "Save password"
+    },
+    "verify": {
+      "metaTitle": "Confirm your email · Catarinotlón 2026",
+      "title": "Confirm your email",
+      "body": "We sent a link to {email}. Open it to activate your account and continue your registration.",
+      "bodyGeneric": "We sent a link to your email. Open it to activate your account and continue your registration.",
+      "resend": "Resend the email",
+      "resent": "We sent you another link.",
+      "help": "Not there? Check your spam folder. The link expires in 1 hour.",
+      "otherEmail": "Use another email",
+      "doneTitle": "Email confirmed!",
+      "doneBody": "Your account is active. Only your payment is left to confirm your spot in the Catarinotlón 2026.",
+      "doneCta": "Continue to payment"
+    }
+  },
+  "registrationForm": {
+    "runnerName": "Runner's full name",
+    "runnerHelpFirst": "Is this registration for someone else? Enter their name. You can add more runners before paying.",
+    "runnerHelpOther": "The name of the person running, as you want it on their ticket.",
+    "distance": "Distance",
+    "feeNote": "Registration fee (same for 3K and 5K)",
+    "shirtSize": "Shirt size",
+    "chooseSize": "Choose your size",
+    "shirtName": "Name for your shirt",
+    "acceptPrefix": "I accept the",
+    "terms": "Terms and conditions",
+    "and": "and the",
+    "privacy": "Privacy notice",
+    "changesNote": "You can change the distance and the shirt name later whenever you want.",
+    "deadlineNote": "The size, only until {date}.",
+    "stepAccount": "Account",
+    "stepRace": "Your race",
+    "stepPayment": "Payment",
+    "stepLabel": "Step {current} of {total}",
+    "feeLabel": "Registration fee (same for 3K and 5K)",
+    "stepsLabel": "Your registration steps",
+    "changesNoteDeadline": "You can change the distance and the shirt name anytime. The size, only until {date}.",
+    "submitWithDistance": "{label} · {distance}"
+  },
+  "register": {
+    "metaTitle": "Complete your registration · Catarinotlón 2026",
+    "eyebrow": "Step 2 of 3",
+    "title": "Complete your registration",
+    "body": "You have an account, {name}. Now choose your race and the name for your shirt.",
+    "submit": "Continue to payment",
+    "submitAnother": "Save and add another runner"
+  },
+  "addRunner": {
+    "metaTitle": "Add another runner · Catarinotlón 2026",
+    "eyebrow": "Another runner",
+    "title": "Add another runner",
+    "body": "Register a relative or a friend from your account. They get their own shirt, number, and ticket.",
+    "submit": "Save and continue to payment",
+    "submitAnother": "Save and add one more runner",
+    "back": "Back to my account"
+  },
+  "ticket": {
+    "title": "Catarinotlón 2026 ticket",
+    "heading": "Your ticket",
+    "body": "Download it as a PDF. You will need it at kit pickup.",
+    "runner": "Runner",
+    "bib": "Bib",
+    "shirt": "Shirt",
+    "size": "Size",
+    "date": "Date",
+    "start": "Start",
+    "venue": "Venue",
+    "pending": "To be confirmed",
+    "qrAlt": "Ticket QR code",
+    "download": "Download ticket (PDF)",
+    "help": "Bring it on your phone or printed to kit pickup. If you can't make it, someone else can collect your kit by showing this ticket.",
+    "bibLabel": "Runner no.",
+    "brand": "Catarinotlón",
+    "brandYear": "2026"
+  },
+  "payment": {
+    "metaTitle": "Payment · Catarinotlón 2026",
+    "title": "Pay by SPEI bank transfer",
+    "body": "Transfer from your bank's app and upload your receipt. Once we validate it, your spot is confirmed and you get your ticket.",
+    "transferHeading": "1. Transfer to this account",
+    "beneficiary": "Beneficiary",
+    "bank": "Bank",
+    "clabe": "CLABE (18 digits)",
+    "exactAmount": "Exact amount",
+    "concept": "Payment concept",
+    "copyBeneficiary": "Copy beneficiary",
+    "copiedBeneficiary": "Beneficiary copied",
+    "copyClabe": "Copy CLABE",
+    "copiedClabe": "CLABE copied",
+    "copyConcept": "Copy concept",
+    "copiedConcept": "Concept copied",
+    "uploadHeading": "2. Upload your receipt",
+    "receiptLabel": "Receipt of your SPEI bank transfer",
+    "receiptHelp": "Upload the image or PDF of the receipt your bank gives you.",
+    "receiptReady": "File ready: {name}",
+    "submit": "Send receipt",
+    "sending": "Sending…",
+    "later": "Upload it later from my account",
+    "summaryHeading": "What you are paying for",
+    "summaryBody": "One transfer covers all your unpaid runners.",
+    "shirtLine": "Shirt {name} · {size}",
+    "total": "{count, plural, one {Total to transfer (# runner)} other {Total to transfer (# runners)}}",
+    "addRunner": "Add another runner before paying",
+    "editDetails": "Change distance, size, or name",
+    "contactHeading": "Questions about your payment?",
+    "contactBody": "Talk directly to the person who receives your transfer.",
+    "contactName": "Name",
+    "contactPhone": "Phone",
+    "contactEmail": "Email",
+    "contactHours": "Contact hours",
+    "whatsapp": "Chat on WhatsApp",
+    "nothingTitle": "You have no pending payments",
+    "nothingBody": "All your runners are already paid or under review.",
+    "toAccount": "Go to my account",
+    "errors": {
+      "closed": "Payment is not open yet.",
+      "nothing_to_pay": "You have no runners to pay for.",
+      "not_in_review": "This payment has already been reviewed.",
+      "not_found": "We couldn't find that payment.",
+      "receipt_invalid_type": "Upload an image (JPG, PNG, or WebP) or a PDF.",
+      "receipt_too_large": "The file is too large.",
+      "receipt_empty": "The file is empty.",
+      "receipt_required": "Choose your receipt file.",
+      "upload_failed": "We couldn't upload the file. Please try again."
+    },
+    "receiptHelpAccount": "Image or PDF of your SPEI bank transfer receipt."
+  },
+  "account": {
+    "metaTitle": "My account · Catarinotlón 2026",
+    "eyebrow": "My account",
+    "greeting": "Hi, {name}",
+    "body": "With this account you can register yourself and your family or friends. Each runner has their own shirt, number, and ticket.",
+    "runnersHeading": "Your runners",
+    "addRunner": "Add another runner",
+    "addRunnerBody": "Register someone else with your account",
+    "bibLine": "{distance} · Bib {bib}",
+    "status": {
+      "confirmed": "Registration confirmed",
+      "pending_payment": "Payment pending",
+      "payment_in_review": "Payment in review",
+      "receipt_rejected": "Receipt rejected"
+    },
+    "distance": "Distance",
+    "size": "Size",
+    "bib": "Bib number",
+    "rejectedTitle": "We couldn't validate your receipt",
+    "rejectedReason": "Reason: {reason}",
+    "rejectedBody": "Your spot is still saved. Upload a new receipt to continue.",
+    "pendingTitle": "One step left",
+    "pendingBody": "Pay by SPEI bank transfer and upload your receipt to confirm your spot and get your ticket.",
+    "pendingLine": "{distance} registration · {name}",
+    "seeTransfer": "See transfer details",
+    "alreadyPaid": "Already transferred? Upload your receipt",
+    "reviewTitle": "We are validating your payment",
+    "reviewBody": "We received your receipt. Once we validate it we will email you and your ticket will appear here.",
+    "receiptSent": "Receipt sent",
+    "sentAt": "Sent: {date}",
+    "viewReceipt": "View receipt",
+    "replaceReceipt": "Replace receipt",
+    "shirtHeading": "Your shirt",
+    "shirtName": "Name on your shirt",
+    "saveName": "Save name",
+    "nameSaved": "We saved your shirt name.",
+    "changeNote": "You can change the name and the distance whenever you want.",
+    "deadlineNote": "The size, only until {date}.",
+    "changeDistance": "Change distance",
+    "distanceSaved": "We saved the distance.",
+    "changeSize": "Change size",
+    "sizeSaved": "We saved the size.",
+    "detailsHeading": "Race details",
+    "date": "Date",
+    "start": "{distance} start",
+    "venue": "Venue",
+    "kitPickup": "Kit pickup",
+    "route": "Route",
+    "routeLink": "See the route map",
+    "yourData": "Your details",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "access": "Sign-in",
+    "googleAccess": "Google account",
+    "passwordAccess": "Email and password",
+    "editData": "Edit details",
+    "saveData": "Save details",
+    "cancel": "Cancel",
+    "dataSaved": "We saved your details.",
+    "delivery": "Delivery",
+    "withKit": "With your kit",
+    "pickerLine": "{status} · No. {bib}",
+    "pickerStatus": {
+      "confirmed": "Confirmed",
+      "pending_payment": "Payment pending",
+      "payment_in_review": "Payment in review",
+      "receipt_rejected": "Receipt rejected"
+    }
+  },
+  "admin": {
+    "badge": "Admin",
+    "nav": {
+      "label": "Administration",
+      "registrations": "Registrations",
+      "kits": "Kit pickup",
+      "settings": "Settings"
+    },
+    "back": "Back to registrations",
+    "list": {
+      "metaTitle": "Registrations · Admin",
+      "title": "Registrations",
+      "add": "Register a runner",
+      "exportRegistrations": "Export registrations",
+      "exportShirts": "Export shirts for the printer",
+      "totalRegistered": "Registered",
+      "inReview": "Payment in review",
+      "pending": "Payment pending",
+      "kitsDelivered": "Kits delivered",
+      "search": "Search by name, email, or bib number",
+      "searchButton": "Search",
+      "distance": "Distance",
+      "payment": "Payment",
+      "kit": "Kit",
+      "all": "All",
+      "allMasculine": "All",
+      "tableCaption": "List of registrations",
+      "runner": "Runner",
+      "size": "Size",
+      "shirtName": "Shirt name",
+      "bib": "Bib",
+      "actions": "Actions",
+      "edit": "Edit {name}",
+      "editShort": "Edit",
+      "review": "Review payment of {name}",
+      "reviewShort": "Review payment",
+      "showing": "Showing {shown} of {total} registrations.",
+      "empty": "No registrations match those filters.",
+      "state": {
+        "paid": "Paid",
+        "in_review": "In review",
+        "pending": "Pending"
+      },
+      "kitState": {
+        "delivered": "Delivered",
+        "waiting": "Not delivered"
+      }
+    },
+    "export": {
+      "bib": "Bib",
+      "runner": "Runner",
+      "distance": "Distance",
+      "size": "Size",
+      "shirt": "Shirt name",
+      "status": "Status"
+    },
+    "review": {
+      "metaTitle": "Review payment · Admin",
+      "title": "Review payment",
+      "receipt": "Receipt",
+      "receiptFrame": "SPEI bank transfer receipt",
+      "sentAt": "Sent: {date}",
+      "open": "Open full size",
+      "account": "Account",
+      "covers": "Runners covered",
+      "coverLine": "{name} ({distance}, bib {bib})",
+      "expected": "Expected amount",
+      "clabe": "Destination account (CLABE)",
+      "concept": "Expected concept",
+      "hint": "Before confirming, compare the receipt with the movement in your bank: amount, destination account, and date.",
+      "confirm": "Confirm payment",
+      "reason": "Rejection reason (sent to the runner)",
+      "reject": "Reject receipt",
+      "confirmed": "Payment confirmed",
+      "rejected": "Receipt rejected",
+      "rejectedReason": "Reason: {reason}",
+      "reviewedBy": "Reviewed on {date}",
+      "reasonRequired": "Enter the rejection reason.",
+      "pdfPreview": "This receipt is a PDF. Open it at full size to compare it with your bank."
+    },
+    "form": {
+      "editMeta": "Edit registration · Admin",
+      "newMeta": "Register a runner · Admin",
+      "editTitle": "Edit registration",
+      "newTitle": "Register a runner",
+      "runnerName": "Runner's full name",
+      "distance": "Distance",
+      "size": "Shirt size",
+      "chooseSize": "Choose a size",
+      "shirtName": "Name for the shirt",
+      "sizeNote": "As an admin you can change the size even after the runner's deadline has passed.",
+      "contactHeading": "Contact and payment",
+      "contactEmail": "Email (to send their ticket)",
+      "contactPhone": "Phone",
+      "paymentReceived": "I already received the payment for this registration.",
+      "paymentReceivedHelp": "It is confirmed and its ticket is issued. If you leave it unchecked, the payment stays pending.",
+      "account": "Account",
+      "noAccount": "No account",
+      "payment": "Payment",
+      "kit": "Kit",
+      "bib": "Bib number",
+      "cancel": "Cancel",
+      "save": "Save changes",
+      "saved": "We saved the changes.",
+      "create": "Register runner",
+      "changes": "Change history",
+      "noChanges": "No changes yet.",
+      "changeLine": "{field}: {from} → {to}",
+      "fields": {
+        "runnerName": "Name",
+        "distance": "Distance",
+        "shirtSize": "Size",
+        "shirtName": "Shirt name"
+      },
+      "editBody": "Correct this runner’s details. The runner gets an email when you change their shirt name.",
+      "newBody": "Register someone by hand, for example if they paid you in person. If they have an email, their ticket goes there.",
+      "bibOnSave": "Assigned on save"
+    },
+    "kits": {
+      "metaTitle": "Kit pickup · Admin",
+      "title": "Kit pickup",
+      "scanHint": "Point the camera at the ticket's QR code",
+      "scan": "Scan ticket",
+      "stopScan": "Stop camera",
+      "scanUnavailable": "This browser can't read QR codes. Search by name or bib number.",
+      "search": "Or search by name or bib number",
+      "searchButton": "Search",
+      "noResults": "We couldn't find that runner.",
+      "ticketRead": "Ticket scanned",
+      "size": "Size",
+      "shirtName": "Shirt name",
+      "payment": "Payment",
+      "bib": "Bib number",
+      "collectedBy": "Is someone else collecting? (optional)",
+      "collectedHelp": "Anyone can collect the kit by showing the ticket. Note their name if they are not the runner.",
+      "deliver": "Mark kit as delivered",
+      "delivered": "Kit delivered",
+      "collectedLine": "Collected by: {name}",
+      "undo": "Undo",
+      "notConfirmed": "This runner's payment is not confirmed yet.",
+      "errors": {
+        "registration_not_confirmed": "Only confirmed registrations can collect a kit.",
+        "kit_already_delivered": "This kit was already delivered.",
+        "kit_not_delivered": "This kit is not marked as delivered.",
+        "not_found": "We couldn't find that registration."
+      }
+    },
+    "settings": {
+      "metaTitle": "Settings · Admin",
+      "title": "Event settings",
+      "body": "This data appears on the site, in emails, and on tickets. Changes are published when you save.",
+      "closedTitle": "Payment is not open yet",
+      "closedBody": "The price or the payment details are missing. Until they are set, the site shows “Registration opening soon” and nobody can pay.",
+      "missing": "Still missing: {items}",
+      "eventHeading": "Event",
+      "eventDate": "Event date",
+      "start3k": "3K start",
+      "start5k": "5K start",
+      "venueEs": "Venue (Spanish)",
+      "venueEn": "Venue (English)",
+      "kitEs": "Kit pickup (Spanish)",
+      "kitEn": "Kit pickup (English)",
+      "kitHelp": "Date, time, and place to collect kits. It appears in the account, in emails, and on the ticket.",
+      "routeMap": "Route map link",
+      "saveEvent": "Save event",
+      "contactHeading": "Payment contact",
+      "contactHelp": "Only signed-in runners see it, next to the payment details.",
+      "fullName": "Full name",
+      "email": "Email",
+      "phone": "Phone",
+      "whatsapp": "WhatsApp",
+      "hoursEs": "Contact hours (Spanish)",
+      "hoursEn": "Contact hours (English)",
+      "saveContact": "Save contact",
+      "registrationHeading": "Registration",
+      "fee": "Price (same for 3K and 5K)",
+      "deadline": "Shirt-size change deadline",
+      "feeHelp": "Changing the price only affects new registrations. Existing ones keep the price they had when created.",
+      "sizes": "Available sizes",
+      "sizesHelp": "Enter each size separated by commas, in the order you want them to appear.",
+      "saveRegistration": "Save registration",
+      "bankHeading": "Payment details",
+      "protected": "Protected",
+      "bankHelp": "Runners transfer to this account. To change it we ask for your password and email every admin.",
+      "beneficiary": "Beneficiary",
+      "bank": "Bank",
+      "clabe": "CLABE (18 digits)",
+      "notSet": "Not set",
+      "clabeHelp": "Enter it twice in your bank to verify it before saving.",
+      "password": "Your password, to confirm the change",
+      "saveBank": "Save payment details",
+      "saved": "We saved the changes.",
+      "historyHeading": "Change history",
+      "historyHelp": "Every change is recorded: what changed, who, and when. Nothing is overwritten or deleted.",
+      "noHistory": "No changes yet.",
+      "historyLine": "{date} · {who}: {fields}",
+      "keys": {
+        "eventDate": "Date",
+        "startTimes": "Start times",
+        "venue": "Venue",
+        "kitPickup": "Kit pickup",
+        "routeMapUrl": "Route map",
+        "feeCents": "Price",
+        "shirtSizes": "Sizes",
+        "shirtSizeDeadline": "Size deadline",
+        "contact": "Contact",
+        "bank": "Payment details"
+      },
+      "errors": {
+        "invalid_fee": "Enter a price greater than zero.",
+        "incomplete_bank_data": "Complete the beneficiary and the bank.",
+        "invalid_shirt_sizes": "Check the sizes: none can be empty or repeated.",
+        "invalid_clabe": "The CLABE must have 18 digits and a correct check digit.",
+        "password_required": "Enter your password to change the payment details.",
+        "wrong_password": "The password is incorrect."
+      },
+      "captureBank": "Enter payment details",
+      "changeBank": "Change payment details",
+      "cancel": "Cancel"
+    }
+  },
+  "status": {
+    "errorTitle": "Something went wrong",
+    "errorBody": "We couldn't load this page. We have logged the problem; please try again in a moment. Your data and your registration are safe.",
+    "retry": "Try again",
+    "home": "Go to home",
+    "notFoundTitle": "You went off course",
+    "notFoundBody": "The page you are looking for doesn't exist or has moved.",
+    "backHome": "Back to home",
+    "toAccount": "Go to my account"
+  },
+  "legal": {
+    "draft": "Draft · pending legal review",
+    "updated": "Last updated: [DATE]",
+    "privacy": {
+      "title": "Privacy notice",
+      "sections": [
+        {
+          "title": "1. Who is responsible for your data",
+          "blocks": [
+            {
+              "p": "[NAME OR LEGAL NAME OF THE CONTROLLER], located at [FULL ADDRESS], organizes the Catarinotlón 2026 and is responsible for processing your personal data. For any privacy matter write to [PRIVACY EMAIL]."
+            }
+          ]
+        },
+        {
+          "title": "2. What data we collect",
+          "blocks": [
+            {
+              "ul": [
+                "Identification and contact: full name, email, and phone.",
+                "Account: your password (stored encrypted, never in readable text) or the identifier Google shares with us if you sign in with your Google account.",
+                "Registration: distance, shirt size, and the name you choose for your shirt.",
+                "Payment: the receipt of your SPEI bank transfer. That document may show the account holder's name, the bank, part of your account number, the amount, and the date.",
+                "Site use: chosen language and theme, and technical error logs."
+              ]
+            },
+            {
+              "p": "We do not ask for sensitive personal data. The payment receipt contains financial data: by uploading it you give us your express consent to use it for the purposes of this notice."
+            }
+          ]
+        },
+        {
+          "title": "3. What we use it for",
+          "blocks": [
+            {
+              "p": "Purposes necessary to provide the service:"
+            },
+            {
+              "ul": [
+                "Create and protect your account.",
+                "Record your registration and validate your payment.",
+                "Personalize your shirt and prepare your kit.",
+                "Issue your ticket and give you your kit and medal.",
+                "Send you notices about your registration and the event.",
+                "Answer your questions and meet legal obligations."
+              ]
+            },
+            {
+              "p": "Additional purpose, which you can refuse at any time by writing to [PRIVACY EMAIL]: telling you about future editions of the Catarinotlón."
+            }
+          ]
+        },
+        {
+          "title": "4. Who we share it with",
+          "blocks": [
+            {
+              "p": "We do not sell your data. We only share it with those who help us run the event, under our instructions:"
+            },
+            {
+              "ul": [
+                "Website hosting, database, and file storage providers.",
+                "Email delivery provider.",
+                "Error monitoring provider.",
+                "Google, only if you choose to sign in with your Google account.",
+                "The shirt printer, which receives your shirt name and size: [PRINTER NAME]."
+              ]
+            },
+            {
+              "p": "Some of these providers process information outside Mexico. [WORDING ON INTERNATIONAL TRANSFERS]"
+            }
+          ]
+        },
+        {
+          "title": "5. How long we keep it",
+          "blocks": [
+            {
+              "p": "We keep your account and registration data for as long as your account exists. Payment receipts are kept with no defined deletion period, as a record of payments received. If you ask for your data to be canceled (section 6), we irreversibly replace your personal data with anonymous data. [HANDLING OF RECEIPTS UPON A CANCELLATION REQUEST]"
+            }
+          ]
+        },
+        {
+          "title": "6. Your rights",
+          "blocks": [
+            {
+              "p": "You can access, rectify, cancel, or object to the use of your data (ARCO rights), and revoke your consent or limit its use or disclosure. Send your request to [PRIVACY EMAIL] with your name, your account email, and what you are requesting. We will respond within [RESPONSE PERIOD]."
+            },
+            {
+              "p": "If you believe we did not address your request, you can go to the personal data protection authority: [COMPETENT AUTHORITY]."
+            }
+          ]
+        },
+        {
+          "title": "7. Cookies",
+          "blocks": [
+            {
+              "p": "We only use the cookies needed to keep you signed in and remember your language and theme. We do not use advertising cookies."
+            }
+          ]
+        },
+        {
+          "title": "8. Minors",
+          "blocks": [
+            {
+              "p": "[POLICY ON THE REGISTRATION AND DATA OF MINORS]"
+            }
+          ]
+        },
+        {
+          "title": "9. Changes to this notice",
+          "blocks": [
+            {
+              "p": "If this notice changes, we will publish the new version on this page and, if the change is important, we will let you know by email."
+            }
+          ]
+        }
+      ]
+    },
+    "terms": {
+      "title": "Terms and conditions",
+      "sections": [
+        {
+          "title": "1. Acceptance",
+          "blocks": [
+            {
+              "p": "By creating an account or registering for the Catarinotlón 2026 you accept these terms and our Privacy notice. The event is organized by [NAME OR LEGAL NAME OF THE ORGANIZER]."
+            }
+          ]
+        },
+        {
+          "title": "2. The event",
+          "blocks": [
+            {
+              "p": "The Catarinotlón 2026 is a race with 3K and 5K distances. It will take place on [EVENT DATE] at [VENUE]. Schedules, the route, and kit pickup are published on this site."
+            }
+          ]
+        },
+        {
+          "title": "3. Your account",
+          "blocks": [
+            {
+              "ul": [
+                "The data you enter must be true and up to date.",
+                "Your account is personal. Protect your password and tell us if someone else accessed your account.",
+                "One account can register several people. Each registration is for a single runner, with their own shirt, number, and ticket."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "4. Registration and payment",
+          "blocks": [
+            {
+              "ul": [
+                "The registration fee is the same for 3K and 5K: [PRICE].",
+                "The only payment method is a SPEI bank transfer to the account shown in your account, for the exact amount and with the stated concept. One transfer can cover several runners on your account.",
+                "After transferring you must upload your receipt. We validate it within [VALIDATION TIME].",
+                "Your registration is confirmed when we validate your payment. Your ticket is issued at that moment.",
+                "If we can't validate your receipt we will tell you why and you can upload a new one."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Changes to your registration",
+          "blocks": [
+            {
+              "ul": [
+                "You can change your distance whenever you want, even after paying. Since the fee is the same, the change is free.",
+                "You can change your shirt name whenever you want.",
+                "You can change your shirt size only until [SHIRT SIZE CHANGE DEADLINE]."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "6. Cancellations and refunds",
+          "blocks": [
+            {
+              "p": "There are no cancellations or refunds. Once we validate your payment, the registration fee is not returned, even if you decide not to take part or cannot attend."
+            }
+          ]
+        },
+        {
+          "title": "7. Kit, shirt, and medal",
+          "blocks": [
+            {
+              "ul": [
+                "Your registration includes a shirt personalized with the name you choose and a finisher medal you receive when you cross the finish line.",
+                "The kit is handed out at [KIT PICKUP DATE, TIME, AND PLACE] when you show your ticket with its QR code. If you can't make it, someone else can collect it for you by showing your ticket.",
+                "Each runner has a unique five-digit bib number."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Your participation",
+          "blocks": [
+            {
+              "p": "You take part voluntarily and at your own risk. You declare that your health allows you to complete the distance you chose. [POLICY FOR MINORS] [LIABILITY WAIVER]"
+            }
+          ]
+        },
+        {
+          "title": "9. Use of your image",
+          "blocks": [
+            {
+              "p": "[POLICY ON THE USE OF EVENT PHOTOS AND VIDEO]"
+            }
+          ]
+        },
+        {
+          "title": "10. Changes to or cancellation of the event",
+          "blocks": [
+            {
+              "p": "[POLICY ON CHANGES OF DATE OR VENUE, OR CANCELLATION DUE TO FORCE MAJEURE]"
+            }
+          ]
+        },
+        {
+          "title": "11. Governing law and contact",
+          "blocks": [
+            {
+              "p": "These terms are governed by the laws of Mexico. Any dispute will be resolved before the courts of [CITY AND STATE]. For questions write to [CONTACT EMAIL]."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
