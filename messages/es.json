@@ -711,6 +711,8 @@
       "notSet": "Sin capturar",
       "clabeHelp": "Escríbela dos veces en tu banca para verificarla antes de guardar.",
       "password": "Tu contraseña, para confirmar el cambio",
+      "noPassword": "Entraste con Google, así que tu cuenta todavía no tiene contraseña y la necesitamos para confirmar este cambio. Créala con el enlace que te enviamos por correo y vuelve aquí; podrás seguir entrando con Google.",
+      "createPassword": "Crear mi contraseña",
       "saveBank": "Guardar datos de pago",
       "saved": "Guardamos los cambios.",
       "historyHeading": "Historial de cambios",

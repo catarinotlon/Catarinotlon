@@ -3,6 +3,7 @@
 import { useFormatter, useTranslations } from 'next-intl';
 import { useState, type ReactNode } from 'react';
 
+import { Link } from '@/i18n/navigation';
 import type { EventSettingsValues, SettingKey } from '@/modules/event';
 import { Button } from '@/shared/ui/button';
 import { FormAlert, TextAreaField, TextField } from '@/shared/ui/form-fields';
@@ -32,6 +33,8 @@ export interface EventSettingsFormProps {
   action: FormAction;
   /** Past versions, newest first. */
   history: readonly SettingsHistoryEntry[];
+  /** Whether the signed-in admin has a password to confirm a bank change with. */
+  adminHasPassword: boolean;
 }
 
 function Section({
@@ -43,6 +46,7 @@ function Section({
   badge,
   editing,
   emphasized = false,
+  canSubmit = true,
   children,
 }: {
   section: string;
@@ -55,6 +59,8 @@ function Section({
   editing?: boolean;
   /** Marks a protected section with a heavier border. */
   emphasized?: boolean;
+  /** Hides the submit button when the section cannot be saved yet. */
+  canSubmit?: boolean;
   children: ReactNode;
 }) {
   const t = useTranslations('admin.settings');
@@ -81,7 +87,7 @@ function Section({
             {t('saved')}
           </p>
         )}
-        {editing !== false && (
+        {editing !== false && canSubmit && (
           <Button type="submit" variant="inverse" disabled={pending} className="self-start">
             {submitLabel}
           </Button>
@@ -91,7 +97,11 @@ function Section({
   );
 }
 
-function BankSection({ values, action }: Pick<EventSettingsFormProps, 'values' | 'action'>) {
+function BankSection({
+  values,
+  action,
+  adminHasPassword,
+}: Pick<EventSettingsFormProps, 'values' | 'action' | 'adminHasPassword'>) {
   const t = useTranslations('admin.settings');
   const [editing, setEditing] = useState(false);
   const notSet = t('notSet');
@@ -104,6 +114,7 @@ function BankSection({ values, action }: Pick<EventSettingsFormProps, 'values' |
       help={t('bankHelp')}
       submitLabel={t('saveBank')}
       editing={editing}
+      canSubmit={adminHasPassword}
       emphasized
       action={async (previous, data) => {
         const result = await action(previous, data);
@@ -143,12 +154,21 @@ function BankSection({ values, action }: Pick<EventSettingsFormProps, 'values' |
             help={t('clabeHelp')}
             defaultValue={values.bank?.clabe ?? ''}
           />
-          <TextField
-            label={t('password')}
-            name="password"
-            type="password"
-            autoComplete="current-password"
-          />
+          {adminHasPassword ? (
+            <TextField
+              label={t('password')}
+              name="password"
+              type="password"
+              autoComplete="current-password"
+            />
+          ) : (
+            <div role="note" className="flex flex-col gap-2 rounded-xl bg-muted p-4 md:col-span-2">
+              <p className="m-0 text-sm">{t('noPassword')}</p>
+              <Link href="/forgot-password" className="self-start font-semibold underline">
+                {t('createPassword')}
+              </Link>
+            </div>
+          )}
           <Button
             type="button"
             variant="outline"
@@ -177,11 +197,19 @@ function BankSection({ values, action }: Pick<EventSettingsFormProps, 'values' |
  *
  * @remarks
  * Changing the bank data requires the admin's password and alerts every admin.
+ * An admin who signs in with Google has no password yet, so the bank section
+ * explains how to create one instead of asking for it.
  *
  * @param props - The values, what is missing, the action, and the history.
  * @returns The form.
  */
-export function EventSettingsForm({ values, missing, action, history }: EventSettingsFormProps) {
+export function EventSettingsForm({
+  values,
+  missing,
+  action,
+  history,
+  adminHasPassword,
+}: EventSettingsFormProps) {
   const t = useTranslations('admin.settings');
   const format = useFormatter();
   const keyLabel = (key: SettingKey) => t(`keys.${key}`);
@@ -324,7 +352,7 @@ export function EventSettingsForm({ values, missing, action, history }: EventSet
             />
           </Section>
 
-          <BankSection values={values} action={action} />
+          <BankSection values={values} action={action} adminHasPassword={adminHasPassword} />
 
           <Card className="flex flex-col gap-3">
             <h2 className="m-0 font-heading text-2xl">{t('historyHeading')}</h2>

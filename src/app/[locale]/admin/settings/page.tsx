@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import {
   accountDirectory,
+  accounts,
   eventSettingsHistory,
   getAdminUser,
   getEventSettings,
@@ -28,9 +29,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function SettingsPage({ params }: Props) {
   const locale = requireLocale((await params).locale);
   setRequestLocale(locale);
-  if (!(await getAdminUser()).ok) notFound();
+  const admin = await getAdminUser();
+  if (!admin.ok) notFound();
 
-  const [values, history] = await Promise.all([getEventSettings(), eventSettingsHistory()]);
+  const [values, history, signInMethod] = await Promise.all([
+    getEventSettings(),
+    eventSettingsHistory(),
+    accounts.signInMethod(admin.value.id),
+  ]);
   const entries = await Promise.all(
     history.map(async (version) => ({
       id: version.id,
@@ -48,6 +54,7 @@ export default async function SettingsPage({ params }: Props) {
         missing={missingSettings(values)}
         action={saveSettingsAction}
         history={entries}
+        adminHasPassword={signInMethod === 'password'}
       />
     </AdminShell>
   );

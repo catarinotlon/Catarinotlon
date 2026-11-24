@@ -127,6 +127,7 @@ export const SettingsEmpty: Story = {
       missing={['feeCents', 'bank']}
       action={settingsAction}
       history={[]}
+      adminHasPassword
     />
   ),
   play: async ({ canvasElement }) => {
@@ -141,7 +142,13 @@ export const SettingsEmpty: Story = {
 /** Each section saves on its own and names itself to the server. */
 export const SettingsSavesSection: Story = {
   render: () => (
-    <EventSettingsForm values={EMPTY_SETTINGS} missing={[]} action={settingsAction} history={[]} />
+    <EventSettingsForm
+      values={EMPTY_SETTINGS}
+      missing={[]}
+      action={settingsAction}
+      history={[]}
+      adminHasPassword
+    />
   ),
   play: async ({ canvasElement }) => {
     settingsAction.mockClear();
@@ -159,7 +166,13 @@ export const SettingsSavesSection: Story = {
 /** Changing the bank data asks for the admin's password. */
 export const SettingsBankNeedsPassword: Story = {
   render: () => (
-    <EventSettingsForm values={EMPTY_SETTINGS} missing={[]} action={settingsAction} history={[]} />
+    <EventSettingsForm
+      values={EMPTY_SETTINGS}
+      missing={[]}
+      action={settingsAction}
+      history={[]}
+      adminHasPassword
+    />
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -169,6 +182,30 @@ export const SettingsBankNeedsPassword: Story = {
       'type',
       'password',
     );
+  },
+};
+
+/** An admin who signs in with Google has no password yet, so it explains how to create one. */
+export const SettingsBankGoogleAdmin: Story = {
+  render: () => (
+    <EventSettingsForm
+      values={EMPTY_SETTINGS}
+      missing={[]}
+      action={settingsAction}
+      history={[]}
+      adminHasPassword={false}
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Capturar datos de pago' }));
+    await expect(canvas.queryByLabelText('Tu contraseña, para confirmar el cambio')).toBeNull();
+    await expect(canvas.getByText(/Entraste con Google/)).toBeVisible();
+    await expect(canvas.getByRole('link', { name: 'Crear mi contraseña' })).toHaveAttribute(
+      'href',
+      '/es/olvide-mi-contrasena',
+    );
+    await expect(canvas.queryByRole('button', { name: 'Guardar datos de pago' })).toBeNull();
   },
 };
 
@@ -187,6 +224,7 @@ export const SettingsHistory: Story = {
           createdAt: new Date('2026-01-15T18:00:00.000Z'),
         },
       ]}
+      adminHasPassword
     />
   ),
   play: async ({ canvasElement }) => {
@@ -212,7 +250,13 @@ export const ScannerUnavailable: Story = {
 /** Kit pickup details take several lines. */
 export const SettingsKitTextArea: Story = {
   render: () => (
-    <EventSettingsForm values={EMPTY_SETTINGS} missing={[]} action={settingsAction} history={[]} />
+    <EventSettingsForm
+      values={EMPTY_SETTINGS}
+      missing={[]}
+      action={settingsAction}
+      history={[]}
+      adminHasPassword
+    />
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

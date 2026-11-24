@@ -711,6 +711,8 @@
       "notSet": "Not set",
       "clabeHelp": "Enter it twice in your bank to verify it before saving.",
       "password": "Your password, to confirm the change",
+      "noPassword": "You signed in with Google, so your account has no password yet, and we need one to confirm this change. Create it with the link we email you, then come back here; you can keep signing in with Google.",
+      "createPassword": "Create my password",
       "saveBank": "Save payment details",
       "saved": "We saved the changes.",
       "historyHeading": "Change history",
