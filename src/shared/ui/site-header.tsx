@@ -29,7 +29,7 @@ export function SiteHeader({ navigation, actions, badge }: SiteHeaderProps) {
   const t = useTranslations('common');
 
   return (
-    <header className="relative border-b border-border bg-background px-5 md:px-10">
+    <header className="sticky top-0 z-40 border-b border-border bg-background px-5 md:px-10">
       <div className="mx-auto flex min-h-16 max-w-[1200px] items-center justify-between gap-4">
         <div className="flex min-w-0 items-center gap-3">
           <Link
@@ -38,7 +38,12 @@ export function SiteHeader({ navigation, actions, badge }: SiteHeaderProps) {
             className="flex min-h-11 items-center gap-2 text-foreground no-underline"
           >
             <Logo />
-            <span className={cn('font-heading text-xl/none', badge ? 'hidden sm:block' : 'block')}>
+            <span
+              className={cn(
+                'font-heading text-xl/none',
+                badge ? 'hidden sm:block' : 'hidden min-[360px]:block',
+              )}
+            >
               {t('appName')} <span className="block text-primary-text">{t('year')}</span>
             </span>
           </Link>

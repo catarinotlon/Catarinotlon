@@ -1,9 +1,8 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
-import { EMPTY_SETTINGS, setEventSettings } from './support/database';
-
-import { pageLoaded } from './support/flows';
+import { EMPTY_SETTINGS, setEventSettings, TEST_SETTINGS, uniqueEmail } from './support/database';
+import { pageLoaded, signIn, signUp } from './support/flows';
 
 test.describe('landing page', () => {
   test.beforeEach(async () => {
@@ -19,6 +18,31 @@ test.describe('landing page', () => {
     expect(home).not.toBeNull();
     expect(theme).not.toBeNull();
     expect((home?.x ?? 0) + (home?.width ?? 0)).toBeLessThanOrEqual(theme?.x ?? 0);
+  });
+
+  test('a section link lands with the section right below the header', async ({ page }) => {
+    await page.goto('/es');
+    const banner = page.getByRole('banner');
+    const menu = banner.getByRole('button', { name: 'Menú' });
+    if (await menu.isVisible()) await menu.click();
+    await banner.getByRole('link', { name: 'Kit del corredor' }).click();
+    await expect(page).toHaveURL(/#kit$/);
+    await expect
+      .poll(async () => {
+        const before = await page.evaluate(() => window.scrollY);
+        await page.waitForTimeout(150);
+        return before === (await page.evaluate(() => window.scrollY));
+      })
+      .toBe(true);
+
+    const header = await banner.boundingBox();
+    const section = await page.locator('#kit').boundingBox();
+    const title = await page.locator('#kit h2').first().boundingBox();
+    const headerBottom = (header?.y ?? 0) + (header?.height ?? 0);
+    expect(header?.y ?? -1).toBeCloseTo(0, 0);
+    expect(section?.y ?? Infinity).toBeLessThanOrEqual(headerBottom + 1);
+    expect(title?.y ?? 0).toBeGreaterThanOrEqual(headerBottom);
+    expect(title?.y ?? Infinity).toBeLessThanOrEqual(headerBottom + 80);
   });
 
   test('presents the event in Spanish by default', async ({ page }) => {
@@ -99,3 +123,41 @@ test.describe('landing page', () => {
     });
   }
 });
+
+for (const width of [320, 375, 390]) {
+  test.describe(`header on a ${width} px phone`, () => {
+    test.use({ viewport: { width, height: 700 } });
+    test.beforeEach(async () => {
+      await setEventSettings(TEST_SETTINGS);
+    });
+
+    test('signed in, the header controls never overlap or overflow', async ({ page }) => {
+      const email = uniqueEmail('narrow');
+      await signUp(page, email);
+      await signIn(page, email);
+      await page.goto('/es');
+
+      const boxes = await page
+        .getByRole('banner')
+        .locator('a, button')
+        .evaluateAll((elements) =>
+          elements
+            .map((element) => element.getBoundingClientRect())
+            .filter((box) => box.width > 0 && box.height > 0)
+            .map((box) => ({ left: box.left, right: box.right, top: box.top, bottom: box.bottom })),
+        );
+      expect(boxes.length).toBeGreaterThanOrEqual(3);
+      for (const box of boxes) expect(box.right).toBeLessThanOrEqual(width);
+      for (const [index, a] of boxes.entries()) {
+        for (const b of boxes.slice(index + 1)) {
+          const overlap =
+            a.left < b.right - 1 &&
+            b.left < a.right - 1 &&
+            a.top < b.bottom - 1 &&
+            b.top < a.bottom - 1;
+          expect(overlap).toBe(false);
+        }
+      }
+    });
+  });
+}

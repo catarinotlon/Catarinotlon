@@ -42,7 +42,7 @@ function Section({
     <section
       id={id}
       className={cn(
-        'scroll-mt-20 px-5 py-14 md:px-10 md:py-24',
+        'scroll-mt-10 px-5 py-14 md:scroll-mt-0 md:px-10 md:py-24',
         muted && 'bg-page',
         dark && 'dark bg-ink text-foreground',
       )}
@@ -426,7 +426,7 @@ export function LandingPage({ facts }: LandingPageProps) {
 
       <section
         id="inscripcion"
-        className="scroll-mt-20 bg-primary px-5 py-14 text-primary-foreground md:px-10 md:py-24"
+        className="scroll-mt-10 bg-primary px-5 py-14 text-primary-foreground md:scroll-mt-0 md:px-10 md:py-24"
       >
         <div className="mx-auto grid max-w-[1200px] items-start gap-10 lg:grid-cols-2">
           <div className="flex flex-col gap-4">
@@ -479,7 +479,7 @@ export function LandingPage({ facts }: LandingPageProps) {
         </div>
       </section>
 
-      <section id="preguntas" className="scroll-mt-20 px-5 py-14 md:px-10 md:py-24">
+      <section id="preguntas" className="scroll-mt-10 px-5 py-14 md:scroll-mt-0 md:px-10 md:py-24">
         <div className="mx-auto grid max-w-[1200px] items-start gap-8 lg:grid-cols-[2fr_3fr]">
           <div className="flex flex-col gap-3">
             <Eyebrow className="text-lg">{t('faq.eyebrow')}</Eyebrow>
