@@ -13,6 +13,7 @@
   "out": "docs/api",
   "excludeExternals": true,
   "excludePrivate": true,
+  "disableSources": true,
   "skipErrorChecking": true,
   "treatWarningsAsErrors": true,
   "requiredToBeDocumented": [
