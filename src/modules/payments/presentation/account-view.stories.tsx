@@ -280,3 +280,14 @@ export const SaveShirtNamePending: Story = {
     await expectBusy(await canvas.findByRole('button', { name: 'Guardando…' }));
   },
 };
+
+/** Session recordings never show the runner’s data or the ticket QR, which collects a kit. */
+export const HiddenFromRecordings: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByText('sofia@example.test').closest('[data-private]')).not.toBeNull();
+    await expect(
+      canvas.getByAltText('Código QR del boleto').closest('.ph-no-capture'),
+    ).not.toBeNull();
+  },
+};

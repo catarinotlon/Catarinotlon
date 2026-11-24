@@ -112,7 +112,10 @@ export function PaymentView({
   const total = formatMoney(totalCents, locale);
 
   return (
-    <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:grid-rows-[auto_1fr]">
+    <div
+      data-private
+      className="grid items-start gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:grid-rows-[auto_1fr]"
+    >
       <div className="order-2 lg:col-start-1 lg:row-span-2 lg:row-start-1">
         <Card className="flex flex-col gap-5">
           <RegistrationSteps current="payment" />

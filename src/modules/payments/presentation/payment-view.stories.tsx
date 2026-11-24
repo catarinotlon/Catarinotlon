@@ -86,3 +86,11 @@ export const RunnersFirstOnMobile: Story = {
     await expect(transfer).toBeVisible();
   },
 };
+
+/** Session recordings never show who is paying. */
+export const HiddenFromRecordings: Story = {
+  play: async ({ canvasElement }) => {
+    const name = within(canvasElement).getAllByText(/Runner One/)[0];
+    await expect(name?.closest('[data-private]')).not.toBeNull();
+  },
+};

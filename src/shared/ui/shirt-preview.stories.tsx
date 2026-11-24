@@ -63,3 +63,12 @@ export const UntrustedText: Story = {
     await expect(canvas.getByTestId('shirt-name').querySelector('img')).toBeNull();
   },
 };
+
+/** The printed name never appears in a session recording. */
+export const NameHiddenFromRecordings: Story = {
+  play: async ({ canvasElement }) => {
+    await expect(
+      within(canvasElement).getByTestId('shirt-name').closest('[data-private]'),
+    ).not.toBeNull();
+  },
+};

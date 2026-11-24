@@ -38,6 +38,7 @@ Web app for the **Catarinotlón 2026** race (3K and 5K). Runners read about the 
 | Payments              | Bank transfer, "Transferencia (SPEI)", with a receipt upload reviewed by an admin. No payment gateway                                                          |
 | File storage          | Vercel Blob, private store, client uploads (`@vercel/blob`)                                                                                                    |
 | Error tracking        | Sentry (`@sentry/nextjs`)                                                                                                                                      |
+| Product analytics     | PostHog (`posthog-js`, US Cloud): pageviews, clicks, and session replay, through the `/ingest` proxy; off without `NEXT_PUBLIC_POSTHOG_KEY`                    |
 | Testing               | Vitest + Testing Library (unit and integration), MSW (external HTTP), Storybook Vitest addon (components), Playwright + axe (E2E)                              |
 | Documentation         | TypeDoc (code API) and Storybook (components)                                                                                                                  |
 | Quality               | ESLint (flat config, `eslint-config-next`, `eslint-plugin-boundaries`), Prettier (`prettier-plugin-tailwindcss`), lefthook + lint-staged, Conventional Commits |
@@ -428,6 +429,7 @@ EMAIL_TRANSPORT      RESEND_API_KEY       EMAIL_FROM
 RECEIPT_STORAGE      RECEIPT_LOCAL_DIR    RECEIPT_MAX_BYTES    BLOB_READ_WRITE_TOKEN
 CRON_SECRET
 NEXT_PUBLIC_SENTRY_DSN   SENTRY_AUTH_TOKEN   SENTRY_ORG   SENTRY_PROJECT
+NEXT_PUBLIC_POSTHOG_KEY
 ```
 
 `EMAIL_TRANSPORT=memory` and `RECEIPT_STORAGE=memory` are for local development and E2E: they send no real email and keep receipts on the local disk. `CRON_SECRET` protects `/api/cron/race-reminders`, which stays closed without it; Vercel Cron (`vercel.json`) calls it daily and sends the secret as a bearer token. Database tooling reads its connection through `src/shared/infrastructure/database-env.ts`, so it can run without the app's other secrets.
@@ -452,6 +454,8 @@ Vercel Blob credentials are added when the private store is created and connecte
 ## Personal data and security
 
 Runner data is stored (name, email, phone). Never write it to logs, error messages, or Sentry events (Sentry 11 collects personal data by default, so `sentryOptions` turns off every `dataCollection` category and scrubs in `beforeSend`). Validate all input on the server even if the client already validated it. Never expose secrets through the `NEXT_PUBLIC_` prefix. Passwords, sessions, and OAuth tokens are handled only by Better Auth: never log them, store them yourself, or put them in URLs. A runner can only ever see or change their own registration and ticket.
+
+**Analytics and session replay (PostHog) never see personal data.** Recordings mask every input. Any element that shows personal data (names, emails, phones, shirt names, bank data, the account and payment pages, every admin page) carries `data-private`, which masks its text; anything that must not be recorded at all (the ticket QR, which collects a kit; receipts; the scanner camera) carries the `ph-no-capture` class. Never call `posthog.identify` with an email or name. A new component that shows personal data adds the marker in the same change, with a story that asserts it. Changing what is tracked means updating the privacy notice and bumping its version.
 
 ## Brand and design
 

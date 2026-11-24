@@ -289,7 +289,7 @@ function TicketPanel({
               width={130}
               height={130}
               unoptimized
-              className="rounded-lg bg-white p-1"
+              className="ph-no-capture rounded-lg bg-white p-1"
             />
             <div>
               <p className="m-0 text-xs font-bold tracking-widest text-gold uppercase">
@@ -461,7 +461,7 @@ export function AccountView(props: AccountViewProps) {
   const pending = common('pending');
 
   return (
-    <div className="flex flex-col gap-6">
+    <div data-private className="flex flex-col gap-6">
       <header className="flex flex-col gap-2">
         <Eyebrow>{t('eyebrow')}</Eyebrow>
         <h1 className="m-0 font-heading text-5xl break-words">

@@ -114,3 +114,13 @@ export const ChangeOption: Story = {
     await expect(await canvas.findByRole('status')).toHaveTextContent('Guardamos la distancia.');
   },
 };
+
+/** Every admin page shows personal data, so recordings hide its content. */
+export const ShellHiddenFromRecordings: Story = {
+  render: () => <AdminShell>Contenido</AdminShell>,
+  play: async ({ canvasElement }) => {
+    await expect(
+      within(canvasElement).getByText('Contenido').closest('[data-private]'),
+    ).not.toBeNull();
+  },
+};

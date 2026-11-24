@@ -48,6 +48,7 @@ export function ShirtPreview({ name, className }: ShirtPreviewProps) {
       />
       <span
         aria-hidden="true"
+        data-private
         data-testid="shirt-name"
         className="absolute inset-x-0 top-[17.2%] flex h-[7.8%] items-center justify-center font-heading whitespace-nowrap text-[#1a1a1a]"
         style={{ fontSize: `${fontSize.toFixed(2)}cqw` }}

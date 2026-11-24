@@ -90,7 +90,7 @@ export function TicketScanner({ onTicket }: TicketScannerProps) {
   }, [scanning, onTicket]);
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="ph-no-capture flex flex-col gap-3">
       <div className="relative flex min-h-64 items-center justify-center overflow-hidden rounded-3xl bg-ink p-8 text-center">
         {scanning && (
           <video

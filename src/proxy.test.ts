@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { describe, expect, it } from 'vitest';
 
-import proxy from './proxy';
+import proxy, { config } from './proxy';
 
 const visit = (path: string, headers: Record<string, string> = {}) =>
   proxy(new NextRequest(`http://localhost:3000${path}`, { headers }));
@@ -40,5 +40,13 @@ describe('locale routing', () => {
     const response = visit('/en', { 'accept-language': 'es-MX' });
 
     expect(redirectPath(response)).toBeNull();
+  });
+
+  it('leaves the analytics proxy path alone', () => {
+    const matcher = new RegExp(`^${config.matcher}$`);
+
+    expect(matcher.test('/ingest/e/')).toBe(false);
+    expect(matcher.test('/ingest/static/array.js')).toBe(false);
+    expect(matcher.test('/es/cuenta')).toBe(true);
   });
 });

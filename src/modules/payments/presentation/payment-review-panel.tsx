@@ -93,7 +93,7 @@ export function PaymentReviewPanel({ data, confirmAction, rejectAction }: Paymen
             width={640}
             height={860}
             unoptimized
-            className="h-auto w-full rounded-lg border border-border"
+            className="ph-no-capture h-auto w-full rounded-lg border border-border"
           />
         ) : (
           <div className="flex min-h-96 items-center justify-center rounded-xl border-2 border-dashed border-input-border p-6 text-center">

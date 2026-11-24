@@ -15,6 +15,7 @@ export function AccountAvatar({ name }: { name: string }) {
 
   return (
     <Link
+      data-private
       href="/account"
       className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-primary font-heading text-lg text-primary-foreground no-underline"
     >

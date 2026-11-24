@@ -257,3 +257,18 @@ export const UndoPending: Story = {
     await expectBusy(await canvas.findByRole('button', { name: 'Deshaciendo…' }));
   },
 };
+
+/** A receipt image never appears in a session recording. */
+export const ReceiptHiddenFromRecordings: Story = {
+  render: () => (
+    <PaymentReviewPanel
+      data={{ ...review, receiptIsImage: true }}
+      confirmAction={confirm}
+      rejectAction={confirm}
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    const image = within(canvasElement).getByRole('img', { name: /comprobante/i });
+    await expect(image.closest('.ph-no-capture')).not.toBeNull();
+  },
+};

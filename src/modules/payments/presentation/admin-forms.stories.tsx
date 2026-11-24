@@ -299,3 +299,12 @@ export const SettingsSavePending: Story = {
     await expectBusy(await canvas.findByRole('button', { name: 'Guardando…' }));
   },
 };
+
+/** The scanner’s camera view never appears in a session recording. */
+export const ScannerHiddenFromRecordings: Story = {
+  render: () => <TicketScanner onTicket={fn()} />,
+  play: async ({ canvasElement }) => {
+    const button = within(canvasElement).getByRole('button', { name: 'Escanear boleto' });
+    await expect(button.closest('.ph-no-capture')).not.toBeNull();
+  },
+};

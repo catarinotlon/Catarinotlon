@@ -62,3 +62,11 @@ export const ResendPending: Story = {
     await expectBusy(await canvas.findByRole('button', { name: 'Reenviando…' }));
   },
 };
+
+/** Session recordings never show the address. */
+export const EmailHiddenFromRecordings: Story = {
+  play: async ({ canvasElement }) => {
+    const text = within(canvasElement).getByText(/sofia@example\.test/);
+    await expect(text.closest('[data-private]')).not.toBeNull();
+  },
+};

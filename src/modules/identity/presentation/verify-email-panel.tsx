@@ -46,7 +46,9 @@ export function VerifyEmailPanel({ email, verified, resendAction }: VerifyEmailP
     <div className="flex flex-col gap-4">
       <IconBadge icon="mail" />
       <h1 className="m-0 font-heading text-[clamp(36px,9vw,44px)]">{t('title')}</h1>
-      <p className="m-0 text-muted-foreground">{email ? t('body', { email }) : t('bodyGeneric')}</p>
+      <p data-private className="m-0 text-muted-foreground">
+        {email ? t('body', { email }) : t('bodyGeneric')}
+      </p>
       <form action={formAction}>
         <Button
           type="submit"

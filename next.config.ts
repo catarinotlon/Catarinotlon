@@ -11,6 +11,21 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     '/api/tickets/**': ['./src/modules/ticketing/infrastructure/pdf-assets/**/*'],
   },
+  // PostHog goes through the site's own path so ad blockers do not drop it.
+  async rewrites() {
+    return [
+      {
+        source: '/ingest/static/:path*',
+        destination: 'https://us-assets.i.posthog.com/static/:path*',
+      },
+      {
+        source: '/ingest/array/:path*',
+        destination: 'https://us-assets.i.posthog.com/array/:path*',
+      },
+      { source: '/ingest/:path*', destination: 'https://us.i.posthog.com/:path*' },
+    ];
+  },
+  skipTrailingSlashRedirect: true,
 };
 
 export default withSentryConfig(withNextIntl(nextConfig), {

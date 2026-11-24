@@ -24,7 +24,7 @@ export function AdminShell({ children, actions }: AdminShellProps) {
 
   return (
     <PageShell admin badge={t('badge')} subheader={<AdminTabs />} actions={actions}>
-      {children}
+      <div data-private>{children}</div>
     </PageShell>
   );
 }

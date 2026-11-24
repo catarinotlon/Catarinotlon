@@ -95,3 +95,11 @@ export const HeaderSignedOutPills: Story = {
     await expect(canvas.getByRole('link', { name: 'Inscríbete' })).toHaveClass('rounded-full');
   },
 };
+
+/** The avatar’s initials never appear in a session recording. */
+export const AvatarHiddenFromRecordings: Story = {
+  render: () => <AccountAvatar name="Sofía Ramírez" />,
+  play: async ({ canvasElement }) => {
+    await expect(canvasElement.querySelector('a')?.closest('[data-private]')).not.toBeNull();
+  },
+};
