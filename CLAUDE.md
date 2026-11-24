@@ -200,7 +200,7 @@ Rules that follow from it:
 
 ### Legal pages
 
-- The privacy notice and the terms in the mocks are **drafts pending legal review**. Do not treat their wording as final or fill their bracketed gaps yourself. The only exception: a gap that names an event setting (event date, venue, fee, shirt-size deadline, kit pickup, contact email) shows the organizer's current value and keeps its bracket while the setting is missing.
+- The privacy notice and the terms are **published as final** by the organizer (no draft label). Their open policy gaps were dropped on purpose; do not add new wording or fill gaps without the user. A gap that names an event setting (event date, venue, fee, shirt-size deadline, kit pickup, contact email) shows the organizer's current value and keeps its bracket while the setting is missing.
 - Their text is content per locale, not code. Sign-up requires accepting both; store when the runner accepted and which version.
 
 - The shirt preview renders the runner's chosen name over the back-of-shirt photo, uppercase, scaled down for long names. The same component is used on the landing, sign-up, and account pages.
@@ -306,16 +306,16 @@ The organizer, not a developer, owns the event's facts. Admins edit them from th
 
 All are React Email templates sent through `EmailSender`, rendered in the runner's locale, light theme only, each with its own story.
 
-| Email                             | Sent when                                                                                                                                             |
-| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Verify your email                 | An account is created with email + password                                                                                                           |
-| Registration confirmed            | A registration is confirmed. Carries the ticket summary, the QR, and a link to download the PDF                                                       |
-| Your race is coming up            | A scheduled reminder before kit pickup and race day                                                                                                   |
-| Shirt name updated                | The runner changes the shirt name from the account page                                                                                               |
-| Reset your password               | The runner requests a password reset                                                                                                                  |
-| We received your receipt          | The runner uploads a transfer receipt                                                                                                                 |
-| Your receipt was rejected         | An admin rejects a receipt. Carries the admin's reason and a link to upload a new one                                                                 |
-| New receipt to review (to admins) | An account holder uploads a receipt. Carries who uploaded it, the runners it covers, the expected amount and concept, and a link to the review screen |
+| Email                             | Sent when                                                                                                                                                                                                         |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Verify your email                 | An account is created with email + password                                                                                                                                                                       |
+| Registration confirmed            | A registration is confirmed. Carries the ticket summary, the QR, and a link to download the PDF                                                                                                                   |
+| Your race is coming up            | Three days and one day before the race date the admin set (a daily Vercel Cron at 15:00 UTC, 9:00 in Mexico City). Kit pickup is on race day, so both carry the pickup details; there is no separate kit reminder |
+| Shirt name updated                | The runner changes the shirt name from the account page                                                                                                                                                           |
+| Reset your password               | The runner requests a password reset                                                                                                                                                                              |
+| We received your receipt          | The runner uploads a transfer receipt                                                                                                                                                                             |
+| Your receipt was rejected         | An admin rejects a receipt. Carries the admin's reason and a link to upload a new one                                                                                                                             |
+| New receipt to review (to admins) | An account holder uploads a receipt. Carries who uploaded it, the runners it covers, the expected amount and concept, and a link to the review screen                                                             |
 
 Each send uses an idempotency key. An email never includes more personal data than the mock shows.
 
@@ -430,7 +430,7 @@ CRON_SECRET
 NEXT_PUBLIC_SENTRY_DSN   SENTRY_AUTH_TOKEN   SENTRY_ORG   SENTRY_PROJECT
 ```
 
-`EMAIL_TRANSPORT=memory` and `RECEIPT_STORAGE=memory` are for local development and E2E: they send no real email and keep receipts on the local disk. `CRON_SECRET` protects `/api/cron/race-reminders`, which stays closed without it; what schedules that endpoint is part of the undecided production setup. Database tooling reads its connection through `src/shared/infrastructure/database-env.ts`, so it can run without the app's other secrets.
+`EMAIL_TRANSPORT=memory` and `RECEIPT_STORAGE=memory` are for local development and E2E: they send no real email and keep receipts on the local disk. `CRON_SECRET` protects `/api/cron/race-reminders`, which stays closed without it; Vercel Cron (`vercel.json`) calls it daily and sends the secret as a bearer token. Database tooling reads its connection through `src/shared/infrastructure/database-env.ts`, so it can run without the app's other secrets.
 
 Vercel Blob credentials are added when the private store is created and connected (connected projects authenticate with short-lived OIDC credentials and a store id; follow the current Blob docs for the exact variable names). Keep `.env.example` up to date. Never commit `.env*` files with real values.
 
@@ -469,8 +469,8 @@ Runner data is stored (name, email, phone). Never write it to logs, error messag
 
 ## Not decided yet (do not implement or assume)
 
-- Going to production: when the production domain opens to the public, CI checks beyond Vercel's Git deployments, Sentry, and what schedules the race reminders.
-- The final, legally reviewed text of the privacy notice and the terms.
+- Going to production: when the production domain opens to the public, and CI checks beyond Vercel's Git deployments. **Sentry must be configured before launch.**
+- Plans: Vercel and Resend stay on their free plans by decision. Mind the limits: Vercel Hobby runs cron jobs once a day within the scheduled hour, and Resend Free sends at most 100 emails a day (more are refused, not retried).
 - Whether a runner can hand their place over to another person.
 - How the podium is decided: whether the three places are overall per distance or split by category (gender, age group), and so how many podium medals there really are.
 - What happens to a stored transfer receipt when its owner asks for erasure. The file shows personal and bank data and cannot be anonymized; it is kept for now, pending legal review.
