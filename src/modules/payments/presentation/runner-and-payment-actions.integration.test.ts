@@ -97,6 +97,12 @@ describe('runner server actions', () => {
       expect(await sql('SELECT phone FROM account_profiles WHERE user_id = ?', [userId])).toEqual([
         { phone: '5511111111' },
       ]);
+      expect(
+        await sql(
+          'SELECT privacy_version, terms_version FROM legal_acceptances WHERE user_id = ? ORDER BY rowid DESC LIMIT 1',
+          [userId],
+        ),
+      ).toEqual([{ privacy_version: 'privacy-2026-11-24', terms_version: 'terms-2026-11-24' }]);
     });
 
     it('requires the phone and consent', async () => {

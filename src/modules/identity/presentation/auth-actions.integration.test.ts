@@ -105,8 +105,8 @@ describe('auth server actions', () => {
       ).toEqual([
         {
           phone: '5500000000',
-          privacy_version: 'privacy-draft-2026-11',
-          terms_version: 'terms-draft-2026-11',
+          privacy_version: 'privacy-2026-11-24',
+          terms_version: 'terms-2026-11-24',
         },
       ]);
     });

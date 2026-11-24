@@ -15,10 +15,8 @@ import {
   registerAccountRunner,
 } from '@/composition';
 import { redirect } from '@/i18n/navigation';
+import { PRIVACY_VERSION, TERMS_VERSION } from '@/modules/identity';
 import type { FormState } from '@/shared/ui/form-state';
-
-const PRIVACY_VERSION = 'privacy-draft-2026-11';
-const TERMS_VERSION = 'terms-draft-2026-11';
 
 const requiredText = (key: string) => z.string({ error: key }).trim().min(1, key);
 

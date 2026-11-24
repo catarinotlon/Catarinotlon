@@ -17,3 +17,4 @@ export {
   type NotSignedIn,
 } from './application/use-cases/require-user';
 export { isAdmin, parseAdminEmails } from './domain/admin-policy';
+export { PRIVACY_VERSION, TERMS_VERSION } from './presentation/legal-versions';
