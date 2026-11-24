@@ -7,6 +7,7 @@ import {
   accounts,
   eventSettingsHistory,
   getAdminUser,
+  isOwner,
   getEventSettings,
 } from '@/composition';
 import { requireLocale } from '@/i18n/locale';
@@ -48,7 +49,7 @@ export default async function SettingsPage({ params }: Props) {
   );
 
   return (
-    <AdminShell actions={<SessionActions />}>
+    <AdminShell actions={<SessionActions />} canManageAdmins={await isOwner()}>
       <EventSettingsForm
         values={values}
         missing={missingSettings(values)}

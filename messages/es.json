@@ -27,7 +27,9 @@
     "recordingDelivery": "Registrando entrega…",
     "undoing": "Deshaciendo…",
     "signingOut": "Cerrando sesión…",
-    "searching": "Buscando…"
+    "searching": "Buscando…",
+    "adding": "Agregando…",
+    "removing": "Quitando…"
   },
   "theme": {
     "toDark": "Cambiar a tema oscuro",
@@ -548,7 +550,8 @@
       "label": "Administración",
       "registrations": "Inscripciones",
       "kits": "Entrega de kits",
-      "settings": "Configuración"
+      "settings": "Configuración",
+      "team": "Administradores"
     },
     "back": "Volver a inscripciones",
     "list": {
@@ -763,6 +766,26 @@
       "captureBank": "Capturar datos de pago",
       "changeBank": "Cambiar datos de pago",
       "cancel": "Cancelar"
+    },
+    "team": {
+      "metaTitle": "Administradores",
+      "title": "Administradores",
+      "body": "Agrega a las personas que te ayudan con el panel. Pueden revisar pagos, editar inscripciones, entregar kits y cambiar la configuración, pero no pueden agregar ni quitar administradores. También reciben el aviso de cada comprobante nuevo.",
+      "listLabel": "Administradores con acceso",
+      "owner": "Dueño",
+      "addedOn": "Agregado el {date}",
+      "empty": "Aún no has agregado administradores.",
+      "addHeading": "Agregar administrador",
+      "emailLabel": "Correo del nuevo administrador",
+      "emailHelp": "Tendrá acceso cuando inicie sesión con este correo y lo haya confirmado.",
+      "add": "Agregar administrador",
+      "remove": "Quitar",
+      "removeLabel": "Quitar a {email}",
+      "errors": {
+        "invalid_email": "Escribe un correo válido.",
+        "already_admin": "Ese correo ya es de un administrador.",
+        "admin_not_found": "Ese administrador ya no tiene acceso."
+      }
     }
   },
   "status": {

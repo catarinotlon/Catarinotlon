@@ -1,6 +1,12 @@
 import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
-import { localReceiptStore } from '@/composition';
+import { getAdminUser, localReceiptStore } from '@/composition';
+import {
+  grantAdminAction,
+  revokeAdminAction,
+} from '@/modules/identity/presentation/admin-team-actions';
+import type { EmailMessage, InMemoryEmailSender } from '@/shared/domain/email';
+import { emailSender } from '@/shared/infrastructure/auth/instance';
 import { signInAction, signUpAction } from '@/modules/identity/presentation/auth-actions';
 import {
   form,
@@ -494,6 +500,94 @@ describe('admin server actions', () => {
           form({ ...newBank, clabe: '002010077777777772', password: PASSWORD }),
         ),
       ).toEqual({ formError: 'admin.settings.errors.invalid_clabe' });
+    });
+  });
+
+  describe('admin team', () => {
+    const outbox = () => (emailSender as InMemoryEmailSender).sent as EmailMessage[];
+    const grantIdOf = async (email: string) =>
+      String(
+        (
+          await sql('SELECT id FROM admin_grants WHERE email = ? AND deleted_at IS NULL', [email])
+        )[0]?.id,
+      );
+
+    it('the owner adds an admin, who can then use the panel', async () => {
+      const email = `helper-${++counter}@actions.test`;
+      await asAdmin();
+
+      expect(await grantAdminAction({}, form({ email: email.toUpperCase() }))).toEqual({
+        done: true,
+      });
+
+      await signUpAndVerify(email);
+      await signIn(email);
+      expect((await getAdminUser()).ok).toBe(true);
+    });
+
+    it('an added admin cannot add or remove admins', async () => {
+      const email = `helper-${++counter}@actions.test`;
+      await asAdmin();
+      await grantAdminAction({}, form({ email }));
+      await signUpAndVerify(email);
+      await signIn(email);
+
+      expect(await grantAdminAction({}, form({ email: 'other@actions.test' }))).toEqual({
+        formError: 'errors.generic',
+      });
+      expect(await revokeAdminAction({}, form({ grantId: await grantIdOf(email) }))).toEqual({
+        formError: 'errors.generic',
+      });
+    });
+
+    it('a runner cannot add admins', async () => {
+      const email = `not-admin-${++counter}@actions.test`;
+      await signUpAndVerify(email);
+      await signIn(email);
+
+      expect(await grantAdminAction({}, form({ email: 'me@actions.test' }))).toEqual({
+        formError: 'errors.generic',
+      });
+    });
+
+    it('explains an invalid or repeated address on the field', async () => {
+      await asAdmin();
+
+      expect(await grantAdminAction({}, form({ email: 'nope' }))).toEqual({
+        fieldErrors: { email: 'admin.team.errors.invalid_email' },
+      });
+      expect(await grantAdminAction({}, form({ email: ADMIN_EMAIL }))).toEqual({
+        fieldErrors: { email: 'admin.team.errors.already_admin' },
+      });
+    });
+
+    it('a removed admin loses access on the next request', async () => {
+      const email = `former-${++counter}@actions.test`;
+      await asAdmin();
+      await grantAdminAction({}, form({ email }));
+      await signUpAndVerify(email);
+
+      await asAdmin();
+      expect(await revokeAdminAction({}, form({ grantId: await grantIdOf(email) }))).toEqual({
+        done: true,
+      });
+
+      await signIn(email);
+      expect((await getAdminUser()).ok).toBe(false);
+    });
+
+    it('sends the new-receipt email to the added admins too', async () => {
+      const email = `notified-${++counter}@actions.test`;
+      await asAdmin();
+      await grantAdminAction({}, form({ email }));
+
+      await runnerInReview();
+
+      await expect
+        .poll(() =>
+          outbox().some((item) => item.template === 'admin_new_receipt' && item.to === email),
+        )
+        .toBe(true);
     });
   });
 });

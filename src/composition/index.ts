@@ -16,15 +16,20 @@ import {
 } from '@/modules/event';
 import { DrizzleEventSettingsRepository } from '@/modules/event/infrastructure/drizzle-event-settings-repository';
 import {
+  adminEmailList,
   eraseAccountData,
   eraseManualRegistration,
+  grantAdmin,
   parseAdminEmails,
   requireAdmin,
+  requireOwner,
   requireUser,
+  revokeAdmin,
 } from '@/modules/identity';
 import { BetterAuthAccounts } from '@/modules/identity/infrastructure/better-auth-accounts';
 import { BetterAuthCurrentUserProvider } from '@/modules/identity/infrastructure/better-auth-current-user-provider';
 import { DrizzleAccountDirectory } from '@/modules/identity/infrastructure/drizzle-account-directory';
+import { DrizzleAdminGrantRepository } from '@/modules/identity/infrastructure/drizzle-admin-grant-repository';
 import { DrizzlePersonalDataEraser } from '@/modules/identity/infrastructure/drizzle-personal-data-eraser';
 import {
   authorizeReceiptRead,
@@ -111,7 +116,10 @@ const currentUser = new BetterAuthCurrentUserProvider(
   getHeaders,
 );
 
-const adminEmails = () => parseAdminEmails(env.ADMIN_EMAILS);
+const adminGrants = new DrizzleAdminGrantRepository(db);
+const owners = () => parseAdminEmails(env.ADMIN_EMAILS);
+const adminTeamDeps = () => ({ grants: adminGrants, owners: owners(), ids, clock });
+const adminEmails = () => adminEmailList({ grants: adminGrants, owners: owners() });
 
 const absolute = (href: Parameters<typeof getPathname>[0]['href'], locale: string) =>
   `${env.BETTER_AUTH_URL}${getPathname({ href, locale: locale as AppLocale })}`;
@@ -127,7 +135,7 @@ const links: PaymentLinks = {
 
 const contacts: PaymentContacts = {
   accountHolder: (userId) => directory.accountHolder(userId),
-  adminEmails: async () => adminEmails(),
+  adminEmails,
 };
 
 const paymentRepositories = (client: DatabaseClient): PaymentRepositories => ({
@@ -204,7 +212,36 @@ const paymentDeps = {
 export const getSignedInUser = () => requireUser({ currentUser });
 
 /** Resolves the signed-in admin, deriving the role on every call. */
-export const getAdminUser = () => requireAdmin({ currentUser, adminEmails: adminEmails() });
+export const getAdminUser = async () =>
+  requireAdmin({ currentUser, adminEmails: await adminEmails() });
+
+/** Resolves the signed-in owner, the only admin who manages other admins. */
+export const getOwnerUser = () => requireOwner({ currentUser, owners: owners() });
+
+/**
+ * Whether the signed-in user is an owner.
+ *
+ * @returns `true` for an owner with a verified address.
+ */
+export const isOwner = async (): Promise<boolean> => (await getOwnerUser()).ok;
+
+/**
+ * Lists the admin team: the owners from `ADMIN_EMAILS` and the added admins.
+ *
+ * @returns The owners' addresses and the active grants.
+ */
+export const getAdminTeam = async () => ({
+  owners: owners(),
+  admins: await adminGrants.listActive(),
+});
+
+/** Gives an address access to the admin panel. */
+export const addAdmin = (input: { ownerId: string; email: string }) =>
+  grantAdmin(adminTeamDeps(), input);
+
+/** Removes an added admin. */
+export const removeAdmin = (input: { ownerId: string; grantId: string }) =>
+  revokeAdmin(adminTeamDeps(), input);
 
 /** Contact data and legal acceptance storage. */
 export const accountDirectory = directory;
@@ -339,7 +376,7 @@ export const saveEventSettings = (input: UpdateEventSettingsInput) =>
     {
       settings,
       passwords: { verify: (userId, password) => accounts.verify(userId, password) },
-      admins: { adminEmails: async () => adminEmails() },
+      admins: { adminEmails },
       links: { settings: (locale) => absolute('/admin/settings', locale) },
       emails,
       reporter,

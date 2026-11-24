@@ -27,7 +27,9 @@
     "recordingDelivery": "Recording delivery…",
     "undoing": "Undoing…",
     "signingOut": "Signing out…",
-    "searching": "Searching…"
+    "searching": "Searching…",
+    "adding": "Adding…",
+    "removing": "Removing…"
   },
   "theme": {
     "toDark": "Switch to dark theme",
@@ -548,7 +550,8 @@
       "label": "Administration",
       "registrations": "Registrations",
       "kits": "Kit pickup",
-      "settings": "Settings"
+      "settings": "Settings",
+      "team": "Admins"
     },
     "back": "Back to registrations",
     "list": {
@@ -763,6 +766,26 @@
       "captureBank": "Enter payment details",
       "changeBank": "Change payment details",
       "cancel": "Cancel"
+    },
+    "team": {
+      "metaTitle": "Admins",
+      "title": "Admins",
+      "body": "Add the people who help you with the panel. They can review payments, edit registrations, hand out kits, and change the settings, but they cannot add or remove admins. They also get the notice for every new receipt.",
+      "listLabel": "Admins with access",
+      "owner": "Owner",
+      "addedOn": "Added on {date}",
+      "empty": "You have not added any admins yet.",
+      "addHeading": "Add an admin",
+      "emailLabel": "New admin's email",
+      "emailHelp": "They get access once they sign in with this email and have confirmed it.",
+      "add": "Add admin",
+      "remove": "Remove",
+      "removeLabel": "Remove {email}",
+      "errors": {
+        "invalid_email": "Enter a valid email.",
+        "already_admin": "That email already belongs to an admin.",
+        "admin_not_found": "That admin no longer has access."
+      }
     }
   },
   "status": {

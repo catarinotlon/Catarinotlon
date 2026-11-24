@@ -206,3 +206,20 @@ export const erasureRecords = sqliteTable('erasure_records', {
   performedAt: timestamp('performed_at').notNull(),
   ...softDeleteColumns(),
 });
+
+/** Admins the owner added from the panel; the owners themselves live in `ADMIN_EMAILS`. */
+export const adminGrants = sqliteTable(
+  'admin_grants',
+  {
+    id: text('id').primaryKey(),
+    email: text('email').notNull(),
+    grantedBy: text('granted_by').notNull(),
+    grantedAt: timestamp('granted_at').notNull(),
+    ...softDeleteColumns(),
+  },
+  (table) => [
+    uniqueIndex('admin_grants_active_email_unique')
+      .on(table.email)
+      .where(sql`deleted_at IS NULL`),
+  ],
+);

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
-import { getAdminRows, getAdminUser } from '@/composition';
+import { getAdminRows, getAdminUser, isOwner } from '@/composition';
 import { requireLocale } from '@/i18n/locale';
 import { adminTotals, filterAdminRows } from '@/modules/payments';
 import { AdminShell } from '@/modules/payments/presentation/admin-shell';
@@ -37,7 +37,7 @@ export default async function AdminPage({ params, searchParams }: Props) {
   const rows = await getAdminRows();
 
   return (
-    <AdminShell actions={<SessionActions />}>
+    <AdminShell actions={<SessionActions />} canManageAdmins={await isOwner()}>
       <RegistrationsTable
         rows={filterAdminRows(rows, filter)}
         totals={adminTotals(rows)}

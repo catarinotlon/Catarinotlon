@@ -7,6 +7,7 @@ import {
   findRegistration,
   getAdminRows,
   getAdminUser,
+  isOwner,
   getEventSettings,
 } from '@/composition';
 import { requireLocale } from '@/i18n/locale';
@@ -45,7 +46,7 @@ export default async function EditRegistrationPage({ params }: Props) {
   const row = rows.find((item) => item.id === registration.id);
 
   return (
-    <AdminShell actions={<SessionActions />}>
+    <AdminShell actions={<SessionActions />} canManageAdmins={await isOwner()}>
       <div className="flex flex-col gap-4">
         <Link
           href="/admin"

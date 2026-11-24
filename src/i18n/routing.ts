@@ -30,6 +30,7 @@ export const routing = defineRouting({
     '/admin/payments/[id]': { es: '/admin/pagos/[id]', en: '/admin/payments/[id]' },
     '/admin/settings': { es: '/admin/configuracion', en: '/admin/settings' },
     '/admin/kit-pickup': { es: '/admin/entrega-de-kits', en: '/admin/kit-pickup' },
+    '/admin/team': { es: '/admin/administradores', en: '/admin/admins' },
   },
 });
 

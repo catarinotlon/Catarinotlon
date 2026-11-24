@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
-import { activePickup, findKit, getAdminRows, getAdminUser } from '@/composition';
+import { activePickup, findKit, getAdminRows, getAdminUser, isOwner } from '@/composition';
 import { requireLocale } from '@/i18n/locale';
 import { filterAdminRows, type AdminRow } from '@/modules/payments';
 import { deliverKitAction, undoKitAction } from '@/modules/payments/presentation/admin-actions';
@@ -48,7 +48,7 @@ export default async function KitPickupPage({ params, searchParams }: Props) {
   const pickups = await Promise.all(rows.map((row) => activePickup(row.id)));
 
   return (
-    <AdminShell actions={<SessionActions />}>
+    <AdminShell actions={<SessionActions />} canManageAdmins={await isOwner()}>
       <div className="mx-auto flex max-w-md flex-col gap-4">
         <h1 className="m-0 font-heading text-4xl">{t('title')}</h1>
         <KitPickupSearch query={q} />

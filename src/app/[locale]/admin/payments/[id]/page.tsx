@@ -7,6 +7,7 @@ import {
   findPayment,
   findRegistration,
   getAdminUser,
+  isOwner,
   getEventSettings,
 } from '@/composition';
 import { requireLocale } from '@/i18n/locale';
@@ -49,7 +50,7 @@ export default async function AdminPaymentPage({ params }: Props) {
   ]);
 
   return (
-    <AdminShell actions={<SessionActions />}>
+    <AdminShell actions={<SessionActions />} canManageAdmins={await isOwner()}>
       <div className="flex flex-col gap-4">
         <Link
           href="/admin"

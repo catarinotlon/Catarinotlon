@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
-import { getAdminUser, getEventSettings } from '@/composition';
+import { getAdminUser, isOwner, getEventSettings } from '@/composition';
 import { requireLocale } from '@/i18n/locale';
 import { Link } from '@/i18n/navigation';
 import { createRegistrationAction } from '@/modules/payments/presentation/admin-actions';
@@ -32,7 +32,7 @@ export default async function NewRegistrationPage({ params }: Props) {
   ]);
 
   return (
-    <AdminShell actions={<SessionActions />}>
+    <AdminShell actions={<SessionActions />} canManageAdmins={await isOwner()}>
       <div className="flex flex-col gap-4">
         <Link
           href="/admin"

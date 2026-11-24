@@ -32,9 +32,22 @@ export const Shell: Story = {
     await expect(nav.getByRole('link', { name: 'Configuración' })).not.toHaveAttribute(
       'aria-current',
     );
+    await expect(nav.queryByRole('link', { name: 'Administradores' })).toBeNull();
     await expect(
       within(within(canvasElement).getByRole('contentinfo')).getByText(/Panel de administración/),
     ).toBeVisible();
+  },
+};
+
+/** The owner also manages the other admins. */
+export const OwnerShell: Story = {
+  render: () => <AdminShell canManageAdmins>Contenido</AdminShell>,
+  play: async ({ canvasElement }) => {
+    const nav = within(within(canvasElement).getByRole('navigation', { name: 'Administración' }));
+    await expect(nav.getByRole('link', { name: 'Administradores' })).toHaveAttribute(
+      'href',
+      '/es/admin/administradores',
+    );
   },
 };
 
