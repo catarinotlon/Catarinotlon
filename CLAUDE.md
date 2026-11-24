@@ -219,6 +219,7 @@ Rules that follow from it:
 - **Hexagonal boundary:** `domain` and `application` never produce user-facing text. They return error codes and data; `presentation` maps them to message keys. Zod schemas return message keys too.
 - **Emails:** store the runner's locale with the registration and render the React Email template in that locale.
 - **SEO:** localized `generateMetadata`, `lang` on `<html>`, and `hreflang` alternates for both locales.
+- **Shared links:** the locale layout sets `metadataBase` (the site origin) plus Open Graph and Twitter (`summary_large_image`) tags, so every page shares the same event card. Its 1200 × 630 image is `src/app/[locale]/opengraph-image.tsx`, which renders the `ShareCard` component from `src/shared/ui` with `ImageResponse` in each locale. Keep it free of personal data and of event facts that are still settings (date, venue, fee).
 
 ## Theming
 

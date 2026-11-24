@@ -68,9 +68,15 @@
     "frontAlt": "Playera oficial del Catarinotlón 2026, vista de frente",
     "previewBadge": "Vista previa de tu playera"
   },
+  "share": {
+    "eyebrow": "Carrera 3K y 5K · <year>2026</year>",
+    "headline": "Nos vemos en el <highlight>Catarinotlón</highlight>",
+    "perks": "Playera personalizada + medalla",
+    "imageAlt": "Catarinotlón 2026: Nos vemos en el Catarinotlón. Carrera 3K y 5K con playera personalizada y medalla."
+  },
   "landing": {
     "metaTitle": "Catarinotlón 2026 · Carrera 3K y 5K",
-    "metaDescription": "Elige 3 o 5 kilómetros, corre con tu nombre en la espalda y cruza la meta por tu medalla de catarina.",
+    "metaDescription": "Elige 3K o 5K, corre con tu nombre en la espalda y cruza la meta por tu medalla de catarina.",
     "hero": {
       "eyebrow": "Carrera 3K y 5K",
       "body": "Elige 3 o 5 kilómetros, corre con tu nombre en la espalda y cruza la meta por tu medalla de catarina. Así de simple, así de rojo.",

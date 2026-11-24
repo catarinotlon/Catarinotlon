@@ -121,6 +121,9 @@ const owners = () => parseAdminEmails(env.ADMIN_EMAILS);
 const adminTeamDeps = () => ({ grants: adminGrants, owners: owners(), ids, clock });
 const adminEmails = () => adminEmailList({ grants: adminGrants, owners: owners() });
 
+/** The site's public origin, for links and metadata that must be absolute. */
+export const siteUrl = new URL(env.BETTER_AUTH_URL);
+
 const absolute = (href: Parameters<typeof getPathname>[0]['href'], locale: string) =>
   `${env.BETTER_AUTH_URL}${getPathname({ href, locale: locale as AppLocale })}`;
 
