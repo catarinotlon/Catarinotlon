@@ -470,7 +470,7 @@ Runner data is stored (name, email, phone). Never write it to logs, error messag
 ## Not decided yet (do not implement or assume)
 
 - Going to production: when the production domain opens to the public, and CI checks beyond Vercel's Git deployments. **Sentry must be configured before launch.**
-- Plans: Vercel and Resend stay on their free plans by decision. Mind the limits: Vercel Hobby runs cron jobs once a day within the scheduled hour, and Resend Free sends at most 100 emails a day (more are refused, not retried).
+- Plans: Vercel and Resend stay on their free plans by decision. Mind the limits: Vercel Hobby runs cron jobs once a day within the scheduled hour, and Resend Free sends at most 100 emails a day (more are refused, not retried). The event expects at most 25 runners, so these limits are enough.
 - Whether a runner can hand their place over to another person.
 - How the podium is decided: whether the three places are overall per distance or split by category (gender, age group), and so how many podium medals there really are.
 - What happens to a stored transfer receipt when its owner asks for erasure. The file shows personal and bank data and cannot be anonymized; it is kept for now, pending legal review.
