@@ -1,0 +1,10 @@
+.next
+node_modules
+coverage
+storybook-static
+docs/api
+drizzle
+pnpm-lock.yaml
+design
+playwright-report
+test-results

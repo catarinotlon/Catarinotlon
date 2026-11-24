@@ -1,0 +1,28 @@
+node_modules/
+.next/
+out/
+coverage/
+storybook-static/
+docs/api/
+test-results/
+playwright-report/
+*.tsbuildinfo
+next-env.d.ts
+
+# Local databases
+*.db
+*.db-shm
+*.db-wal
+
+# Environment files (only the example is committed)
+.env*
+!.env.example
+
+.DS_Store
+.vercel
+
+# E2E database
+e2e/.tmp/
+
+# Local receipt storage
+.data/

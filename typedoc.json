@@ -1,0 +1,32 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/modules", "src/shared"],
+  "entryPointStrategy": "expand",
+  "exclude": [
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.stories.tsx",
+    "**/*.contract.ts",
+    "**/*-test-kit.ts",
+    "**/test-database.ts"
+  ],
+  "out": "docs/api",
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "skipErrorChecking": true,
+  "treatWarningsAsErrors": true,
+  "requiredToBeDocumented": [
+    "Class",
+    "Function",
+    "Interface",
+    "TypeAlias",
+    "Variable",
+    "Method",
+    "Enum"
+  ],
+  "validation": {
+    "notExported": false,
+    "invalidLink": true,
+    "notDocumented": true
+  }
+}
