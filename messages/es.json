@@ -839,11 +839,11 @@
                 "Proveedor de envío de correos.",
                 "Proveedor de monitoreo de errores.",
                 "Google, únicamente si eliges entrar con tu cuenta de Google.",
-                "La imprenta de las playeras, que recibe el nombre para tu playera y tu talla: [NOMBRE DE LA IMPRENTA]."
+                "La imprenta de las playeras, que recibe el nombre para tu playera y tu talla."
               ]
             },
             {
-              "p": "Algunos de estos proveedores procesan la información fuera de México. [REDACCIÓN SOBRE TRANSFERENCIAS INTERNACIONALES]"
+              "p": "Algunos de estos proveedores procesan la información fuera de México."
             }
           ]
         },
@@ -851,7 +851,7 @@
           "title": "5. Cuánto tiempo los conservamos",
           "blocks": [
             {
-              "p": "Conservamos los datos de tu cuenta y de tu inscripción mientras tu cuenta exista. Los comprobantes de pago se conservan sin un plazo de eliminación definido, como respaldo de los pagos recibidos. Si pides la cancelación de tus datos (sección 6), sustituimos tus datos personales por datos anónimos de forma irreversible. [TRATAMIENTO DE LOS COMPROBANTES ANTE UNA SOLICITUD DE CANCELACIÓN]"
+              "p": "Conservamos los datos de tu cuenta y de tu inscripción mientras tu cuenta exista. Los comprobantes de pago se conservan sin un plazo de eliminación definido, como respaldo de los pagos recibidos. Si pides la cancelación de tus datos (sección 6), sustituimos tus datos personales por datos anónimos de forma irreversible."
             }
           ]
         },
@@ -859,10 +859,10 @@
           "title": "6. Tus derechos",
           "blocks": [
             {
-              "p": "Puedes acceder a tus datos, rectificarlos, cancelarlos u oponerte a su uso (derechos ARCO), así como revocar tu consentimiento o limitar su uso o divulgación. Envía tu solicitud a contact@catarinotlon.online con tu nombre, el correo de tu cuenta y lo que solicitas. Te responderemos en un plazo de [PLAZO DE RESPUESTA]."
+              "p": "Puedes acceder a tus datos, rectificarlos, cancelarlos u oponerte a su uso (derechos ARCO), así como revocar tu consentimiento o limitar su uso o divulgación. Envía tu solicitud a contact@catarinotlon.online con tu nombre, el correo de tu cuenta y lo que solicitas."
             },
             {
-              "p": "Si consideras que no atendimos tu solicitud, puedes acudir a la autoridad de protección de datos personales: [AUTORIDAD COMPETENTE]."
+              "p": "Si consideras que no atendimos tu solicitud, puedes acudir a la autoridad de protección de datos personales."
             }
           ]
         },
@@ -875,15 +875,7 @@
           ]
         },
         {
-          "title": "8. Menores de edad",
-          "blocks": [
-            {
-              "p": "[POLÍTICA PARA LA INSCRIPCIÓN Y LOS DATOS DE MENORES DE EDAD]"
-            }
-          ]
-        },
-        {
-          "title": "9. Cambios a este aviso",
+          "title": "8. Cambios a este aviso",
           "blocks": [
             {
               "p": "Si este aviso cambia, publicaremos la nueva versión en esta página y, si el cambio es importante, te avisaremos por correo."
@@ -930,7 +922,7 @@
               "ul": [
                 "La cuota de inscripción es la misma para 3K y para 5K: {fee}.",
                 "El único medio de pago es Transferencia (SPEI) a la cuenta que se muestra en tu cuenta, por el monto exacto y con el concepto indicado. Una sola transferencia puede cubrir a varios corredores de tu cuenta.",
-                "Después de transferir debes subir tu comprobante. Lo validamos en [TIEMPO DE VALIDACIÓN].",
+                "Después de transferir debes subir tu comprobante.",
                 "Tu inscripción queda confirmada cuando validamos tu pago. En ese momento se genera tu boleto.",
                 "Si no podemos validar tu comprobante te diremos el motivo y podrás subir uno nuevo."
               ]
@@ -973,31 +965,15 @@
           "title": "8. Tu participación",
           "blocks": [
             {
-              "p": "Participas de forma voluntaria y bajo tu propia responsabilidad. Declaras que tu estado de salud te permite completar la distancia que elegiste. [POLÍTICA PARA MENORES DE EDAD] [EXONERACIÓN DE RESPONSABILIDAD]"
+              "p": "Participas de forma voluntaria y bajo tu propia responsabilidad. Declaras que tu estado de salud te permite completar la distancia que elegiste."
             }
           ]
         },
         {
-          "title": "9. Uso de tu imagen",
+          "title": "9. Ley aplicable y contacto",
           "blocks": [
             {
-              "p": "[POLÍTICA DE USO DE FOTOGRAFÍAS Y VIDEO DEL EVENTO]"
-            }
-          ]
-        },
-        {
-          "title": "10. Cambios o cancelación del evento",
-          "blocks": [
-            {
-              "p": "[POLÍTICA ANTE CAMBIOS DE FECHA, SEDE O CANCELACIÓN POR CAUSAS DE FUERZA MAYOR]"
-            }
-          ]
-        },
-        {
-          "title": "11. Ley aplicable y contacto",
-          "blocks": [
-            {
-              "p": "Estos términos se rigen por las leyes de México. Cualquier controversia se resolverá ante los tribunales de [CIUDAD Y ESTADO]. Para dudas escribe a {contactEmail}."
+              "p": "Estos términos se rigen por las leyes de México. Para dudas escribe a {contactEmail}."
             }
           ]
         }

@@ -839,11 +839,11 @@
                 "Email delivery provider.",
                 "Error monitoring provider.",
                 "Google, only if you choose to sign in with your Google account.",
-                "The shirt printer, which receives your shirt name and size: [PRINTER NAME]."
+                "The shirt printer, which receives your shirt name and size."
               ]
             },
             {
-              "p": "Some of these providers process information outside Mexico. [WORDING ON INTERNATIONAL TRANSFERS]"
+              "p": "Some of these providers process information outside Mexico."
             }
           ]
         },
@@ -851,7 +851,7 @@
           "title": "5. How long we keep it",
           "blocks": [
             {
-              "p": "We keep your account and registration data for as long as your account exists. Payment receipts are kept with no defined deletion period, as a record of payments received. If you ask for your data to be canceled (section 6), we irreversibly replace your personal data with anonymous data. [HANDLING OF RECEIPTS UPON A CANCELLATION REQUEST]"
+              "p": "We keep your account and registration data for as long as your account exists. Payment receipts are kept with no defined deletion period, as a record of payments received. If you ask for your data to be canceled (section 6), we irreversibly replace your personal data with anonymous data."
             }
           ]
         },
@@ -859,10 +859,10 @@
           "title": "6. Your rights",
           "blocks": [
             {
-              "p": "You can access, rectify, cancel, or object to the use of your data (ARCO rights), and revoke your consent or limit its use or disclosure. Send your request to contact@catarinotlon.online with your name, your account email, and what you are requesting. We will respond within [RESPONSE PERIOD]."
+              "p": "You can access, rectify, cancel, or object to the use of your data (ARCO rights), and revoke your consent or limit its use or disclosure. Send your request to contact@catarinotlon.online with your name, your account email, and what you are requesting."
             },
             {
-              "p": "If you believe we did not address your request, you can go to the personal data protection authority: [COMPETENT AUTHORITY]."
+              "p": "If you believe we did not address your request, you can go to the personal data protection authority."
             }
           ]
         },
@@ -875,15 +875,7 @@
           ]
         },
         {
-          "title": "8. Minors",
-          "blocks": [
-            {
-              "p": "[POLICY ON THE REGISTRATION AND DATA OF MINORS]"
-            }
-          ]
-        },
-        {
-          "title": "9. Changes to this notice",
+          "title": "8. Changes to this notice",
           "blocks": [
             {
               "p": "If this notice changes, we will publish the new version on this page and, if the change is important, we will let you know by email."
@@ -930,7 +922,7 @@
               "ul": [
                 "The registration fee is the same for 3K and 5K: {fee}.",
                 "The only payment method is a SPEI bank transfer to the account shown in your account, for the exact amount and with the stated concept. One transfer can cover several runners on your account.",
-                "After transferring you must upload your receipt. We validate it within [VALIDATION TIME].",
+                "After transferring you must upload your receipt.",
                 "Your registration is confirmed when we validate your payment. Your ticket is issued at that moment.",
                 "If we can't validate your receipt we will tell you why and you can upload a new one."
               ]
@@ -973,31 +965,15 @@
           "title": "8. Your participation",
           "blocks": [
             {
-              "p": "You take part voluntarily and at your own risk. You declare that your health allows you to complete the distance you chose. [POLICY FOR MINORS] [LIABILITY WAIVER]"
+              "p": "You take part voluntarily and at your own risk. You declare that your health allows you to complete the distance you chose."
             }
           ]
         },
         {
-          "title": "9. Use of your image",
+          "title": "9. Governing law and contact",
           "blocks": [
             {
-              "p": "[POLICY ON THE USE OF EVENT PHOTOS AND VIDEO]"
-            }
-          ]
-        },
-        {
-          "title": "10. Changes to or cancellation of the event",
-          "blocks": [
-            {
-              "p": "[POLICY ON CHANGES OF DATE OR VENUE, OR CANCELLATION DUE TO FORCE MAJEURE]"
-            }
-          ]
-        },
-        {
-          "title": "11. Governing law and contact",
-          "blocks": [
-            {
-              "p": "These terms are governed by the laws of Mexico. Any dispute will be resolved before the courts of [CITY AND STATE]. For questions write to {contactEmail}."
+              "p": "These terms are governed by the laws of Mexico. For questions write to {contactEmail}."
             }
           ]
         }
