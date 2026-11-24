@@ -348,7 +348,7 @@
       "googleNote": "Si creaste tu cuenta con Google no tienes contraseña: entra con «Continuar con Google».",
       "back": "Volver a iniciar sesión",
       "sentTitle": "Revisa tu correo",
-      "sentBody": "Si hay una cuenta con ese correo, te enviamos un enlace para crear una nueva contraseña. El enlace vence en 1 hora.",
+      "sentBody": "Si hay una cuenta con ese correo, te enviamos un enlace para crear una nueva contraseña. Si no lo ves, revisa tu carpeta de correo no deseado. El enlace vence en 1 hora.",
       "resend": "Reenviar el enlace",
       "resent": "Te enviamos otro enlace."
     },

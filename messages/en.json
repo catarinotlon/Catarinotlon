@@ -348,7 +348,7 @@
       "googleNote": "If you created your account with Google you have no password: use “Continue with Google”.",
       "back": "Back to sign in",
       "sentTitle": "Check your inbox",
-      "sentBody": "If there is an account with that email, we sent a link to create a new password. The link expires in 1 hour.",
+      "sentBody": "If there is an account with that email, we sent a link to create a new password. If you don't see it, check your spam folder. The link expires in 1 hour.",
       "resend": "Resend the link",
       "resent": "We sent you another link."
     },
