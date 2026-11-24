@@ -50,7 +50,8 @@
     "account": "My account",
     "menu": "Menu",
     "openMenu": "Open menu",
-    "closeMenu": "Close menu"
+    "closeMenu": "Close menu",
+    "admin": "Admin"
   },
   "footer": {
     "tagline": "3K and 5K race",

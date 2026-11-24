@@ -11,10 +11,20 @@ import { LANDING_SECTIONS as SECTIONS } from './landing-sections';
  * Links to the landing page's sections, inline on wide screens and in a menu on
  * narrow ones.
  *
- * @param props - Whether the visitor is signed in. If not, the menu offers the account links.
+ * @remarks
+ * An admin also gets a link to the panel, in both places.
+ *
+ * @param props - Whether the visitor is signed in (if not, the menu offers the
+ * account links) and whether they are an admin.
  * @returns The navigation.
  */
-export function LandingNav({ signedIn = false }: { signedIn?: boolean }) {
+export function LandingNav({
+  signedIn = false,
+  isAdmin = false,
+}: {
+  signedIn?: boolean;
+  isAdmin?: boolean;
+}) {
   const t = useTranslations('nav');
   const common = useTranslations('common');
   const [open, setOpen] = useState(false);
@@ -31,6 +41,14 @@ export function LandingNav({ signedIn = false }: { signedIn?: boolean }) {
             {t(key)}
           </a>
         ))}
+        {isAdmin && (
+          <Link
+            href="/admin"
+            className="inline-flex min-h-11 items-center font-semibold text-primary-text no-underline hover:underline"
+          >
+            {t('admin')}
+          </Link>
+        )}
       </nav>
 
       <div className="order-last lg:hidden">
@@ -68,6 +86,15 @@ export function LandingNav({ signedIn = false }: { signedIn?: boolean }) {
                 {t(key)}
               </a>
             ))}
+            {isAdmin && (
+              <Link
+                href="/admin"
+                onClick={() => setOpen(false)}
+                className="inline-flex min-h-11 items-center font-semibold text-primary-text no-underline"
+              >
+                {t('admin')}
+              </Link>
+            )}
             {!signedIn && (
               <>
                 <Link

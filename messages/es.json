@@ -50,7 +50,8 @@
     "account": "Mi cuenta",
     "menu": "Menú",
     "openMenu": "Abrir menú",
-    "closeMenu": "Cerrar menú"
+    "closeMenu": "Cerrar menú",
+    "admin": "Admin"
   },
   "footer": {
     "tagline": "Carrera 3K y 5K",

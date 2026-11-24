@@ -80,3 +80,40 @@ export const MenuSignedIn: Story = {
     await expect(canvas.queryByRole('link', { name: 'Iniciar sesión' })).toBeNull();
   },
 };
+
+/** An admin reaches the panel from the main navigation. */
+export const AdminLink: Story = {
+  args: { signedIn: true, isAdmin: true },
+  play: async ({ canvasElement }) => {
+    const nav = within(
+      within(canvasElement).getByRole('navigation', { name: 'Navegación principal', hidden: true }),
+    );
+    await expect(nav.getByRole('link', { name: 'Admin', hidden: true })).toHaveAttribute(
+      'href',
+      '/es/admin',
+    );
+  },
+};
+
+/** A runner who is not an admin sees no admin link. */
+export const NoAdminLink: Story = {
+  args: { signedIn: true, isAdmin: false },
+  play: async ({ canvasElement }) => {
+    await expect(
+      within(canvasElement).queryByRole('link', { name: 'Admin', hidden: true }),
+    ).toBeNull();
+  },
+};
+
+/** On narrow screens the admin link is in the menu. */
+export const MenuAdminLink: Story = {
+  args: { signedIn: true, isAdmin: true },
+  globals: { viewport: { value: 'mobile1' } },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Abrir menú' }));
+    await expect(
+      within(canvas.getByRole('navigation', { name: 'Menú' })).getByRole('link', { name: 'Admin' }),
+    ).toBeVisible();
+  },
+};
