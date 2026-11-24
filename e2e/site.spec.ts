@@ -1,6 +1,8 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
+import { pageLoaded } from './support/flows';
+
 test.describe('default language', () => {
   test.use({ locale: 'en-US' });
 
@@ -53,6 +55,7 @@ test.describe('legal and status pages', () => {
         await page.goto(path);
         // Next.js streams the metadata of dynamic pages, so wait for the title.
         await expect(page).toHaveTitle(/Catarinotlón/);
+        await pageLoaded(page);
         const results = await new AxeBuilder({ page }).analyze();
         expect(results.violations.map((violation) => violation.id)).toEqual([]);
       }

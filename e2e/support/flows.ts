@@ -81,3 +81,8 @@ export async function openReview(page: Page, runnerName: string) {
   await page.getByRole('link', { name: `Revisar pago de ${runnerName}` }).click();
   await expect(page.getByRole('heading', { name: 'Revisar pago' })).toBeVisible();
 }
+
+/** Waits until the page has replaced its loading skeleton with content. */
+export async function pageLoaded(page: Page): Promise<void> {
+  await expect(page.locator('[role="status"][aria-busy="true"]')).toHaveCount(0);
+}

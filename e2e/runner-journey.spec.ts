@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
 import { setEventSettings, TEST_SETTINGS, uniqueEmail } from './support/database';
-import { asAdmin, openReview, signIn, signUp, uploadReceipt } from './support/flows';
+import { asAdmin, openReview, pageLoaded, signIn, signUp, uploadReceipt } from './support/flows';
 
 test.describe('runner journey', () => {
   test.beforeEach(async () => {
@@ -198,6 +198,7 @@ test.describe('runner journey', () => {
       await signIn(page, email);
       await expect(page).toHaveURL(/\/es\/pago/);
 
+      await pageLoaded(page);
       const results = await new AxeBuilder({ page }).analyze();
 
       expect(results.violations.map((violation) => violation.id)).toEqual([]);

@@ -9,7 +9,8 @@
     "register": "Inscríbete",
     "skipToContent": "Saltar al contenido",
     "openingSoonTitle": "Inscripciones próximamente",
-    "openingSoonBody": "Estamos terminando de preparar todo. Vuelve pronto para apartar tu lugar."
+    "openingSoonBody": "Estamos terminando de preparar todo. Vuelve pronto para apartar tu lugar.",
+    "loading": "Cargando…"
   },
   "busy": {
     "creatingAccount": "Creando tu cuenta…",

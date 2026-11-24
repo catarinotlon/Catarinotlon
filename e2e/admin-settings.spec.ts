@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
 import { EMPTY_SETTINGS, setEventSettings, TEST_SETTINGS } from './support/database';
-import { asAdmin, PASSWORD } from './support/flows';
+import { asAdmin, pageLoaded, PASSWORD } from './support/flows';
 
 test.describe('admin event settings', () => {
   test.beforeEach(async () => {
@@ -105,6 +105,7 @@ test.describe('admin event settings', () => {
           '/es/admin/inscripciones/nueva',
         ]) {
           await admin.goto(path);
+          await pageLoaded(admin);
           const results = await new AxeBuilder({ page: admin }).analyze();
           expect(results.violations.map((violation) => `${path}:${violation.id}`)).toEqual([]);
         }

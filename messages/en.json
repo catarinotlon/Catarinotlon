@@ -9,7 +9,8 @@
     "register": "Register",
     "skipToContent": "Skip to content",
     "openingSoonTitle": "Registration opening soon",
-    "openingSoonBody": "We are getting everything ready. Come back soon to save your spot."
+    "openingSoonBody": "We are getting everything ready. Come back soon to save your spot.",
+    "loading": "Loading…"
   },
   "busy": {
     "creatingAccount": "Creating your account…",

@@ -92,6 +92,7 @@ e2e/                          Playwright tests
 ### Next.js as an adapter
 
 - Server Components by default; `'use client'` only on leaves that need state or events.
+- **No dead waits.** Every button that waits on the server uses the shared `Button` `pending` state (or `SubmitButton`, which follows its form): a spinner, a label that says what is happening (`busy.*` messages), `aria-busy`, and no second submission. Every route that loads data has a `loading.tsx` with a skeleton from `src/shared/ui/skeleton.tsx` in the shape of the page.
 - Mutations go through thin Server Actions: validate with Zod → call the use case → translate the `Result` into UI state. No business logic.
 - No component or route queries the database: always through a use case.
 - Every module that touches secrets or the DB imports `server-only`.

@@ -47,6 +47,7 @@
 }
 
 @theme inline {
+  --animate-shimmer: shimmer 1.4s linear infinite;
   --color-background: var(--background);
   --color-surface: var(--surface);
   --color-surface-raised: var(--surface-raised);
@@ -130,4 +131,24 @@
     radial-gradient(circle at 42% 62%, var(--ink) 8px, transparent 8.5px),
     radial-gradient(circle at 86% 74%, var(--ink) 5px, transparent 5.5px);
   background-size: 104px 104px;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@utility skeleton-shimmer {
+  background-color: var(--muted);
+  background-image: linear-gradient(
+    90deg,
+    var(--muted) 0%,
+    color-mix(in srgb, var(--muted), var(--foreground) 7%) 50%,
+    var(--muted) 100%
+  );
+  background-size: 200% 100%;
 }

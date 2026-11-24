@@ -3,6 +3,8 @@ import { expect, test } from '@playwright/test';
 
 import { EMPTY_SETTINGS, setEventSettings } from './support/database';
 
+import { pageLoaded } from './support/flows';
+
 test.describe('landing page', () => {
   test.beforeEach(async () => {
     await setEventSettings(EMPTY_SETTINGS);
@@ -90,6 +92,7 @@ test.describe('landing page', () => {
       await page.addInitScript((value) => localStorage.setItem('theme', value), theme);
       await page.goto('/es');
 
+      await pageLoaded(page);
       const results = await new AxeBuilder({ page }).analyze();
 
       expect(results.violations.map((violation) => violation.id)).toEqual([]);
