@@ -6,6 +6,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ThemeProvider } from 'next-themes';
 import type { ReactNode } from 'react';
 
+import { siteUrl } from '@/composition';
 import { routing } from '@/i18n/routing';
 
 import '../globals.css';
@@ -27,7 +28,13 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-/** Gives every page a title, including the 404 page, which has no metadata of its own. */
+/** Open Graph locale codes, which name a region as well as a language. */
+const OPEN_GRAPH_LOCALES = { es: 'es_MX', en: 'en_US' } as const;
+
+/**
+ * Gives every page a title, including the 404 page, which has no metadata of its own, and the
+ * event card social networks show when any link to the site is shared.
+ */
 export async function generateMetadata({
   params,
 }: {
@@ -36,7 +43,21 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
   const t = await getTranslations({ locale, namespace: 'landing' });
-  return { title: { default: t('metaTitle'), template: '%s' } };
+  const share = { title: t('metaTitle'), description: t('metaDescription') };
+  return {
+    metadataBase: siteUrl,
+    title: { default: share.title, template: '%s' },
+    openGraph: {
+      ...share,
+      type: 'website',
+      siteName: 'Catarinotlón',
+      locale: OPEN_GRAPH_LOCALES[locale],
+      alternateLocale: routing.locales
+        .filter((other) => other !== locale)
+        .map((other) => OPEN_GRAPH_LOCALES[other]),
+    },
+    twitter: { ...share, card: 'summary_large_image' },
+  };
 }
 
 export default async function LocaleLayout({

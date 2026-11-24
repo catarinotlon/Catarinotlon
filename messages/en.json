@@ -68,9 +68,15 @@
     "frontAlt": "Official Catarinotlón 2026 shirt, front view",
     "previewBadge": "Preview of your shirt"
   },
+  "share": {
+    "eyebrow": "3K and 5K race · <year>2026</year>",
+    "headline": "See you at the <highlight>Catarinotlón</highlight>",
+    "perks": "Custom shirt + medal",
+    "imageAlt": "Catarinotlón 2026: See you at the Catarinotlón. A 3K and 5K race with a custom shirt and a medal."
+  },
   "landing": {
     "metaTitle": "Catarinotlón 2026 · 3K and 5K race",
-    "metaDescription": "Pick 3 or 5 kilometers, run with your name on your back, and cross the finish line for your ladybug medal.",
+    "metaDescription": "Pick 3K or 5K, run with your name on your back, and cross the finish line for your ladybug medal.",
     "hero": {
       "eyebrow": "3K and 5K race",
       "body": "Pick 3 or 5 kilometers, run with your name on your back, and cross the finish line for your ladybug medal. That simple, that red.",
