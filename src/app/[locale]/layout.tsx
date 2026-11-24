@@ -78,7 +78,13 @@ export default async function LocaleLayout({
       className={`${barlow.variable} ${barlowCondensed.variable}`}
     >
       <body>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+        {/* The color scheme comes from globals.css: next-themes would set a plain "light". */}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+          enableColorScheme={false}
+        >
           <NextIntlClientProvider>{children}</NextIntlClientProvider>
         </ThemeProvider>
       </body>

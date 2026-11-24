@@ -111,6 +111,24 @@ test.describe('landing page', () => {
     await expect(page.locator('html')).toHaveClass(/dark/);
   });
 
+  test.describe('on a device set to dark mode', () => {
+    test.use({ colorScheme: 'dark' });
+
+    test('a first visit is light and tells the browser not to darken it', async ({ page }) => {
+      await page.goto('/es');
+      const html = page.locator('html');
+
+      await expect(html).not.toHaveClass(/dark/);
+      // Chromium serializes "only light" as "light only".
+      await expect(html).toHaveCSS('color-scheme', /^(only light|light only)$/);
+      await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+
+      await page.getByRole('button', { name: 'Cambiar a tema oscuro' }).click();
+      await expect(html).toHaveClass(/dark/);
+      await expect(html).toHaveCSS('color-scheme', 'dark');
+    });
+  });
+
   for (const theme of ['light', 'dark'] as const) {
     test(`has no accessibility violations in the ${theme} theme`, async ({ page }) => {
       await page.addInitScript((value) => localStorage.setItem('theme', value), theme);
