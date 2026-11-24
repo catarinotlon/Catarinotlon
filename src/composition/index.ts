@@ -484,8 +484,16 @@ export async function getAdminRows() {
 export const authorizeCron = (request: Request) =>
   isAuthorizedCronRequest(request, env.CRON_SECRET);
 
-/** Sends a reminder campaign to every confirmed runner. */
-export const sendReminders = (campaign: string) =>
+/** Today's date in the event's time zone, `YYYY-MM-DD`. */
+const eventToday = () =>
+  new Intl.DateTimeFormat('en-CA', { timeZone: APP_TIME_ZONE }).format(clock.now());
+
+/**
+ * Sends today's race reminder, if today is three days or one day before the race.
+ *
+ * @returns How many reminders went out and which reminder day today is.
+ */
+export const sendReminders = async () =>
   sendRaceReminders(
     {
       registrations,
@@ -494,5 +502,5 @@ export const sendReminders = (campaign: string) =>
       contact: runnerEditDeps.contact,
       links: runnerEditDeps.links,
     },
-    { campaign },
+    { eventDate: (await getEventSettings()).eventDate, today: eventToday() },
   );

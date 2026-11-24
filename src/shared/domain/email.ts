@@ -45,6 +45,8 @@ export type EmailMessage = EmailEnvelope &
           distance: string;
           bibNumber: string;
           accountUrl: string;
+          /** `3` or `1`: how many days before the race this reminder goes out. */
+          daysLeft: number;
         };
       }
     | {

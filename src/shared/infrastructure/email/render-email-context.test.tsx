@@ -45,6 +45,7 @@ const reminder: EmailMessage = {
     distance: '3K',
     bibNumber: '48213',
     accountUrl: 'https://app.test/a',
+    daysLeft: 3,
   },
 };
 

@@ -216,8 +216,8 @@ export function buildEmailContent(
       };
     case 'race_reminder':
       return {
-        subject: t('race_reminder.subject'),
-        title: t('race_reminder.title'),
+        subject: t('race_reminder.subject', { daysLeft: message.data.daysLeft }),
+        title: t('race_reminder.title', { daysLeft: message.data.daysLeft }),
         body: t('race_reminder.body', {
           runnerName: message.data.runnerName,
           distance: message.data.distance,

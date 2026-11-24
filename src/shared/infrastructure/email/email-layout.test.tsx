@@ -44,7 +44,7 @@ const confirmed: EmailMessage = {
 const reminder: EmailMessage = {
   ...envelope,
   template: 'race_reminder',
-  data: { runnerName: 'Sofía', distance: '5K', bibNumber: '48213', accountUrl: url },
+  data: { runnerName: 'Sofía', distance: '5K', bibNumber: '48213', accountUrl: url, daysLeft: 3 },
 };
 const received: EmailMessage = {
   ...envelope,

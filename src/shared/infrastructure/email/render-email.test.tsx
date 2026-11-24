@@ -39,6 +39,7 @@ const samples: EmailMessage[] = [
       distance: '5K',
       bibNumber: '48213',
       accountUrl: 'https://app.test/account',
+      daysLeft: 3,
     },
   },
   {
@@ -157,4 +158,29 @@ describe('renderEmail', () => {
 
     expect(email.text).toContain('$123.45');
   });
+
+  it.each([
+    [3, 'es', 'Faltan 3 días para tu carrera'],
+    [1, 'es', 'Tu carrera es mañana'],
+    [3, 'en', 'Your race is in 3 days'],
+    [1, 'en', 'Your race is tomorrow'],
+  ] as const)(
+    'the %i-day reminder in %s says how soon the race is',
+    async (daysLeft, locale, subject) => {
+      const email = await renderEmail({
+        ...envelope,
+        locale,
+        template: 'race_reminder',
+        data: {
+          runnerName: 'Sofía',
+          distance: '5K',
+          bibNumber: '48213',
+          accountUrl: 'https://app.test/account',
+          daysLeft,
+        },
+      });
+
+      expect(email.subject).toBe(subject);
+    },
+  );
 });

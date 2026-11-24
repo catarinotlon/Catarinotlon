@@ -4,19 +4,17 @@ import { authorizeCron, sendReminders } from '@/composition';
 
 export const runtime = 'nodejs';
 
-const CAMPAIGNS = ['kit-pickup', 'race-day'];
-
 /**
- * Sends a reminder campaign. Whatever schedules it must send the bearer secret.
+ * Sends today's race reminder, if any. Vercel calls it once a day (see
+ * `vercel.json`) with the bearer secret.
  *
  * @remarks
- * A repeated call sends nothing new, because each email has an idempotency key.
+ * Reminders go out three days and one day before the race date the organizer
+ * set. A repeated call sends nothing new, because each email has an
+ * idempotency key.
  */
 export async function GET(request: Request): Promise<Response> {
   if (!authorizeCron(request)) return new Response(null, { status: 404 });
 
-  const campaign = new URL(request.url).searchParams.get('campaign') ?? '';
-  if (!CAMPAIGNS.includes(campaign)) return new Response(null, { status: 400 });
-
-  return NextResponse.json(await sendReminders(campaign));
+  return NextResponse.json(await sendReminders());
 }

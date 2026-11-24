@@ -266,30 +266,26 @@ describe('API routes', () => {
   });
 
   describe('GET /api/cron/race-reminders', () => {
-    const call = (campaign: string, secret?: string) =>
+    const call = (secret?: string) =>
       cron(
-        new Request(url(`/api/cron/race-reminders?campaign=${campaign}`), {
+        new Request(url('/api/cron/race-reminders'), {
           headers: secret ? { authorization: `Bearer ${secret}` } : {},
         }),
       );
 
     it('stays closed without the secret', async () => {
-      expect((await call('kit-pickup')).status).toBe(404);
+      expect((await call()).status).toBe(404);
     });
 
     it('stays closed with a wrong secret', async () => {
-      expect((await call('kit-pickup', 'wrong-secret-value')).status).toBe(404);
+      expect((await call('wrong-secret-value')).status).toBe(404);
     });
 
-    it('refuses an unknown campaign', async () => {
-      expect((await call('other', CRON_SECRET)).status).toBe(400);
-    });
-
-    it.each(['kit-pickup', 'race-day'])('runs the %s campaign', async (campaign) => {
-      const response = await call(campaign, CRON_SECRET);
+    it('decides from the race date whether today is a reminder day', async () => {
+      const response = await call(CRON_SECRET);
 
       expect(response.status).toBe(200);
-      expect(await response.json()).toEqual(expect.any(Object));
+      expect(await response.json()).toEqual({ sent: 0, daysLeft: null });
     });
   });
 });

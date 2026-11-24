@@ -79,7 +79,13 @@ export const RaceReminder: Story = {
     message: {
       ...envelope,
       template: 'race_reminder',
-      data: { runnerName: 'Sofía', distance: '5K', bibNumber: '48213', accountUrl: url },
+      data: {
+        runnerName: 'Sofía',
+        distance: '5K',
+        bibNumber: '48213',
+        accountUrl: url,
+        daysLeft: 3,
+      },
     },
   },
   play: showsAction('Ver mi boleto'),

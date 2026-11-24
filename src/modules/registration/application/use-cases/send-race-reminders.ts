@@ -1,6 +1,7 @@
 import { sendAfterCommit, type EmailSender } from '@/shared/domain/email';
 import type { ErrorReporter } from '@/shared/domain/error-reporter';
 
+import { reminderDaysLeft, type ReminderDaysLeft } from '../../domain/race-reminder';
 import type { RegistrationRepository } from '../ports/registration-repository';
 import type { AccountEmailLookup, AccountLinks } from './runner-edits';
 
@@ -19,25 +20,30 @@ export interface SendRaceRemindersDeps {
 }
 
 /**
- * Reminds every confirmed runner about kit pickup or race day.
+ * Reminds every confirmed runner, three days and one day before the race.
  *
  * @remarks
- * The idempotency key combines the campaign and the registration, so a repeated
- * run sends nothing new. One failed email does not stop the others.
+ * It runs every day and sends only on a reminder day. Kit pickup is on race
+ * day, so each reminder also carries the pickup details. The idempotency key
+ * combines the registration and the days left, so a repeated run sends
+ * nothing new. One failed email does not stop the others.
  *
  * @param deps - The required ports.
- * @param input - The campaign's name, such as `kit-pickup`.
- * @returns How many reminders were attempted.
+ * @param input - The race day and today's date in the event's time zone, both `YYYY-MM-DD`.
+ * @returns How many reminders were attempted, and which reminder day today is.
  *
  * @example
  * ```ts
- * await sendRaceReminders(deps, { campaign: 'kit-pickup' });
+ * await sendRaceReminders(deps, { eventDate: '2026-12-19', today: '2026-12-16' });
  * ```
  */
 export async function sendRaceReminders(
   deps: SendRaceRemindersDeps,
-  input: { readonly campaign: string },
-): Promise<{ sent: number }> {
+  input: { readonly eventDate: string | null; readonly today: string },
+): Promise<{ sent: number; daysLeft: ReminderDaysLeft | null }> {
+  const daysLeft = reminderDaysLeft(input.eventDate, input.today);
+  if (daysLeft === null) return { sent: 0, daysLeft };
+
   const all = await deps.registrations.listAll();
   let sent = 0;
 
@@ -53,16 +59,17 @@ export async function sendRaceReminders(
       template: 'race_reminder',
       to,
       locale: registration.locale,
-      idempotencyKey: `race_reminder:${registration.id}:${input.campaign}`,
+      idempotencyKey: `race_reminder:${registration.id}:${daysLeft}d`,
       data: {
         runnerName: registration.runnerName,
         distance: registration.distance,
         bibNumber: registration.bibNumber,
         accountUrl: deps.links.account(registration.locale),
+        daysLeft,
       },
     });
     sent += 1;
   }
 
-  return { sent };
+  return { sent, daysLeft };
 }

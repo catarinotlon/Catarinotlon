@@ -222,8 +222,8 @@
       "viewTicket": "See my ticket and my shirt"
     },
     "race_reminder": {
-      "subject": "Your race is coming up: pick up your kit",
-      "title": "Your race is coming up",
+      "subject": "{daysLeft, plural, =1 {Your race is tomorrow} other {Your race is in # days}}",
+      "title": "{daysLeft, plural, =1 {Your race is tomorrow} other {# days to go}}",
       "body": "{runnerName}, your {distance} is almost here. Here is everything you need to know.",
       "cta": "See my ticket",
       "step1": "1. Pick up your kit",

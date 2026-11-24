@@ -222,8 +222,8 @@
       "viewTicket": "Ver mi boleto y mi playera"
     },
     "race_reminder": {
-      "subject": "Tu carrera se acerca: recoge tu kit",
-      "title": "Tu carrera se acerca",
+      "subject": "{daysLeft, plural, =1 {Tu carrera es mañana} other {Faltan # días para tu carrera}}",
+      "title": "{daysLeft, plural, =1 {Tu carrera es mañana} other {Faltan # días}}",
       "body": "{runnerName}, ya casi es tu {distance}. Aquí tienes todo lo que necesitas saber.",
       "cta": "Ver mi boleto",
       "step1": "1. Recoge tu kit",
