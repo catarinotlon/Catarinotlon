@@ -300,6 +300,7 @@ The organizer, not a developer, owns the event's facts. Admins edit them from th
 - **No wallet passes.** Apple Wallet and Google Wallet were dropped from scope: do not build them, add their libraries, or show "add to wallet" buttons.
 - **Port:** `TicketPdfRenderer`, with an in-memory double. The PDF download is served by a route handler that checks ownership.
 - **Libraries (approved):** `qrcode` for the QR and `@react-pdf/renderer` for the PDF. Check each one's current docs before using it.
+- **PDF design:** a ticket with a tear-off stub (the "Boleto con talón" mock): the runner's details, their shirt with the printed name, and the finisher medal of their distance on the main part; the distance, the QR, and the bib on the red stub. Its fonts (Barlow, OFL) and images live in `src/modules/ticketing/infrastructure/pdf-assets/` and ship with the route through `outputFileTracingIncludes`. react-pdf reads PNG and JPG only, not WebP.
 
 ## Transactional emails
 

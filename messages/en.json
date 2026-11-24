@@ -415,7 +415,10 @@
     "help": "Bring it on your phone or printed to kit pickup. If you can't make it, someone else can collect your kit by showing this ticket.",
     "bibLabel": "Runner no.",
     "brand": "Catarinotlón",
-    "brandYear": "2026"
+    "brandYear": "2026",
+    "medalLine": "Cross the finish line to take home your {distance} medal.",
+    "showAtPickup": "Show it at kit pickup",
+    "shirtLine": "{name} · Size {size}"
   },
   "payment": {
     "metaTitle": "Payment · Catarinotlón 2026",

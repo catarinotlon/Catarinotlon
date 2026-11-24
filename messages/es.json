@@ -415,7 +415,10 @@
     "help": "Llévalo en tu teléfono o impreso a la entrega de kits. Si no puedes ir, otra persona puede recoger tu kit mostrando este boleto.",
     "bibLabel": "Corredor n.º",
     "brand": "Catarinotlón",
-    "brandYear": "2026"
+    "brandYear": "2026",
+    "medalLine": "Al cruzar la meta te llevas tu medalla de {distance}.",
+    "showAtPickup": "Muéstralo en la entrega de kits",
+    "shirtLine": "{name} · Talla {size}"
   },
   "payment": {
     "metaTitle": "Pago · Catarinotlón 2026",

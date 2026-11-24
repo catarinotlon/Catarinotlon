@@ -3,6 +3,8 @@ import { useTranslations } from 'next-intl';
 
 import { cn } from './cn';
 
+// Keep in step with `shirtNameWidthRatio` in src/shared/domain/shirt-print.ts,
+// which the PDF ticket uses (shared/ui cannot import shared/domain).
 const MAX_FONT_SIZE_CQW = 11.6;
 const FIT_FACTOR = 94;
 

@@ -1,7 +1,9 @@
+import { existsSync } from 'node:fs';
+
 import { describe, expect, it } from 'vitest';
 
 import type { TicketDocument } from '../application/ports/ticket-pdf-renderer';
-import { ReactPdfTicketRenderer } from './react-pdf-ticket-renderer';
+import { medalImagePath, ReactPdfTicketRenderer } from './react-pdf-ticket-renderer';
 
 const document: TicketDocument = {
   locale: 'es',
@@ -37,4 +39,26 @@ describe('ReactPdfTicketRenderer', () => {
     expect(header(bytes)).toBe('%PDF-');
     expect(bytes.length).toBeGreaterThan(1000);
   }, 30_000);
+
+  it("shows the runner's shirt and the medal of their distance beside the QR", async () => {
+    const bytes = await new ReactPdfTicketRenderer().render(document);
+    const raw = new TextDecoder('latin1').decode(bytes);
+
+    expect(raw.match(/\/Subtype\s*\/Image/g)?.length ?? 0).toBeGreaterThanOrEqual(3);
+  }, 30_000);
+
+  it('sets the ticket in the brand typography', async () => {
+    const raw = new TextDecoder('latin1').decode(
+      await new ReactPdfTicketRenderer().render(document),
+    );
+
+    expect(raw).toContain('BarlowCondensed');
+  }, 30_000);
+
+  it("picks the finisher medal of the runner's distance", () => {
+    expect(medalImagePath('3K')).toMatch(/medal-finisher-3k\.png$/);
+    expect(medalImagePath('5K')).toMatch(/medal-finisher-5k\.png$/);
+    expect(existsSync(medalImagePath('3K'))).toBe(true);
+    expect(existsSync(medalImagePath('5K'))).toBe(true);
+  });
 });

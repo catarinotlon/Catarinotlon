@@ -7,6 +7,10 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   serverExternalPackages: ['@libsql/client', '@react-pdf/renderer'],
+  // The ticket PDF reads its fonts and images from disk at runtime.
+  outputFileTracingIncludes: {
+    '/api/tickets/**': ['./src/modules/ticketing/infrastructure/pdf-assets/**/*'],
+  },
 };
 
 export default withSentryConfig(withNextIntl(nextConfig), {
