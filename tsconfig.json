@@ -33,5 +33,5 @@
     ".storybook/**/*.tsx",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "docs/api", "storybook-static"]
+  "exclude": ["node_modules", "docs/api", "storybook-static", ".claude/worktrees"]
 }
