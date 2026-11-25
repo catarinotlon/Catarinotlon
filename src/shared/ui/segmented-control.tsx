@@ -19,10 +19,11 @@ export interface SegmentedControlProps {
   /** The value of the chosen option. */
   value: string;
   /**
-   * `pill`: a rounded pair, such as the medal switch. `compact`: a small pill, such as
-   * the header language switch. `block`: the large form version, with a gap between choices.
+   * `pill`: a rounded pair, such as the medal switch. `compact`: a small outlined pill, such
+   * as the switches in the phone menu. `subtle`: no outline and a soft highlight, such as the
+   * header language switch. `block`: the large form version, with a gap between choices.
    */
-  variant?: 'pill' | 'compact' | 'block';
+  variant?: 'pill' | 'compact' | 'subtle' | 'block';
   /** The radio group's name, for the choices that are form fields. */
   name?: string;
   /** The visible label of the radio group. */
@@ -50,18 +51,21 @@ const GAP_PX = 12;
 const TRACK = {
   pill: 'rounded-full border-2 border-input-border p-0.5',
   compact: 'rounded-full border-2 border-input-border p-0.5',
+  subtle: 'rounded-full p-1',
   block: 'gap-3',
 } as const;
 
 const THUMB = {
   pill: 'inset-y-0.5 left-0.5 rounded-full',
   compact: 'inset-y-0.5 left-0.5 rounded-full',
+  subtle: 'inset-y-1 left-1 rounded-full',
   block: 'inset-y-0 left-0 rounded-lg',
 } as const;
 
 const ITEM = {
   pill: 'min-h-11 min-w-16 rounded-full px-5 font-heading text-xl',
   compact: 'h-9 min-w-11 rounded-full px-3 text-sm font-bold no-underline',
+  subtle: 'h-9 min-w-10 rounded-full px-2.5 text-sm font-bold tracking-wide no-underline',
   block: 'min-h-12 rounded-lg border-2 font-heading text-2xl',
 } as const;
 
@@ -69,7 +73,13 @@ function itemClasses(variant: keyof typeof ITEM, selected: boolean) {
   return cn(
     'relative inline-flex cursor-pointer items-center justify-center focus-within:outline-3 focus-within:outline-offset-3 focus-within:outline-focus focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-focus',
     ITEM[variant],
-    selected ? 'text-inverse-foreground' : 'text-foreground',
+    variant === 'subtle'
+      ? selected
+        ? 'text-foreground'
+        : 'text-muted-foreground hover:text-foreground'
+      : selected
+        ? 'text-inverse-foreground'
+        : 'text-foreground',
     variant === 'block' &&
       (selected ? 'border-transparent' : 'border-input-border bg-input text-foreground'),
     variant === 'compact' && !selected && 'hover:bg-muted',
@@ -83,8 +93,9 @@ function thumbStyle(variant: keyof typeof ITEM, index: number, count: number): C
       transform: `translateX(calc(${index} * (100% + ${GAP_PX}px)))`,
     };
   }
+  const inset = variant === 'subtle' ? 8 : 4;
   return {
-    width: `calc((100% - 4px) / ${count})`,
+    width: `calc((100% - ${inset}px) / ${count})`,
     transform: `translateX(${index * 100}%)`,
   };
 }
@@ -137,7 +148,8 @@ export function SegmentedControl({
           aria-hidden="true"
           data-testid="segmented-thumb"
           className={cn(
-            'absolute bg-inverse transition-transform duration-300 ease-out motion-reduce:transition-none',
+            'absolute transition-transform duration-300 ease-out motion-reduce:transition-none',
+            variant === 'subtle' ? 'bg-muted' : 'bg-inverse',
             THUMB[variant],
           )}
           style={thumbStyle(variant, index, options.length)}

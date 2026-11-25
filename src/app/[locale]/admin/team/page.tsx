@@ -9,7 +9,8 @@ import {
   revokeAdminAction,
 } from '@/modules/identity/presentation/admin-team-actions';
 import { AdminTeamPanel } from '@/modules/identity/presentation/admin-team-panel';
-import { SessionActions } from '@/modules/identity/presentation/session-actions';
+import { SessionActions } from '@/app/[locale]/_chrome/session-actions';
+import { SiteNavigation } from '@/app/[locale]/_chrome/site-navigation';
 import { AdminShell } from '@/modules/payments/presentation/admin-shell';
 
 export const dynamic = 'force-dynamic';
@@ -30,7 +31,7 @@ export default async function AdminTeamPage({ params }: Props) {
   const team = await getAdminTeam();
 
   return (
-    <AdminShell actions={<SessionActions />} canManageAdmins>
+    <AdminShell navigation={<SiteNavigation />} actions={<SessionActions />} canManageAdmins>
       <AdminTeamPanel
         owners={team.owners}
         admins={team.admins}

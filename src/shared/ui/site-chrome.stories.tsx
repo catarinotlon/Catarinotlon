@@ -23,6 +23,29 @@ export const Header: Story = {
   },
 };
 
+/** On a phone, a header with the site navigation leaves the theme and the account to its menu. */
+export const PhoneHeaderWithMenu: Story = {
+  globals: { viewport: { value: 'mobile1' } },
+  render: () => <SiteHeader navigation={<button type="button">Abrir menú</button>} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('button', { name: 'Abrir menú' })).toBeVisible();
+    await expect(canvas.queryByRole('button', { name: /Cambiar a tema/ })).toBeNull();
+    await expect(canvas.queryByRole('link', { name: 'Inscríbete' })).toBeNull();
+  },
+};
+
+/** On a phone, a header without a menu, such as the admin one, keeps the theme switch. */
+export const PhoneHeaderWithoutMenu: Story = {
+  globals: { viewport: { value: 'mobile1' } },
+  render: () => <SiteHeader badge="Admin" actions={<></>} />,
+  play: async ({ canvasElement }) => {
+    await expect(
+      await within(canvasElement).findByRole('button', { name: /Cambiar a tema/ }),
+    ).toBeVisible();
+  },
+};
+
 /** The footer carries the legal links and the language switch. */
 export const Footer: Story = {
   render: () => <SiteFooter />,
@@ -76,12 +99,13 @@ export const HeaderBadge: Story = {
   },
 };
 
-/** Signed-out actions look the same as on the landing: pill-shaped. */
-export const HeaderSignedOutPills: Story = {
+/** Signed out, the header offers a plain sign-in link and the red registration pill. */
+export const HeaderSignedOutLinks: Story = {
   render: () => <SiteHeader />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByRole('link', { name: 'Iniciar sesión' })).toHaveClass('rounded-full');
+    const signIn = canvas.getByRole('link', { name: 'Iniciar sesión' });
+    await expect(getComputedStyle(signIn).borderTopWidth).toBe('0px');
     await expect(canvas.getByRole('link', { name: 'Inscríbete' })).toHaveClass('rounded-full');
   },
 };

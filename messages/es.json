@@ -33,7 +33,10 @@
   },
   "theme": {
     "toDark": "Cambiar a tema oscuro",
-    "toLight": "Cambiar a tema claro"
+    "toLight": "Cambiar a tema claro",
+    "label": "Tema",
+    "light": "Claro",
+    "dark": "Oscuro"
   },
   "language": {
     "label": "Idioma:",
@@ -53,7 +56,15 @@
     "menu": "Menú",
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú",
-    "admin": "Admin"
+    "admin": "Admin",
+    "yourAccount": "Tu cuenta",
+    "accountSummary": "Mi cuenta · {count, plural, =0 {sin corredores} one {# corredor} other {# corredores}}",
+    "yourRunners": "Tus corredores",
+    "runnerMeta": "{distance} · n.º {bib}",
+    "payPending": "Pagar pendientes ({count})",
+    "backToMenu": "Volver al menú",
+    "completeRegistration": "Completa tu inscripción",
+    "accountHint": "Boletos, pagos y tus datos"
   },
   "footer": {
     "tagline": "Carrera 3K y 5K",

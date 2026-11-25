@@ -506,6 +506,20 @@ export async function getAccountOverview(userId: string) {
   );
 }
 
+/**
+ * Loads where each of an account's runners stands, for the phone menu.
+ *
+ * @remarks
+ * Like {@link getAccountOverview} without the tickets, which the menu does not show.
+ */
+export async function getAccountRunners(userId: string) {
+  const [runners, accountPayments] = await Promise.all([
+    registrations.listByOwner(userId),
+    payments.listByOwner(userId),
+  ]);
+  return buildAccountOverview(runners, accountPayments, []);
+}
+
 /** Summarizes what an account still has to pay. */
 export async function getPaymentSummary(userId: string, holderName: string) {
   return buildPaymentSummary(await registrations.listByOwner(userId), holderName);

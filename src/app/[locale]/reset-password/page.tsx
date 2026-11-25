@@ -7,7 +7,7 @@ import { resetPasswordAction } from '@/modules/identity/presentation/auth-action
 import { ResetPasswordForm } from '@/modules/identity/presentation/auth-forms';
 import { FormAlert } from '@/shared/ui/form-fields';
 import { Card, PageShell } from '@/shared/ui/page-shell';
-import { SessionActions } from '@/modules/identity/presentation/session-actions';
+import { SessionActions } from '@/app/[locale]/_chrome/session-actions';
 
 import { SiteNavigation } from '../_chrome/site-navigation';
 

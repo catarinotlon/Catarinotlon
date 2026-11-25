@@ -1,6 +1,6 @@
 import { PageShell } from '@/shared/ui/page-shell';
 import { NotFoundScreen } from '@/shared/ui/status-screen';
-import { SessionActions } from '@/modules/identity/presentation/session-actions';
+import { SessionActions } from '@/app/[locale]/_chrome/session-actions';
 
 import { SiteNavigation } from './_chrome/site-navigation';
 

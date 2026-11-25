@@ -33,7 +33,10 @@
   },
   "theme": {
     "toDark": "Switch to dark theme",
-    "toLight": "Switch to light theme"
+    "toLight": "Switch to light theme",
+    "label": "Theme",
+    "light": "Light",
+    "dark": "Dark"
   },
   "language": {
     "label": "Language:",
@@ -53,7 +56,15 @@
     "menu": "Menu",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
-    "admin": "Admin"
+    "admin": "Admin",
+    "yourAccount": "Your account",
+    "accountSummary": "My account · {count, plural, =0 {no runners} one {# runner} other {# runners}}",
+    "yourRunners": "Your runners",
+    "runnerMeta": "{distance} · No. {bib}",
+    "payPending": "Pay pending ({count})",
+    "backToMenu": "Back to menu",
+    "completeRegistration": "Complete your registration",
+    "accountHint": "Tickets, payments, and your details"
   },
   "footer": {
     "tagline": "3K and 5K race",
