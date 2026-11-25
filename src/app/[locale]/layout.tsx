@@ -40,7 +40,7 @@ export async function generateMetadata({
   const share = { title: t('metaTitle'), description: t('metaDescription') };
   return {
     metadataBase: siteUrl,
-    title: { default: share.title, template: '%s' },
+    title: { default: share.title, template: '%s · Catarinotlón' },
     // iOS would turn the CLABE or a bib number into a phone link; phones are linked by hand.
     formatDetection: { telephone: false },
     openGraph: {

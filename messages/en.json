@@ -340,7 +340,7 @@
     "phone": "Phone",
     "passwordHelp": "At least 8 characters.",
     "signUp": {
-      "metaTitle": "Create your account · Catarinotlón 2026",
+      "metaTitle": "Create your account",
       "eyebrow": "Create your account",
       "title": "Register and put a name on your shirt",
       "body": "With your account you keep your registration, see how your shirt will look, and download your ticket for race day.",
@@ -352,7 +352,7 @@
       "signIn": "Sign in"
     },
     "signIn": {
-      "metaTitle": "Sign in · Catarinotlón 2026",
+      "metaTitle": "Sign in",
       "title": "Sign in",
       "body": "Sign in to see your ticket, your shirt, and your race details.",
       "divider": "or sign in with your email",
@@ -362,7 +362,7 @@
       "signUp": "Create your account"
     },
     "forgot": {
-      "metaTitle": "Forgot password · Catarinotlón 2026",
+      "metaTitle": "Forgot password",
       "title": "Forgot your password?",
       "body": "Enter your account email and we'll send you a link to create a new one.",
       "submit": "Send link",
@@ -374,14 +374,14 @@
       "resent": "We sent you another link."
     },
     "reset": {
-      "metaTitle": "New password · Catarinotlón 2026",
+      "metaTitle": "New password",
       "title": "Create your new password",
       "password": "New password",
       "confirm": "Confirm your new password",
       "submit": "Save password"
     },
     "verify": {
-      "metaTitle": "Confirm your email · Catarinotlón 2026",
+      "metaTitle": "Confirm your email",
       "title": "Confirm your email",
       "body": "We sent a link to {email}. Open it to activate your account and continue your registration.",
       "bodyGeneric": "We sent a link to your email. Open it to activate your account and continue your registration.",
@@ -419,7 +419,7 @@
     "submitWithDistance": "{label} · {distance}"
   },
   "register": {
-    "metaTitle": "Complete your registration · Catarinotlón 2026",
+    "metaTitle": "Complete your registration",
     "eyebrow": "Step 2 of 3",
     "title": "Complete your registration",
     "body": "You have an account, {name}. Now choose your race and the name for your shirt.",
@@ -427,7 +427,7 @@
     "submitAnother": "Save and add another runner"
   },
   "addRunner": {
-    "metaTitle": "Add another runner · Catarinotlón 2026",
+    "metaTitle": "Add another runner",
     "eyebrow": "Another runner",
     "title": "Add another runner",
     "body": "Register a relative or a friend from your account. They get their own shirt, number, and ticket.",
@@ -458,7 +458,7 @@
     "shirtLine": "{name} · Size {size}"
   },
   "payment": {
-    "metaTitle": "Payment · Catarinotlón 2026",
+    "metaTitle": "Payment",
     "title": "Pay by SPEI bank transfer",
     "body": "Transfer from your bank's app and upload your receipt. Once we validate it, your spot is confirmed and you get your ticket.",
     "transferHeading": "1. Transfer to this account",
@@ -513,7 +513,7 @@
     "receiptHelpAccount": "Image or PDF of your SPEI bank transfer receipt."
   },
   "account": {
-    "metaTitle": "My account · Catarinotlón 2026",
+    "metaTitle": "My account",
     "eyebrow": "My account",
     "greeting": "Hi, {name}",
     "body": "With this account you can register yourself and your family or friends. Each runner has their own shirt, number, and ticket.",
