@@ -92,7 +92,7 @@ export const OnTheShirt: Story = {
             src="/images/shirt/shirt-front.jpg"
             alt="Front of the official shirt"
             width={612}
-            height={834}
+            height={830}
             className="block aspect-[614/900] w-full object-cover"
           />
           <div className="absolute top-[37%] left-[29%] w-[42%] -rotate-2 drop-shadow-lg">

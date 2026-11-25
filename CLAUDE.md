@@ -484,7 +484,7 @@ Runner data is stored (name, email, phone). Never write it to logs, error messag
 - Dark theme: `#0E0E0F` background, `#18181A` surface, `#232327` raised surface, `#34343A` border, `#F5F5F6` text, `#B9B9BF` muted text, `#FF5A4D` red for text.
 - Red buttons, the dotted red panel, and the red registration section look the same in both themes.
 - Typography: Barlow Condensed (headings, italic 800/900, uppercase) and Barlow (body), loaded with `next/font`.
-- Motifs: black dots on red (medal ribbon), dotted route ending in a ladybug pin (shirt), speed lines from the logo.
+- Motifs: black dots on red (medal ribbon), dotted route ending in a ladybug pin, speed lines from the logo.
 - Accessibility: minimum 4.5:1 text contrast, 44 px touch targets, native controls (`button`, `a`, `input` + `label`), everything keyboard-navigable.
 - Design mobile-first.
 

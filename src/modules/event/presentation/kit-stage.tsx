@@ -22,7 +22,7 @@ export function KitStage({ className }: { className?: string }) {
         src="/images/shirt/shirt-front.jpg"
         alt={shirt('frontAlt')}
         width={612}
-        height={834}
+        height={830}
         priority
         sizes="(max-width: 1024px) 55vw, 320px"
         className="h-auto w-full -rotate-2 rounded-2xl bg-surface shadow-xl"

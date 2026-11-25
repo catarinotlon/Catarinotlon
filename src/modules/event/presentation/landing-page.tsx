@@ -18,6 +18,12 @@ import { ShirtTryOn } from './shirt-try-on';
 /** An illustrative bib for the kit section, for either distance; real numbers are assigned per registration. */
 const SAMPLE_BIB = { number: '48213', distance: '3K/5K' } as const;
 
+/** Intrinsic size of each shirt photo, at the photos' own aspect ratio. */
+const SHIRT_PHOTO_SIZE = {
+  front: { width: 612, height: 830 },
+  back: { width: 612, height: 897 },
+} as const;
+
 /** Props of {@link LandingPage}. */
 export interface LandingPageProps {
   /** The public event facts. */
@@ -365,8 +371,7 @@ export function LandingPage({ facts }: LandingPageProps) {
                 <Image
                   src={`/images/shirt/shirt-${side}.jpg`}
                   alt={t(`kit.${side}`)}
-                  width={612}
-                  height={834}
+                  {...SHIRT_PHOTO_SIZE[side]}
                   sizes="(max-width: 768px) 45vw, 280px"
                   className="block h-auto w-full rounded-xl"
                 />
