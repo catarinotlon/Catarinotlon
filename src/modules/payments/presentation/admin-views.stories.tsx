@@ -98,6 +98,7 @@ export const ReviewInProgress: Story = {
     await expect(canvasElement.querySelector('iframe')).toBeNull();
     await expect(canvas.getByText(/Este comprobante es un PDF/)).toBeVisible();
     await expect(canvas.getByText('$100.00')).toBeVisible();
+    await expect(canvas.getByText(/12:00\sp\.\sm\./)).toBeVisible();
     await expect(canvas.getByText('Emilio Cruz (5K, n.º 31758)')).toBeVisible();
     await expect(canvas.getByRole('link', { name: 'Abrir en tamaño completo' })).toBeVisible();
     await expect(canvas.getByRole('button', { name: 'Confirmar pago' })).toBeVisible();

@@ -7,6 +7,7 @@ import QRCode from 'qrcode';
 
 import { getPathname } from '@/i18n/navigation';
 import type { AppLocale } from '@/i18n/routing';
+import { formatStartTime } from '@/i18n/start-time';
 import {
   isPaymentOpen,
   readEventSettings,
@@ -442,7 +443,6 @@ export const localReceiptStore = () => (receiptUploadMode === 'local' ? localRec
 export const receiptMaxBytes = env.RECEIPT_MAX_BYTES;
 
 const APP_TIME_ZONE = 'America/Mexico_City';
-const MEXICO_CITY_UTC_OFFSET_HOURS = 6;
 
 /**
  * Formats the event facts for one runner.
@@ -455,7 +455,6 @@ const MEXICO_CITY_UTC_OFFSET_HOURS = 6;
 export function formatRunnerFacts(values: EventSettingsValues, distance: string, locale: string) {
   const format = createFormatter({ locale: locale as AppLocale, timeZone: APP_TIME_ZONE });
   const time = values.startTimes[distance === '3K' ? '3K' : '5K'];
-  const [hours = 0, minutes = 0] = (time ?? '').split(':').map(Number);
   const text = (item: { es: string; en: string } | null) =>
     (locale === 'en' ? item?.en : item?.es) || null;
 
@@ -463,12 +462,7 @@ export function formatRunnerFacts(values: EventSettingsValues, distance: string,
     date: values.eventDate
       ? format.dateTime(new Date(`${values.eventDate}T12:00:00Z`), { dateStyle: 'long' })
       : null,
-    start: time
-      ? format.dateTime(
-          new Date(Date.UTC(2026, 0, 1, hours + MEXICO_CITY_UTC_OFFSET_HOURS, minutes)),
-          { hour: 'numeric', minute: '2-digit' },
-        )
-      : null,
+    start: time ? formatStartTime(time, locale) : null,
     venue: text(values.venue),
     kitPickup: text(values.kitPickup),
     routeMapUrl: values.routeMapUrl,

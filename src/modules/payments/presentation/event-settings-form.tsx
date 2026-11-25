@@ -4,6 +4,7 @@ import { useFormatter, useTranslations } from 'next-intl';
 import { useState, type ReactNode } from 'react';
 
 import { Link } from '@/i18n/navigation';
+import { DATE_AND_TIME_FORMAT } from '@/i18n/start-time';
 import type { EventSettingsValues, SettingKey } from '@/modules/event';
 import { Button } from '@/shared/ui/button';
 import { FormAlert, TextAreaField, TextField } from '@/shared/ui/form-fields';
@@ -373,10 +374,7 @@ export function EventSettingsForm({
                 {history.map((entry) => (
                   <li key={entry.id} className="border-b border-border pb-2 last:border-b-0">
                     {t('historyLine', {
-                      date: format.dateTime(entry.createdAt, {
-                        dateStyle: 'medium',
-                        timeStyle: 'short',
-                      }),
+                      date: format.dateTime(entry.createdAt, DATE_AND_TIME_FORMAT),
                       who: entry.changedBy,
                       fields: entry.changedFields.map(keyLabel).join(', '),
                     })}

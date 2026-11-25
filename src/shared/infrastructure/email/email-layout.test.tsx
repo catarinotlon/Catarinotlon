@@ -92,7 +92,7 @@ describe('email layout', () => {
       distance: '5K',
       rows: [
         ['Fecha', '15 de enero de 2030'],
-        ['Salida', '7:30'],
+        ['Salida', expect.stringMatching(/^7:30\sa\.\sm\.$/)],
         ['Sede', 'SEDE ES'],
         ['Número', '48213'],
         ['Talla', 'SIZE-A'],
