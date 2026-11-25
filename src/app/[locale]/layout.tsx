@@ -41,6 +41,14 @@ export async function generateMetadata({
   return {
     metadataBase: siteUrl,
     title: { default: share.title, template: '%s · Catarinotlón' },
+    // No crawler or AI tool may index the site. next.config.ts sends the same as X-Robots-Tag.
+    robots: {
+      index: false,
+      follow: false,
+      noarchive: true,
+      nosnippet: true,
+      noimageindex: true,
+    },
     // iOS would turn the CLABE or a bib number into a phone link; phones are linked by hand.
     formatDetection: { telephone: false },
     openGraph: {

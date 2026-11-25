@@ -19,7 +19,7 @@ type Props = {
 export async function generateMetadata({ params }: Pick<Props, 'params'>): Promise<Metadata> {
   const locale = requireLocale((await params).locale);
   const t = await getTranslations({ locale, namespace: 'auth.verify' });
-  return { title: t('metaTitle'), robots: { index: false } };
+  return { title: t('metaTitle') };
 }
 
 export default async function VerifyEmailPage({ params, searchParams }: Props) {

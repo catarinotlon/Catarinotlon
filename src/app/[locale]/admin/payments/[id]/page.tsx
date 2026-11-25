@@ -29,7 +29,7 @@ type Props = { params: Promise<{ locale: string; id: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = requireLocale((await params).locale);
   const t = await getTranslations({ locale, namespace: 'admin.review' });
-  return { title: t('metaTitle'), robots: { index: false } };
+  return { title: t('metaTitle') };
 }
 
 export default async function AdminPaymentPage({ params }: Props) {

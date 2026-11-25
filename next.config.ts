@@ -11,6 +11,20 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     '/api/tickets/**': ['./src/modules/ticketing/infrastructure/pdf-assets/**/*'],
   },
+  // No crawler or AI tool may index the site, files and API responses included (robots.ts).
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow, noarchive, nosnippet, noimageindex, noai, noimageai',
+          },
+        ],
+      },
+    ];
+  },
   // PostHog goes through the site's own path so ad blockers do not drop it.
   async rewrites() {
     return [
