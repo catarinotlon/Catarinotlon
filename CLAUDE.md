@@ -16,7 +16,8 @@ Web app for the **Catarinotlón 2026** race (3K and 5K). Runners read about the 
 6. **No hardcoded user-facing text.** Every string a user can read comes from the message files, in both English and Spanish.
 7. **Do not invent event facts** (date, venue, prices, shirt sizes, rules). If a fact is missing, ask or leave it as pending configuration.
 8. **Soft delete only.** No row is ever physically deleted from the database, and no uploaded file is ever removed (see "Soft delete").
-9. **Check current documentation before using an API** from Next.js, next-intl, next-themes, Better Auth, Drizzle, Turso, Vercel Blob, Storybook, Vitest, Playwright, Sentry, Resend, React Email, Tailwind, or TypeDoc (Context7). These tools change fast; do not rely on memory.
+9. **Always work in a git worktree.** Every change (feature, fix, docs) is made in its own worktree under `.claude/worktrees/<name>` on its own branch, never in the main checkout (see "Worktrees").
+10. **Check current documentation before using an API** from Next.js, next-intl, next-themes, Better Auth, Drizzle, Turso, Vercel Blob, Storybook, Vitest, Playwright, Sentry, Resend, React Email, Tailwind, or TypeDoc (Context7). These tools change fast; do not rely on memory.
 
 ## Stack
 
@@ -395,6 +396,12 @@ A change is ready when:
 - [ ] Components use semantic tokens only and work in both light and dark themes.
 - [ ] Schema changes include their generated migration in `drizzle/`, and every new table has the soft-delete columns and its `BEFORE DELETE` trigger.
 - [ ] `pnpm check` is green.
+
+## Worktrees
+
+- **Never work in the main checkout.** Before the first edit of any change, create a worktree on a new branch: `git worktree add .claude/worktrees/<name> -b <type>/<name>` from the branch the change starts from (usually `main`), and do all the work, tests, and commits there.
+- `.claude/worktrees/` is ignored by git, ESLint, Prettier, and `tsc`, so one worktree's tools never read another's files. Each worktree needs its own `pnpm install` and its own `.env.local` (copy it; never commit it).
+- Remove a worktree (`git worktree remove`) once its branch is merged or abandoned.
 
 ## Commits
 
