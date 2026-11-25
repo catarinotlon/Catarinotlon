@@ -65,7 +65,7 @@ async function paidRunner() {
   const account = await runner();
   const pathname = `receipts/${account.userId}/receipt.pdf`;
   await localReceiptStore()?.write(pathname, 'application/pdf', new TextEncoder().encode('%PDF'));
-  await redirectOf(() => recordReceiptAction({ pathname }));
+  await recordReceiptAction({ pathname });
   const [payment] = await sql('SELECT id FROM payments WHERE owner_id = ?', [account.userId]);
   return { ...account, pathname, paymentId: String(payment?.id) };
 }

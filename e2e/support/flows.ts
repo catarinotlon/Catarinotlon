@@ -40,6 +40,10 @@ export async function signIn(page: Page, email: string) {
 export async function uploadReceipt(page: Page) {
   await page.getByLabel(/Comprobante de tu Transferencia \(SPEI\)/).setInputFiles(RECEIPT);
   await page.getByRole('button', { name: 'Enviar comprobante' }).click();
+  const received = page.getByRole('dialog', { name: 'Comprobante recibido' });
+  await expect(received).toBeVisible();
+  await expect(received.getByRole('button', { name: 'Continuar' })).toBeVisible();
+  await expect(page).toHaveURL(/\/es\/cuenta/);
   await expect(page.getByRole('heading', { name: 'Estamos validando tu pago' })).toBeVisible();
 }
 

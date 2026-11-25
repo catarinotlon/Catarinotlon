@@ -29,7 +29,8 @@
     "signingOut": "Cerrando sesión…",
     "searching": "Buscando…",
     "adding": "Agregando…",
-    "removing": "Quitando…"
+    "removing": "Quitando…",
+    "loadingAccount": "Cargando tu cuenta…"
   },
   "theme": {
     "toDark": "Cambiar a tema oscuro",
@@ -479,6 +480,9 @@
     "submit": "Enviar comprobante",
     "sending": "Enviando…",
     "later": "Subirlo después desde mi cuenta",
+    "receivedTitle": "Comprobante recibido",
+    "receivedBody": "Lo estamos validando. Te avisamos por correo en cuanto tu pago quede confirmado.",
+    "receivedContinue": "Continuar",
     "summaryHeading": "Lo que vas a pagar",
     "summaryBody": "Una sola transferencia cubre a todos tus corredores por pagar.",
     "shirtLine": "Playera {name} · {size}",
