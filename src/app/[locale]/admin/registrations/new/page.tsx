@@ -18,7 +18,7 @@ type Props = { params: Promise<{ locale: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = requireLocale((await params).locale);
   const t = await getTranslations({ locale, namespace: 'admin.form' });
-  return { title: t('newMeta'), robots: { index: false } };
+  return { title: t('newMeta') };
 }
 
 export default async function NewRegistrationPage({ params }: Props) {

@@ -1,5 +1,8 @@
 import { expect, test } from '@playwright/test';
 
+/** Every directive that asks crawlers and AI tools to leave the site alone. */
+const BLOCKED = ['noindex', 'nofollow', 'noarchive', 'nosnippet', 'noimageindex'] as const;
+
 test.describe('metadata', () => {
   test.skip(({ isMobile }) => isMobile, 'Metadata does not depend on the viewport.');
 
@@ -67,5 +70,34 @@ test.describe('metadata', () => {
     await page.getByRole('link', { name: 'Iniciar sesión', exact: true }).first().click();
     await expect(page).toHaveURL(/\/es\/iniciar-sesion$/);
     await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', '#0e0e0f');
+  });
+
+  test('every page asks crawlers not to index, follow, or train on it', async ({ page }) => {
+    for (const path of ['/es', '/en/sign-in', '/es/nueva-contrasena']) {
+      const response = await page.goto(path);
+      const header = response?.headers()['x-robots-tag'] ?? '';
+      for (const directive of [...BLOCKED, 'noai', 'noimageai']) {
+        expect(header, `${path} X-Robots-Tag`).toContain(directive);
+      }
+      const meta = page.locator('meta[name="robots"]');
+      await expect(meta).toHaveCount(1);
+      for (const directive of BLOCKED) {
+        await expect(meta, `${path} robots meta`).toHaveAttribute(
+          'content',
+          new RegExp(`\\b${directive}\\b`),
+        );
+      }
+    }
+  });
+
+  test('robots.txt keeps every crawler out except link previews', async ({ request }) => {
+    const response = await request.get('/robots.txt');
+    expect(response.ok()).toBe(true);
+    const robots = await response.text();
+
+    expect(robots).toMatch(/User-Agent: \*\nDisallow: \/\n/);
+    expect(robots).toContain('User-Agent: Twitterbot');
+    expect(robots).toContain('User-Agent: facebookexternalhit');
+    expect(robots).not.toContain('Sitemap');
   });
 });

@@ -20,7 +20,7 @@ type Props = { params: Promise<{ locale: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = requireLocale((await params).locale);
   const t = await getTranslations({ locale, namespace: 'register' });
-  return { title: t('metaTitle'), robots: { index: false } };
+  return { title: t('metaTitle') };
 }
 
 export default async function RegisterPage({ params }: Props) {
