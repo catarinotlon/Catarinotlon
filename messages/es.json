@@ -724,7 +724,7 @@
       "scanHint": "Apunta la cámara al código QR del boleto",
       "scan": "Escanear boleto",
       "stopScan": "Detener cámara",
-      "scanUnavailable": "Este navegador no puede leer códigos QR. Busca por nombre o número.",
+      "cameraUnavailable": "No pudimos abrir la cámara. Revisa el permiso de cámara del navegador o busca por nombre o número.",
       "search": "O busca por nombre o número de corredor",
       "searchButton": "Buscar",
       "noResults": "No encontramos a ese corredor.",
@@ -739,13 +739,34 @@
       "delivered": "Kit entregado",
       "collectedLine": "Recogió: {name}",
       "undo": "Deshacer",
-      "notConfirmed": "Este corredor todavía no tiene el pago confirmado.",
       "errors": {
         "registration_not_confirmed": "Solo se entrega el kit de inscripciones confirmadas.",
         "kit_already_delivered": "Este kit ya se entregó.",
         "kit_not_delivered": "Este kit no está marcado como entregado.",
         "not_found": "No encontramos esa inscripción."
-      }
+      },
+      "verdict": {
+        "ready": "Entregar kit",
+        "delivered": "Ya se entregó",
+        "unpaid": "No entregar",
+        "notFound": "Boleto no encontrado",
+        "validating": "Validando boleto…",
+        "done": "Kit entregado"
+      },
+      "resultLabel": "Resultado del boleto",
+      "deliveredAt": "Se entregó el {when}",
+      "unpaidBody": "Su pago {state, select, in_review {está en revisión} other {está pendiente}}. El kit solo se entrega con el pago confirmado.",
+      "notFoundBody": "El código es un boleto, pero no corresponde a ninguna inscripción activa.",
+      "ticketCode": "Boleto",
+      "scanNext": "Escanear siguiente",
+      "cancelScan": "Cancelar y escanear otro",
+      "undoDelivery": "Deshacer entrega",
+      "returning": "Volviendo a la cámara…",
+      "deliveredToast": "Kit de {name} entregado",
+      "notTicket": "Ese QR no es un boleto de Catarinotlón",
+      "pointAtTicket": "Apunta al QR del boleto",
+      "searchInstead": "Buscar por nombre o número",
+      "empty": "Escanea un boleto o busca a un corredor para ver su kit."
     },
     "settings": {
       "metaTitle": "Configuración · Admin",

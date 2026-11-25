@@ -249,9 +249,9 @@ test.describe('runner journey', () => {
       await admin.getByLabel(/busca por nombre/i).fill(name);
       await admin.getByRole('button', { name: 'Buscar' }).click();
       await admin.getByRole('button', { name: 'Marcar kit entregado' }).click();
-      await expect(admin.getByText('Kit entregado')).toBeVisible();
+      await expect(admin.getByRole('heading', { name: 'Ya se entregó' })).toBeVisible();
 
-      await admin.getByRole('button', { name: 'Deshacer' }).click();
+      await admin.getByRole('button', { name: 'Deshacer entrega' }).click();
       await expect(admin.getByRole('button', { name: 'Marcar kit entregado' })).toBeVisible();
     });
   });

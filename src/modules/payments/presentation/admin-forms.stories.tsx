@@ -3,6 +3,7 @@ import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 
 import { EMPTY_SETTINGS } from '@/modules/event';
 import type { FormAction } from '@/shared/ui/form-state';
+import { blockCamera, filmQrCode } from '@/test/fake-camera';
 
 import { AdminRegistrationForm } from './admin-registration-form';
 import { EventSettingsForm } from './event-settings-form';
@@ -233,16 +234,64 @@ export const SettingsHistory: Story = {
   },
 };
 
-/** Without camera support, it explains the fallback. */
-export const ScannerUnavailable: Story = {
-  render: () => <TicketScanner onTicket={fn()} />,
+const TICKET_ID = '3f2b8c1e-7a4d-4e9f-b6c2-1d5a9e8f0b37';
+const acceptCode = fn(() => 'accepted' as const);
+
+/** Browsers without a native barcode detector (Safari, Firefox) still read the ticket. */
+export const ScanWithoutNativeDetector: Story = {
+  beforeEach: () => {
+    acceptCode.mockClear();
+    return filmQrCode(TICKET_ID, { withoutNativeDetector: true });
+  },
+  render: () => <TicketScanner onCode={acceptCode} />,
+  play: async ({ canvasElement }) => {
+    await userEvent.click(within(canvasElement).getByRole('button', { name: 'Escanear boleto' }));
+    await waitFor(() => expect(acceptCode).toHaveBeenCalledWith(TICKET_ID), { timeout: 5000 });
+  },
+};
+
+/** After a read the camera stays on, ready for the next runner. */
+export const ScannerStaysOn: Story = {
+  beforeEach: () => {
+    acceptCode.mockClear();
+    return filmQrCode(TICKET_ID);
+  },
+  render: () => <TicketScanner onCode={acceptCode} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    Reflect.deleteProperty(window, 'BarcodeDetector');
+    await userEvent.click(canvas.getByRole('button', { name: 'Escanear boleto' }));
+    await waitFor(() => expect(acceptCode).toHaveBeenCalled(), { timeout: 5000 });
+    await expect(await canvas.findByText('Boleto leído')).toBeVisible();
+    await expect(canvas.getByRole('button', { name: 'Detener cámara' })).toBeVisible();
+  },
+};
+
+const ignoreCode = fn(() => 'accepted' as const);
+
+/** While paused (a result is open), the scanner reads nothing. */
+export const ScannerPaused: Story = {
+  beforeEach: () => {
+    ignoreCode.mockClear();
+    return filmQrCode(TICKET_ID);
+  },
+  render: () => <TicketScanner onCode={ignoreCode} paused />,
+  play: async ({ canvasElement }) => {
+    await userEvent.click(within(canvasElement).getByRole('button', { name: 'Escanear boleto' }));
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await expect(ignoreCode).not.toHaveBeenCalled();
+  },
+};
+
+/** When the camera cannot be opened, it says so and points to the search. */
+export const ScannerCameraBlocked: Story = {
+  beforeEach: blockCamera,
+  render: () => <TicketScanner onCode={acceptCode} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
     await userEvent.click(canvas.getByRole('button', { name: 'Escanear boleto' }));
     await expect(
       await canvas.findByText(
-        'Este navegador no puede leer códigos QR. Busca por nombre o número.',
+        'No pudimos abrir la cámara. Revisa el permiso de cámara del navegador o busca por nombre o número.',
       ),
     ).toBeVisible();
   },
@@ -303,7 +352,7 @@ export const SettingsSavePending: Story = {
 
 /** The scanner’s camera view never appears in a session recording. */
 export const ScannerHiddenFromRecordings: Story = {
-  render: () => <TicketScanner onTicket={fn()} />,
+  render: () => <TicketScanner onCode={acceptCode} />,
   play: async ({ canvasElement }) => {
     const button = within(canvasElement).getByRole('button', { name: 'Escanear boleto' });
     await expect(button.closest('.ph-no-capture')).not.toBeNull();

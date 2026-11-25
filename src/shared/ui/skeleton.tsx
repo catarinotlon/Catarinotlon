@@ -200,21 +200,26 @@ export function AdminDetailSkeleton() {
 }
 
 /**
- * The shape of kit pickup on a phone: the search and the runner's kit.
+ * The shape of kit pickup: the camera and the search, with the result beside them on a wide screen.
  *
  * @returns The skeleton.
  */
 export function KitPickupSkeleton() {
   return (
     <LoadingRegion>
-      <div className="mx-auto flex w-full max-w-[540px] flex-col gap-4">
-        <Skeleton className="h-13 w-full rounded-full" />
-        <Field />
-        <CardShape>
-          <Skeleton className="h-7 w-2/3" />
-          <Skeleton className="h-4 w-1/2" />
+      <div className="mx-auto grid w-full max-w-md gap-4 md:max-w-5xl md:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] md:gap-x-8">
+        <div className="flex flex-col gap-4">
+          <Skeleton className="h-[min(60dvh,30rem)] w-full rounded-3xl md:aspect-[4/3] md:h-auto" />
           <Skeleton className="h-13 w-full rounded-full" />
-        </CardShape>
+          <Field />
+        </div>
+        <div className="hidden md:block">
+          <CardShape>
+            <Skeleton className="h-7 w-2/3" />
+            <Skeleton className="h-4 w-1/2" />
+            <Skeleton className="h-13 w-full rounded-full" />
+          </CardShape>
+        </div>
       </div>
     </LoadingRegion>
   );

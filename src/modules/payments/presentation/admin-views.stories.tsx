@@ -148,19 +148,18 @@ const kitRunner: KitRunner = {
   paymentState: 'paid',
   kitDelivered: false,
   collectedBy: null,
+  deliveredAt: null,
 };
 
 const deliver = fn<FormAction>(async () => ({ done: true }));
 
 /** A confirmed runner's kit can be delivered, noting who collects it. */
 export const KitReady: Story = {
-  render: () => (
-    <KitPickupPanel runner={kitRunner} scanned deliverAction={deliver} undoAction={deliver} />
-  ),
+  render: () => <KitPickupPanel runner={kitRunner} deliverAction={deliver} undoAction={deliver} />,
   play: async ({ canvasElement }) => {
     deliver.mockClear();
     const canvas = within(canvasElement);
-    await expect(canvas.getByText('Boleto leído')).toBeVisible();
+    await expect(canvas.getByRole('heading', { name: 'Entregar kit' })).toBeVisible();
     await userEvent.type(canvas.getByLabelText('¿Recoge otra persona? (opcional)'), 'Una tía');
     await userEvent.click(canvas.getByRole('button', { name: 'Marcar kit entregado' }));
     await waitFor(() => expect(deliver).toHaveBeenCalled());
@@ -170,38 +169,86 @@ export const KitReady: Story = {
   },
 };
 
-/** A delivered kit can be undone. */
+const delivered = fn();
+
+/** Once the server records the delivery, the panel tells whoever is listening. */
+export const KitReadyReportsDelivery: Story = {
+  render: () => (
+    <KitPickupPanel
+      runner={kitRunner}
+      deliverAction={deliver}
+      undoAction={deliver}
+      onDelivered={delivered}
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    delivered.mockClear();
+    await userEvent.click(
+      within(canvasElement).getByRole('button', { name: 'Marcar kit entregado' }),
+    );
+    await waitFor(() => expect(delivered).toHaveBeenCalledTimes(1));
+  },
+};
+
+/** A kit that was already delivered says when and to whom, and can be undone. */
 export const KitDelivered: Story = {
   render: () => (
     <KitPickupPanel
-      runner={{ ...kitRunner, kitDelivered: true, collectedBy: 'Una tía' }}
+      runner={{
+        ...kitRunner,
+        kitDelivered: true,
+        collectedBy: 'Una tía',
+        deliveredAt: new Date('2026-11-29T12:48:00.000Z'),
+      }}
       deliverAction={deliver}
       undoAction={deliver}
     />
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByText('Kit entregado')).toBeVisible();
+    await expect(canvas.getByRole('heading', { name: 'Ya se entregó' })).toBeVisible();
+    await expect(canvas.getByText(/Se entregó el .*6:48\sa\.\sm\./)).toBeVisible();
     await expect(canvas.getByText('Recogió: Una tía')).toBeVisible();
-    await expect(canvas.getByRole('button', { name: 'Deshacer' })).toBeVisible();
+    await expect(canvas.getByRole('button', { name: 'Deshacer entrega' })).toBeVisible();
+    await expect(canvas.queryByRole('button', { name: 'Marcar kit entregado' })).toBeNull();
   },
 };
 
-/** An unpaid runner cannot collect a kit. */
+/** An unpaid runner cannot collect a kit, and the panel says why. */
 export const KitNotConfirmed: Story = {
+  render: () => (
+    <KitPickupPanel
+      runner={{ ...kitRunner, paymentState: 'in_review' }}
+      deliverAction={deliver}
+      undoAction={deliver}
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('heading', { name: 'No entregar' })).toBeVisible();
+    await expect(canvas.getByText(/Su pago está en revisión/)).toBeVisible();
+    await expect(canvas.queryByRole('button', { name: 'Marcar kit entregado' })).toBeNull();
+  },
+};
+
+const next = fn();
+
+/** From a scan, every verdict offers to move on to the next ticket. */
+export const KitScanNext: Story = {
   render: () => (
     <KitPickupPanel
       runner={{ ...kitRunner, paymentState: 'pending' }}
       deliverAction={deliver}
       undoAction={deliver}
+      onNext={next}
     />
   ),
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    await expect(
-      canvas.getByText('Este corredor todavía no tiene el pago confirmado.'),
-    ).toBeVisible();
-    await expect(canvas.queryByRole('button', { name: 'Marcar kit entregado' })).toBeNull();
+    next.mockClear();
+    await userEvent.click(
+      within(canvasElement).getByRole('button', { name: 'Escanear siguiente' }),
+    );
+    await expect(next).toHaveBeenCalledTimes(1);
   },
 };
 
@@ -254,7 +301,7 @@ export const UndoPending: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByRole('button', { name: 'Deshacer' }));
+    await userEvent.click(canvas.getByRole('button', { name: 'Deshacer entrega' }));
     await expectBusy(await canvas.findByRole('button', { name: 'Deshaciendo…' }));
   },
 };

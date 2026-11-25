@@ -100,3 +100,17 @@ export function acceptancesOf(email: string): Promise<unknown[]> {
 
 /** Builds an email address unique to this run. */
 export const uniqueEmail = (prefix: string): string => `${prefix}-${randomUUID()}@e2e.test`;
+
+/** Finds the ticket UUID of an account's first confirmed runner, as its QR code carries it. */
+export function ticketOf(email: string): Promise<string> {
+  return withClient(async (client) => {
+    const result = await client.execute({
+      sql: `SELECT t.id FROM tickets t
+            JOIN registrations r ON r.id = t.registration_id
+            JOIN user u ON u.id = r.owner_id
+            WHERE u.email = ? ORDER BY r.created_at LIMIT 1`,
+      args: [email],
+    });
+    return String(result.rows[0]?.id);
+  });
+}

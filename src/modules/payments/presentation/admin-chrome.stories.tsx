@@ -51,12 +51,11 @@ export const OwnerShell: Story = {
   },
 };
 
-/** Finds a runner by QR code, name, or bib number. */
+/** Finds a runner by name or bib number. */
 export const KitSearch: Story = {
   render: () => <KitPickupSearch query="48213" />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByRole('button', { name: 'Escanear boleto' })).toBeVisible();
     await expect(canvas.getByLabelText('O busca por nombre o número de corredor')).toHaveValue(
       '48213',
     );
