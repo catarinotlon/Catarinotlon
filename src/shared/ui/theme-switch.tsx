@@ -4,6 +4,8 @@ import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { useSyncExternalStore } from 'react';
 
+import { cn } from './cn';
+
 const subscribe = () => () => undefined;
 
 /**
@@ -11,7 +13,9 @@ const subscribe = () => () => undefined;
  *
  * @remarks
  * This is the only place that calls `setTheme`. The active theme is unknown on
- * the server, so a same-size placeholder renders until the client has mounted.
+ * the server, so a same-size placeholder renders until the client has mounted. The moon
+ * and the sun cross-fade and turn when the theme changes, unless the visitor prefers
+ * reduced motion.
  *
  * @returns The theme switch.
  */
@@ -35,25 +39,39 @@ export function ThemeSwitch() {
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
       className="inline-flex size-11 cursor-pointer items-center justify-center rounded-xl border-2 border-input-border text-foreground hover:bg-muted"
     >
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 24 24"
-        className="size-5"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        {isDark ? (
-          <>
-            <circle cx="12" cy="12" r="4" />
-            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
-          </>
-        ) : (
+      <span aria-hidden="true" className="relative size-5">
+        <svg
+          data-icon="moon"
+          viewBox="0 0 24 24"
+          className={cn(
+            'absolute inset-0 size-5 transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none',
+            isDark ? 'scale-50 -rotate-90 opacity-0' : 'scale-100 rotate-0 opacity-100',
+          )}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />
-        )}
-      </svg>
+        </svg>
+        <svg
+          data-icon="sun"
+          viewBox="0 0 24 24"
+          className={cn(
+            'absolute inset-0 size-5 transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none',
+            isDark ? 'scale-100 rotate-0 opacity-100' : 'scale-50 rotate-90 opacity-0',
+          )}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+        </svg>
+      </span>
     </button>
   );
 }

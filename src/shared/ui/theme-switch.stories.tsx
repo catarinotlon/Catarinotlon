@@ -22,3 +22,23 @@ export const Default: Story = {
     });
   },
 };
+
+/** The moon and the sun cross-fade and turn instead of swapping at once. */
+export const SmoothIconSwap: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = await canvas.findByRole('button');
+    const moon = button.querySelector('[data-icon="moon"]');
+    const sun = button.querySelector('[data-icon="sun"]');
+    await expect(moon).not.toBeNull();
+    await expect(sun).not.toBeNull();
+    for (const icon of [moon, sun]) {
+      await expect(icon).toHaveClass(
+        'transition-[opacity,transform]',
+        'motion-reduce:transition-none',
+      );
+    }
+    const hidden = [moon, sun].filter((icon) => icon?.classList.contains('opacity-0'));
+    await expect(hidden).toHaveLength(1);
+  },
+};

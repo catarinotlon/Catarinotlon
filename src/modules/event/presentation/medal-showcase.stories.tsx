@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { expect, userEvent, within } from 'storybook/test';
+import { expect, userEvent, waitFor, within } from 'storybook/test';
 
 import { MedalShowcase } from './medal-showcase';
 
@@ -44,5 +44,20 @@ export const SwitchTo3K: Story = {
     for (const medal of canvas.getAllByRole('img')) {
       await expect(medal.parentElement).toHaveClass('studio-backdrop');
     }
+  },
+};
+
+/** The highlight slides to the chosen distance instead of jumping. */
+export const SmoothSwitch: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const thumb = canvas.getByTestId('segmented-thumb');
+    await expect(thumb).toHaveClass('transition-transform', 'motion-reduce:transition-none');
+    await expect(getComputedStyle(thumb).transitionDuration).not.toBe('0s');
+    const atFive = thumb.getBoundingClientRect().left;
+
+    await userEvent.click(canvas.getByRole('radio', { name: '3K' }));
+    await waitFor(() => expect(thumb.getBoundingClientRect().left).toBeLessThan(atFive));
+    await expect(canvas.getByText('3K')).toHaveClass('text-inverse-foreground');
   },
 };
