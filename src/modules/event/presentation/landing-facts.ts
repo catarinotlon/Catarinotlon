@@ -18,6 +18,8 @@ export interface LandingFacts {
   readonly kitPickup: string | null;
   /** Link to the route map. */
   readonly routeMapUrl: string | null;
+  /** Link that opens the venue on Google Maps, built from its Spanish name. */
+  readonly venueMapUrl: string | null;
   /** The registration fee as a currency amount. */
   readonly feeAmount: number | null;
   /** The shirt sizes on offer. */
@@ -25,6 +27,8 @@ export interface LandingFacts {
   /** Whether payment is open. */
   readonly paymentOpen: boolean;
 }
+
+const GOOGLE_MAPS_SEARCH = 'https://www.google.com/maps/search/?api=1&query=';
 
 const localized = (text: LocalizedText | null, locale: string): string | null =>
   (locale === 'en' ? text?.en : text?.es) || null;
@@ -34,7 +38,9 @@ const localized = (text: LocalizedText | null, locale: string): string | null =>
  *
  * @remarks
  * The bank and contact data are left out, because they are never rendered for
- * signed-out visitors.
+ * signed-out visitors. The venue map searches Google Maps for the venue's Spanish
+ * name in every locale, because the place is known by that name; it needs no
+ * setting of its own.
  *
  * @param values - The current event settings.
  * @param locale - The page's locale.
@@ -48,6 +54,9 @@ export function toLandingFacts(values: EventSettingsValues, locale: string): Lan
     venue: localized(values.venue, locale),
     kitPickup: localized(values.kitPickup, locale),
     routeMapUrl: values.routeMapUrl,
+    venueMapUrl: values.venue?.es
+      ? `${GOOGLE_MAPS_SEARCH}${encodeURIComponent(values.venue.es)}`
+      : null,
     feeAmount: values.feeCents === null ? null : values.feeCents / 100,
     shirtSizes: values.shirtSizes,
     paymentOpen: isPaymentOpen(values),

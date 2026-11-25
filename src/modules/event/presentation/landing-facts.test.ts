@@ -24,6 +24,7 @@ describe('toLandingFacts', () => {
       venue: null,
       kitPickup: null,
       routeMapUrl: null,
+      venueMapUrl: null,
       feeAmount: null,
       shirtSizes: [],
       paymentOpen: false,
@@ -33,6 +34,13 @@ describe('toLandingFacts', () => {
   it('picks the free text of the requested locale', () => {
     expect(toLandingFacts(complete, 'en')).toMatchObject({ venue: 'Venue', kitPickup: 'Pickup' });
     expect(toLandingFacts(complete, 'es')).toMatchObject({ venue: 'Sede', kitPickup: 'Entrega' });
+  });
+
+  it('links the venue to a Google Maps search by its Spanish name in every locale', () => {
+    const settings = { ...complete, venue: { es: 'Parque Hundido, CDMX', en: 'Sunken Park' } };
+    const expected = 'https://www.google.com/maps/search/?api=1&query=Parque%20Hundido%2C%20CDMX';
+    expect(toLandingFacts(settings, 'es').venueMapUrl).toBe(expected);
+    expect(toLandingFacts(settings, 'en').venueMapUrl).toBe(expected);
   });
 
   it('converts the fee from cents to a currency amount', () => {

@@ -101,7 +101,9 @@
       "signIn": "Inicia sesión",
       "date": "Fecha",
       "startDistance": "Salida {distance}",
-      "venue": "Sede"
+      "venue": "Sede",
+      "venueMap": "Ver mapa",
+      "venueMapLabel": "Ver mapa de {venue} (se abre en otra pestaña)"
     },
     "distances": {
       "eyebrow": "Distancias",

@@ -11,6 +11,7 @@ const missing: LandingFacts = {
   venue: null,
   kitPickup: null,
   routeMapUrl: null,
+  venueMapUrl: null,
   feeAmount: null,
   shirtSizes: [],
   paymentOpen: false,
@@ -33,6 +34,7 @@ export const FactsPending: Story = {
     await expect(canvas.getAllByText('Por confirmar').length).toBeGreaterThan(0);
     await expect(canvas.getAllByText('Inscripciones próximamente').length).toBeGreaterThan(0);
     await expect(canvas.getByRole('main').textContent).not.toContain('[');
+    await expect(canvas.queryByRole('link', { name: /Ver mapa/ })).toBeNull();
   },
 };
 
@@ -46,6 +48,7 @@ export const FactsConfigured: Story = {
       venue: 'Sample venue',
       kitPickup: 'Sample pickup details',
       routeMapUrl: 'https://example.test/route',
+      venueMapUrl: 'https://example.test/venue',
       feeAmount: 100,
       shirtSizes: ['Size A', 'Size B'],
       paymentOpen: true,
@@ -123,7 +126,7 @@ export const StartTimes: Story = {
   ...(FactsConfigured.args ? { args: FactsConfigured.args } : {}),
   play: async ({ canvasElement }) => {
     const band = within(within(canvasElement).getByTestId('facts-band'));
-    await expect(band.getAllByRole('term').map((term) => term.textContent)).toEqual([
+    await expect(band.getAllByRole('term').map((term) => term.firstChild?.textContent)).toEqual([
       'Fecha',
       'Salida 3K',
       'Salida 5K',
@@ -134,5 +137,20 @@ export const StartTimes: Story = {
     await expect(within(three).getByText('a. m.')).toHaveClass('text-muted-foreground');
     const five = band.getByText('Salida 5K').nextElementSibling as HTMLElement;
     await expect(five.textContent?.replace(/\s+/g, ' ')).toBe('7:30 a. m.');
+  },
+};
+
+/** The venue label carries a small link that opens the venue on a map, in a new tab. */
+export const VenueMap: Story = {
+  ...(FactsConfigured.args ? { args: FactsConfigured.args } : {}),
+  play: async ({ canvasElement }) => {
+    const band = within(within(canvasElement).getByTestId('facts-band'));
+    const venueTerm = band.getAllByRole('term')[3] as HTMLElement;
+    await expect(venueTerm.firstChild?.textContent).toBe('Sede');
+    const link = within(venueTerm).getByRole('link', { name: /Ver mapa/ });
+    await expect(link).toHaveAttribute('href', 'https://example.test/venue');
+    await expect(link).toHaveAttribute('target', '_blank');
+    await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    await expect(link.getAttribute('aria-label')).toContain('Sample venue');
   },
 };
