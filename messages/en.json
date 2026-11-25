@@ -544,6 +544,7 @@
     "sentAt": "Sent: {date}",
     "viewReceipt": "View receipt",
     "replaceReceipt": "Replace receipt",
+    "receiptReplaced": "Receipt replaced",
     "shirtHeading": "Your shirt",
     "shirtName": "Name on your shirt",
     "saveName": "Save name",

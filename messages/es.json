@@ -544,6 +544,7 @@
     "sentAt": "Enviado: {date}",
     "viewReceipt": "Ver comprobante",
     "replaceReceipt": "Reemplazar comprobante",
+    "receiptReplaced": "Comprobante reemplazado",
     "shirtHeading": "Tu playera",
     "shirtName": "Nombre en tu playera",
     "saveName": "Guardar nombre",
