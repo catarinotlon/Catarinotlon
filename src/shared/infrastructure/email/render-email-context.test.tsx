@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import type { EmailMessage } from '@/shared/domain/email';
 
-import { EMPTY_EMAIL_CONTEXT, type EmailEventContext } from './email-content';
+import { buildEmailContent, EMPTY_EMAIL_CONTEXT, type EmailEventContext } from './email-content';
 import { renderEmail } from './render-email';
 
 const context: EmailEventContext = {
@@ -32,7 +32,6 @@ const confirmed: Extract<EmailMessage, { template: 'registration_confirmed' }> =
     shirtName: 'SOFI',
     shirtSize: 'SIZE-A',
     ticketId: '7f1c2d3e-0000-4000-8000-000000000001',
-    ticketPdfUrl: 'https://app.test/ticket.pdf',
     accountUrl: 'https://app.test/account',
   },
 };
@@ -128,17 +127,26 @@ describe('renderEmail with the event facts', () => {
       expect(text).toContain('Por confirmar');
     });
 
-    it('links to both the account and the PDF', async () => {
+    it('links to the account, with no direct PDF download', async () => {
       const { html } = await renderEmail(confirmed, context);
 
       expect(html).toContain('Ver mi boleto y mi playera');
       expect(html).toContain('href="https://app.test/account"');
-      expect(html).toContain('href="https://app.test/ticket.pdf"');
+      expect(html).not.toMatch(/href="[^"]*pdf/i);
+    });
+
+    it('explains how to download the PDF from the account', () => {
+      expect(buildEmailContent(confirmed, context).lead).toBe(
+        'Para descargar tu boleto en PDF, toca «Ver mi boleto y mi playera» y luego «Descargar boleto (PDF)». Guárdalo en tu teléfono o imprímelo para la entrega de kits.',
+      );
+      expect(buildEmailContent({ ...confirmed, locale: 'en' }, context).lead).toBe(
+        'To download your ticket as a PDF, tap “See my ticket and my shirt” and then “Download ticket (PDF)”. Save it on your phone or print it for kit pickup.',
+      );
     });
 
     it('offers neither link to a runner with no account', async () => {
       const { html } = await renderEmail(
-        { ...confirmed, data: { ...confirmed.data, ticketPdfUrl: null, accountUrl: null } },
+        { ...confirmed, data: { ...confirmed.data, accountUrl: null } },
         context,
       );
 

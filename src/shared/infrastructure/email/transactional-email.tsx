@@ -58,7 +58,22 @@ const ctaBase = {
   textDecoration: 'none',
 } as const;
 
-const ticketLabel = { color: COLORS.gold, fontSize: 12, fontWeight: 700, margin: 0 } as const;
+const ticketLabel = {
+  color: COLORS.gold,
+  fontSize: 12,
+  fontWeight: 700,
+  letterSpacing: 1.5,
+  margin: 0,
+  textTransform: 'uppercase',
+} as const;
+
+const ticketValue = {
+  color: COLORS.white,
+  fontSize: 16,
+  fontWeight: 700,
+  lineHeight: '22px',
+  margin: '2px 0 0',
+} as const;
 
 function chunk<T>(items: readonly T[], size: number): T[][] {
   const rows: T[][] = [];
@@ -84,6 +99,13 @@ function DetailRows({ rows }: { rows: readonly (readonly [string, string])[] }) 
   ));
 }
 
+/**
+ * The ticket as a card with a tear-off stub, like the PDF.
+ *
+ * @remarks
+ * The data goes in two columns and the QR on the stub below it, so the values
+ * keep a readable width on a phone instead of sharing one row with the QR.
+ */
 function TicketCard({
   ticket,
   qrAlt,
@@ -96,12 +118,20 @@ function TicketCard({
   return (
     <Section style={{ background: COLORS.ink, borderRadius: 16, margin: '20px 0' }}>
       <Row>
-        <Column style={{ padding: '20px 0 8px 22px' }}>
-          <Text style={{ ...display, color: COLORS.white, fontSize: 20, margin: 0 }}>
+        <Column style={{ padding: '20px 0 12px 20px' }}>
+          <Text
+            style={{
+              ...display,
+              color: COLORS.white,
+              fontSize: 19,
+              margin: 0,
+              whiteSpace: 'nowrap',
+            }}
+          >
             CATARINOTLÓN <span style={{ color: COLORS.redOnInk }}>2026</span>
           </Text>
         </Column>
-        <Column align="right" style={{ padding: '20px 22px 8px 0' }}>
+        <Column align="right" style={{ padding: '20px 20px 12px 8px', width: 64 }}>
           <span
             style={{
               ...display,
@@ -110,65 +140,66 @@ function TicketCard({
               color: COLORS.white,
               fontSize: 18,
               padding: '4px 14px',
+              whiteSpace: 'nowrap',
             }}
           >
             {ticket.distance}
           </span>
         </Column>
       </Row>
-      <Row>
-        <Column style={{ padding: '4px 8px 20px 22px', verticalAlign: 'top' }}>
-          <Text style={ticketLabel}>{ticket.label}</Text>
-          <Text
-            style={{
-              color: COLORS.white,
-              fontFamily: DISPLAY_FONT,
-              fontSize: 24,
-              fontWeight: 800,
-              margin: '0 0 10px',
-            }}
-          >
-            {ticket.runnerName}
-          </Text>
-          {chunk(ticket.rows, 3).map((cells) => (
-            <Row key={cells[0]?.[0]}>
-              {cells.map(([label, value]) => (
-                <Column
-                  key={label}
-                  style={{ paddingBottom: 10, verticalAlign: 'top', width: '33%' }}
-                >
-                  <Text style={ticketLabel}>{label}</Text>
-                  <Text
-                    style={{
-                      color: COLORS.white,
-                      fontSize: 15,
-                      fontWeight: 700,
-                      margin: 0,
-                      wordBreak: 'break-word',
-                    }}
-                  >
-                    {value}
-                  </Text>
-                </Column>
-              ))}
-            </Row>
-          ))}
-        </Column>
-        {qrAlt && (
-          <Column
-            align="right"
-            style={{ padding: '0 22px 20px 0', verticalAlign: 'top', width: 132 }}
-          >
-            <Img
-              src={qrSrc}
-              alt={qrAlt}
-              width={120}
-              height={120}
-              style={{ background: COLORS.white, borderRadius: 10, padding: 5 }}
-            />
+      <Section style={{ padding: '4px 20px 6px' }}>
+        <Text style={ticketLabel}>{ticket.label}</Text>
+        <Text
+          style={{
+            color: COLORS.white,
+            fontFamily: DISPLAY_FONT,
+            fontSize: 24,
+            fontWeight: 800,
+            lineHeight: '28px',
+            margin: '2px 0 14px',
+          }}
+        >
+          {ticket.runnerName}
+        </Text>
+        {chunk(ticket.rows, 2).map((cells) => (
+          <Row key={cells[0]?.[0]}>
+            {cells.map(([label, value], index) => (
+              <Column
+                key={label}
+                style={{
+                  padding: index === 0 ? '0 12px 14px 0' : '0 0 14px',
+                  verticalAlign: 'top',
+                  width: '50%',
+                }}
+              >
+                <Text style={ticketLabel}>{label}</Text>
+                <Text style={{ ...ticketValue, wordBreak: 'break-word' }}>{value}</Text>
+              </Column>
+            ))}
+          </Row>
+        ))}
+      </Section>
+      <Section style={{ borderTop: `2px dashed ${COLORS.muted}`, padding: '18px 20px 20px' }}>
+        <Row>
+          {qrAlt && (
+            <Column style={{ verticalAlign: 'middle', width: 136 }}>
+              <Img
+                src={qrSrc}
+                alt={qrAlt}
+                width={120}
+                height={120}
+                style={{ background: COLORS.white, borderRadius: 10, padding: 6 }}
+              />
+            </Column>
+          )}
+          <Column style={{ paddingLeft: qrAlt ? 16 : 0, verticalAlign: 'middle' }}>
+            <Text style={ticketLabel}>{ticket.stub.label}</Text>
+            <Text style={{ ...display, color: COLORS.white, fontSize: 28, margin: '2px 0 0' }}>
+              {ticket.stub.value}
+            </Text>
           </Column>
-        )}
-      </Row>
+        </Row>
+      </Section>
     </Section>
   );
 }
@@ -251,7 +282,7 @@ export function EmailBody({ content, qrSrc = `cid:${QR_CONTENT_ID}` }: EmailBody
           {RIBBON_DOTS}
         </Text>
       </Section>
-      <Section style={{ padding: '24px 32px 4px' }}>
+      <Section style={{ padding: '24px 24px 4px' }}>
         <Row>
           <Column>
             <Text
@@ -281,7 +312,7 @@ export function EmailBody({ content, qrSrc = `cid:${QR_CONTENT_ID}` }: EmailBody
           )}
         </Row>
       </Section>
-      <Section style={{ padding: '12px 32px 24px' }}>
+      <Section style={{ padding: '12px 24px 24px' }}>
         <Heading
           as="h1"
           style={{
@@ -365,22 +396,6 @@ export function EmailBody({ content, qrSrc = `cid:${QR_CONTENT_ID}` }: EmailBody
             {content.cta.label}
           </Button>
         )}
-        {content.secondaryCta && (
-          <Button
-            href={content.secondaryCta.url}
-            style={{
-              ...ctaBase,
-              background: COLORS.ink,
-              borderRadius: 10,
-              fontSize: 15,
-              fontWeight: 700,
-              margin: '0 0 12px',
-              padding: '13px 24px',
-            }}
-          >
-            {content.secondaryCta.label}
-          </Button>
-        )}
         {content.sectionsAfterActions && sections}
         {content.note && (
           <Text
@@ -398,7 +413,7 @@ export function EmailBody({ content, qrSrc = `cid:${QR_CONTENT_ID}` }: EmailBody
         )}
       </Section>
       <Hr style={{ borderColor: COLORS.line, margin: 0 }} />
-      <Section style={{ padding: '16px 32px 22px' }}>
+      <Section style={{ padding: '16px 24px 22px' }}>
         <Text style={{ color: COLORS.muted, fontSize: 13, lineHeight: '19px', margin: 0 }}>
           {content.footer}
         </Text>

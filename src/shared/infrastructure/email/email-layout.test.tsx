@@ -37,7 +37,6 @@ const confirmed: EmailMessage = {
     shirtName: 'SOFÍA',
     shirtSize: 'SIZE-A',
     ticketId: '7f1c2d3e-0000-4000-8000-000000000001',
-    ticketPdfUrl: url,
     accountUrl: url,
   },
 };
@@ -98,7 +97,24 @@ describe('email layout', () => {
         ['Talla', 'SIZE-A'],
         ['Playera', 'SOFÍA'],
       ],
+      stub: { label: 'Corredor N.º', value: '48213' },
     });
+  });
+
+  it('lays the ticket out in two columns, so a phone does not squeeze the values', async () => {
+    const { html } = await renderEmail(confirmed, context);
+
+    expect(html).toMatch(/width:50%/);
+    expect(html).not.toMatch(/width:33%/);
+  });
+
+  it('puts the QR on a stub below the ticket data, next to the bib', async () => {
+    const { html } = await renderEmail(confirmed, context);
+    const qr = html.indexOf('cid:ticket-qr');
+
+    expect(qr).toBeGreaterThan(html.indexOf('SOFÍA'));
+    expect(html).toMatch(/border-top:2px dashed/);
+    expect(html.indexOf('Corredor N.º')).toBeGreaterThan(qr);
   });
 
   it('greets the runner by first name', () => {
@@ -119,7 +135,9 @@ describe('email layout', () => {
   it('offers the ticket actions before the kit pickup panel', async () => {
     const { html } = await renderEmail(confirmed, context);
 
-    expect(html.indexOf('Descargar boleto')).toBeLessThan(html.indexOf('Entrega de kits'));
+    expect(html.indexOf('Ver mi boleto y mi playera')).toBeLessThan(
+      html.indexOf('Entrega de kits'),
+    );
   });
 
   it('keeps the reminder’s steps before its button', async () => {

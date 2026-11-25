@@ -48,7 +48,7 @@ describe('payment review', () => {
       });
     });
 
-    it('sends one confirmation per runner with a link to the ticket PDF', async () => {
+    it('sends one confirmation per runner, linking to that runner on the account page', async () => {
       await confirm();
 
       const ticket = await kit.tickets.findByRegistration('a');
@@ -59,11 +59,11 @@ describe('payment review', () => {
         data: {
           runnerName: 'Runner a',
           shirtSize: 'size-a',
-          accountUrl: 'https://app.test/es/account',
+          accountUrl: 'https://app.test/es/account?runner=a',
           ticketId: ticket?.id,
-          ticketPdfUrl: `https://app.test/es/tickets/${ticket?.id}.pdf`,
         },
       });
+      expect(emails[0]?.data).not.toHaveProperty('ticketPdfUrl');
     });
 
     it('refuses to confirm twice, so no second ticket is issued', async () => {

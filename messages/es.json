@@ -245,7 +245,8 @@
       "bib": "Número",
       "shirt": "Playera",
       "qrAlt": "Código QR de tu boleto",
-      "cta": "Descargar boleto (PDF)",
+      "bibStub": "Corredor N.º",
+      "pdfHowTo": "Para descargar tu boleto en PDF, toca «Ver mi boleto y mi playera» y luego «Descargar boleto (PDF)». Guárdalo en tu teléfono o imprímelo para la entrega de kits.",
       "note": "Tu kit incluye la playera con tu nombre y tu número de corredor, y lo recoges el mismo día de la carrera. La medalla te espera en la meta. Si no puedes ir por tu kit, otra persona puede recogerlo mostrando tu boleto.",
       "viewTicket": "Ver mi boleto y mi playera"
     },

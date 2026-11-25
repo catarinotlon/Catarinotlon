@@ -245,7 +245,8 @@
       "bib": "Bib",
       "shirt": "Shirt",
       "qrAlt": "QR code of your ticket",
-      "cta": "Download ticket (PDF)",
+      "bibStub": "Runner no.",
+      "pdfHowTo": "To download your ticket as a PDF, tap “See my ticket and my shirt” and then “Download ticket (PDF)”. Save it on your phone or print it for kit pickup.",
       "note": "Your kit includes the shirt with your name and your race bib, and you pick it up on race day itself. Your medal is waiting at the finish line. If you can't pick up your kit, someone else can collect it by showing your ticket.",
       "viewTicket": "See my ticket and my shirt"
     },

@@ -123,8 +123,7 @@ export async function confirmPaymentReview(
           shirtName: registration.shirtName,
           shirtSize: registration.shirtSize,
           ticketId: ticket.id,
-          ticketPdfUrl: deps.links.ticketPdf(ticket.id, registration.locale),
-          accountUrl: deps.links.account(registration.locale),
+          accountUrl: deps.links.runner(registration.id, registration.locale),
         },
       });
     }
