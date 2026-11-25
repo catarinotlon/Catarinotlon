@@ -7,7 +7,7 @@ import { getPathname } from '@/i18n/navigation';
 import { LegalDocument } from '@/modules/event/presentation/legal-document';
 import { toLegalFacts } from '@/modules/event/presentation/legal-facts';
 import { PageShell } from '@/shared/ui/page-shell';
-import { SessionActions } from '@/modules/identity/presentation/session-actions';
+import { SessionActions } from '@/app/[locale]/_chrome/session-actions';
 
 import { SiteNavigation } from '../_chrome/site-navigation';
 

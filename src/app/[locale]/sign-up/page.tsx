@@ -8,7 +8,7 @@ import { isPaymentOpen } from '@/modules/event';
 import { googleSignInAction, signUpAction } from '@/modules/identity/presentation/auth-actions';
 import { SignUpForm } from '@/modules/identity/presentation/auth-forms';
 import { PageIntro, PageShell } from '@/shared/ui/page-shell';
-import { SessionActions } from '@/modules/identity/presentation/session-actions';
+import { SessionActions } from '@/app/[locale]/_chrome/session-actions';
 
 import { SiteNavigation } from '../_chrome/site-navigation';
 

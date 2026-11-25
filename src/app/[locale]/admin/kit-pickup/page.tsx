@@ -9,7 +9,8 @@ import { deliverKitAction, undoKitAction } from '@/modules/payments/presentation
 import { AdminShell } from '@/modules/payments/presentation/admin-shell';
 import { KitPickupPanel } from '@/modules/payments/presentation/kit-pickup-panel';
 import { KitPickupSearch } from '@/modules/payments/presentation/kit-pickup-search';
-import { SessionActions } from '@/modules/identity/presentation/session-actions';
+import { SessionActions } from '@/app/[locale]/_chrome/session-actions';
+import { SiteNavigation } from '@/app/[locale]/_chrome/site-navigation';
 
 export const dynamic = 'force-dynamic';
 
@@ -48,7 +49,11 @@ export default async function KitPickupPage({ params, searchParams }: Props) {
   const pickups = await Promise.all(rows.map((row) => activePickup(row.id)));
 
   return (
-    <AdminShell actions={<SessionActions />} canManageAdmins={await isOwner()}>
+    <AdminShell
+      navigation={<SiteNavigation />}
+      actions={<SessionActions />}
+      canManageAdmins={await isOwner()}
+    >
       <div className="mx-auto flex max-w-md flex-col gap-4">
         <h1 className="m-0 font-heading text-4xl">{t('title')}</h1>
         <KitPickupSearch query={q} />

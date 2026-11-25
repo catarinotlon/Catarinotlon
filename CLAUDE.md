@@ -199,12 +199,15 @@ Rules that follow from it:
 ### Site header
 
 - Every page shows the same header as the landing page: the section links (Distances, Runner kit, Race day, FAQ), which lead back to the landing sections from any other page, plus the language and theme switches.
-- Signed out, it offers sign in and register (in the menu on narrow screens). Signed in, the avatar opens the account menu on every screen size: the account, add another runner, the admin panel for admins, and sign out. There is no separate sign-out button in the header.
+- **Wide screens** (the "Pista" design): the logo, the section links inline (from `xl`; on the landing page the section in view is marked current with a red underline), then the language switch, the theme switch, a divider, and the account actions. Signed out: a plain "Sign in" link and the red "Register" pill. Signed in: an "Admin" chip for admins, and the account button (initials, plus the first name from `sm` up) whose menu lists the account's runners with their state (each opens the account page with that runner chosen), pays what is pending, adds another runner, links to the account, and signs out. There is no separate sign-out button in the header.
+- **Phones** (below `md`): the header shows only the logo and the menu button. Its drawer (a modal dialog from the right) holds everything else: the section links with their icons, the admin link for admins, the theme and language switches, and either sign in and register or the account card. The card opens a second level, "Your account", with the same runner list, "Add another runner" (or "Complete your registration" without runners), "Pay pending" while payment is open, and sign out. Between `md` and `xl` the header keeps its controls and the menu button carries the section links.
+- Every page uses this header with the site navigation, the admin panel included (its tabs go below the header); there is no separate admin header or badge. `SiteHeader` without a `navigation` keeps the theme switch and the account button on every screen size (with only the initials on phones), but no page should render it that way.
+- Both menus get their data from one per-request read of the session in `src/app/[locale]/_chrome/session.ts`.
 - Every time shown to users says whether it is morning or afternoon (`7:00 a. m.`, `7:00 AM`), through the shared formats in `src/i18n/start-time.ts`.
 
 ### Language switch
 
-- Every page offers the language switch: an `ES | EN` control in the header on wide screens, and a language link in the footer on every screen size.
+- Every page offers the language switch: an `ES | EN` control in the header on wide screens and in the menu drawer on phones, and a language link in the footer on every screen size.
 - Switching keeps the runner on the same page and remembers the choice.
 
 ### Legal pages
@@ -233,7 +236,7 @@ Rules that follow from it:
 - **Themes:** light and dark, both approved. **Light is the default**: a first visit always renders light, regardless of the OS preference. The user's choice is remembered.
 - **Library:** next-themes. `ThemeProvider` wraps the app in `src/app/[locale]/layout.tsx` with `attribute="class"`, `defaultTheme="light"`, `enableSystem={false}`, and `enableColorScheme={false}`; the color scheme comes from `globals.css` instead, `only light` on `:root` (so browsers with an automatic dark mode do not darken the light theme) and `dark` on `.dark`; `<html>` carries `suppressHydrationWarning`. Tailwind's `dark` variant is bound to that class with `@custom-variant dark (&:where(.dark, .dark *));`.
 - **Tokens:** components use semantic tokens only (`background`, `foreground`, `primary`, `muted`, `border`…), defined as CSS variables for `:root` (light) and `.dark`. No raw hex values or palette classes inside components. Reach for a `dark:` utility only when a token cannot express the difference.
-- **Theme switch:** a single `ThemeSwitch` component in `src/shared/ui`, placed in the site header on every page. It is a real `<button>` with a localized accessible label that names the action ("Switch to dark theme"), shows a moon in light and a sun in dark, and is the only place that calls `setTheme`. It must be hydration-safe: the active theme is unknown on the server, so render a same-size placeholder until mounted (no layout shift, no hydration mismatch).
+- **Theme switch:** a single `ThemeSwitch` component in `src/shared/ui`, in the site header on every page (inside the menu drawer on phones). In the header it is a real `<button>` with a localized accessible label that names the action ("Switch to dark theme") and shows a moon in light and a sun in dark; in the drawer its `segmented` variant offers both themes as radio choices. It is the only place that calls `setTheme`. It must be hydration-safe: the active theme is unknown on the server, so render a same-size placeholder until mounted (no layout shift, no hydration mismatch).
 - **Every UI component must support both themes:**
   - Every story renders in light and dark (Storybook theme toolbar), and the a11y check passes in both.
   - Contrast is at least 4.5:1 for text in both themes. Brand red `#D42016` fails as small text on dark surfaces: use the `#FF5A4D` token for red text there.

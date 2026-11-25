@@ -9,7 +9,7 @@ import { completeRegistrationAction } from '@/modules/registration/presentation/
 import { RunnerForm } from '@/modules/registration/presentation/runner-form';
 import { firstName } from '@/shared/domain/person-name';
 import { Card, PageIntro, PageShell } from '@/shared/ui/page-shell';
-import { SessionActions } from '@/modules/identity/presentation/session-actions';
+import { SessionActions } from '@/app/[locale]/_chrome/session-actions';
 
 import { SiteNavigation } from '../_chrome/site-navigation';
 

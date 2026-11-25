@@ -126,18 +126,34 @@ test.describe('runner journey', () => {
     ]) {
       await page.goto(path);
       await expect(banner.getByRole('link', { name: 'Iniciar sesión' })).toHaveCount(0);
-      await expect(banner.getByRole('button', { name: 'Menú de tu cuenta' })).toBeVisible();
+      if (isMobile) {
+        await banner.getByRole('button', { name: 'Abrir menú' }).click();
+        const drawer = page.getByRole('dialog', { name: 'Menú' });
+        await expect(drawer.getByRole('button', { name: /Mi cuenta/ })).toBeVisible();
+        await expect(drawer.getByRole('link', { name: 'Iniciar sesión' })).toHaveCount(0);
+        await page.keyboard.press('Escape');
+      } else {
+        await expect(banner.getByRole('button', { name: 'Menú de tu cuenta' })).toBeVisible();
+      }
       expect(
         await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
       ).toBe(true);
     }
 
     await page.goto('/es/cuenta');
-    await banner.getByRole('button', { name: 'Menú de tu cuenta' }).click();
-    await banner
-      .getByRole('navigation', { name: 'Menú de tu cuenta' })
-      .getByRole('button', { name: 'Cerrar sesión' })
-      .click();
+    if (isMobile) {
+      await banner.getByRole('button', { name: 'Abrir menú' }).click();
+      await page
+        .getByRole('dialog', { name: 'Menú' })
+        .getByRole('button', { name: 'Cerrar sesión' })
+        .click();
+    } else {
+      await banner.getByRole('button', { name: 'Menú de tu cuenta' }).click();
+      await banner
+        .getByRole('navigation', { name: 'Menú de tu cuenta' })
+        .getByRole('button', { name: 'Cerrar sesión' })
+        .click();
+    }
     await expect(page).toHaveURL(/\/es$/);
     if (isMobile) await banner.getByRole('button', { name: 'Abrir menú' }).click();
     await expect(page.getByRole('banner').getByRole('link', { name: 'Inscríbete' })).toBeVisible();

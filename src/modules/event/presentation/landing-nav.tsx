@@ -1,16 +1,95 @@
 'use client';
 
 import { useLocale, useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 
-import { getPathname, Link } from '@/i18n/navigation';
+import { getPathname } from '@/i18n/navigation';
+import { SiteMenu, type MenuAccount } from '@/shared/ui/site-menu';
 
 import { LANDING_SECTIONS as SECTIONS } from './landing-sections';
 
+function icon(children: ReactNode) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="size-[18px]"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {children}
+    </svg>
+  );
+}
+
+const SECTION_ICONS: Record<(typeof SECTIONS)[number]['key'], ReactNode> = {
+  distances: icon(
+    <>
+      <path d="M4 19c4 0 4-6 8-6s4 6 8 6" />
+      <circle cx="12" cy="6" r="2.5" />
+    </>,
+  ),
+  kit: icon(<path d="M8 4l-4 3 2 4 2-1v10h8V10l2 1 2-4-4-3c0 2-2 3-4 3S8 6 8 4Z" />),
+  raceDay: icon(
+    <>
+      <rect x="4" y="5" width="16" height="15" rx="2" />
+      <path d="M4 10h16M9 3v4M15 3v4" />
+    </>,
+  ),
+  faq: icon(
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6M12 17h.01" />
+    </>,
+  ),
+};
+
+type SectionKey = (typeof SECTIONS)[number]['key'];
+
+/**
+ * Follows which landing section is in the middle of the screen.
+ *
+ * @param enabled - Whether the sections are on this page.
+ * @returns The key of the section in view, or `null` above the first one.
+ */
+function useSectionInView(enabled: boolean): SectionKey | null {
+  const [current, setCurrent] = useState<SectionKey | null>(null);
+
+  useEffect(() => {
+    if (!enabled) return;
+    const targets = SECTIONS.flatMap(({ href, key }) => {
+      const element = document.getElementById(href.slice(1));
+      return element ? [{ key, element }] : [];
+    });
+    const inView = new Set<SectionKey>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const target = targets.find((item) => item.element === entry.target);
+          if (!target) continue;
+          if (entry.isIntersecting) inView.add(target.key);
+          else inView.delete(target.key);
+        }
+        setCurrent(targets.find((item) => inView.has(item.key))?.key ?? null);
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    );
+    for (const { element } of targets) observer.observe(element);
+    return () => observer.disconnect();
+  }, [enabled]);
+
+  return current;
+}
+
 /** Props of {@link LandingNav}. */
 export interface LandingNavProps {
-  /** Whether the visitor is signed in. If not, the menu offers sign-in and registration. */
-  signedIn?: boolean;
+  /** The signed-in account. Without one, the menu offers sign-in and registration. */
+  account?: MenuAccount | null;
+  /** The server action that ends the session, offered in the menu to a signed-in visitor. */
+  signOut?: () => Promise<void>;
   /** Whether the visitor is an admin, who also gets a link to the panel. */
   isAdmin?: boolean;
   /** Whether it is rendered on the landing page itself, where the links are in-page anchors. */
@@ -22,109 +101,53 @@ export interface LandingNavProps {
  * in a menu on narrow ones.
  *
  * @remarks
- * Every page shows it. On the landing page the links are in-page anchors; elsewhere they
- * lead back to those sections. An admin also gets a link to the panel. On narrow screens,
- * where the header has no room for them, the menu also offers a signed-out visitor to sign
- * in or register; a signed-in one uses the account menu on the avatar.
+ * Every page shows it. On the landing page the links are in-page anchors, and the link of
+ * the section in the middle of the screen is marked current; elsewhere they lead back to
+ * those sections. On wide screens an admin reaches the panel from the header's admin chip.
+ * On narrow screens the links, and the admin link, live in the {@link SiteMenu} drawer,
+ * together with everything the header has no room for: the theme and language switches and
+ * either the sign-in links or the account.
  *
- * @param props - The visitor's session and role, and whether this is the landing page.
+ * @param props - The visitor's account and role, and whether this is the landing page.
  * @returns The navigation.
  */
 export function LandingNav({
-  signedIn = false,
+  account = null,
+  signOut,
   isAdmin = false,
   onLanding = true,
 }: LandingNavProps) {
   const t = useTranslations('nav');
-  const common = useTranslations('common');
   const locale = useLocale();
-  const [open, setOpen] = useState(false);
   const home = onLanding ? '' : getPathname({ locale, href: '/' });
+  const current = useSectionInView(onLanding);
 
   return (
     <>
-      <nav aria-label={t('main')} className="hidden items-center gap-5 lg:flex">
+      <nav aria-label={t('main')} className="hidden items-center xl:flex">
         {SECTIONS.map(({ href, key }) => (
           <a
             key={key}
             href={`${home}${href}`}
-            className="inline-flex min-h-11 items-center font-semibold text-foreground no-underline hover:underline"
+            {...(current === key ? { 'aria-current': 'true' as const } : {})}
+            className="relative inline-flex h-18 items-center px-3 text-base font-semibold whitespace-nowrap text-muted-foreground no-underline after:absolute after:inset-x-3 after:bottom-3.5 after:h-[3px] after:rounded-full after:bg-primary after:opacity-0 after:transition-opacity hover:text-foreground aria-[current]:font-bold aria-[current]:text-foreground aria-[current]:after:opacity-100 motion-reduce:after:transition-none"
           >
             {t(key)}
           </a>
         ))}
-        {isAdmin && (
-          <Link
-            href="/admin"
-            className="inline-flex min-h-11 items-center font-semibold text-primary-text no-underline hover:underline"
-          >
-            {t('admin')}
-          </Link>
-        )}
       </nav>
 
-      <div className="order-last lg:hidden">
-        <button
-          type="button"
-          aria-expanded={open}
-          aria-label={open ? t('closeMenu') : t('openMenu')}
-          onClick={() => setOpen((value) => !value)}
-          className="inline-flex size-11 cursor-pointer items-center justify-center rounded-xl border-2 border-input-border text-foreground"
-        >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            className="size-5"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-          >
-            {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
-          </svg>
-        </button>
-        {open && (
-          <nav
-            aria-label={t('menu')}
-            className="absolute inset-x-0 top-16 z-20 flex flex-col border-b border-border bg-background px-5 py-2 shadow-lg"
-          >
-            {SECTIONS.map(({ href, key }) => (
-              <a
-                key={key}
-                href={`${home}${href}`}
-                onClick={() => setOpen(false)}
-                className="inline-flex min-h-11 items-center font-semibold text-foreground no-underline"
-              >
-                {t(key)}
-              </a>
-            ))}
-            {isAdmin && (
-              <Link
-                href="/admin"
-                onClick={() => setOpen(false)}
-                className="inline-flex min-h-11 items-center font-semibold text-primary-text no-underline"
-              >
-                {t('admin')}
-              </Link>
-            )}
-            {!signedIn && (
-              <>
-                <Link
-                  href="/sign-in"
-                  className="inline-flex min-h-11 items-center font-semibold text-foreground no-underline"
-                >
-                  {common('signIn')}
-                </Link>
-                <Link
-                  href="/sign-up"
-                  className="inline-flex min-h-11 items-center font-semibold text-primary-text no-underline"
-                >
-                  {common('register')}
-                </Link>
-              </>
-            )}
-          </nav>
-        )}
+      <div className="order-last xl:hidden">
+        <SiteMenu
+          sections={SECTIONS.map(({ href, key }) => ({
+            href: `${home}${href}`,
+            label: t(key),
+            icon: SECTION_ICONS[key],
+          }))}
+          isAdmin={isAdmin}
+          account={account}
+          {...(signOut ? { signOut } : {})}
+        />
       </div>
     </>
   );

@@ -12,8 +12,11 @@ import { SegmentedControl } from './segmented-control';
 
 /** Props of {@link LanguageSwitch}. */
 export interface LanguageSwitchProps {
-  /** `compact` shows `ES | EN`. `full` shows the language names. */
-  variant: 'compact' | 'full';
+  /**
+   * `compact` shows `ES | EN` in an outlined pill. `subtle` shows the same choices without
+   * the outline, for the header. `full` shows the language names.
+   */
+  variant: 'compact' | 'subtle' | 'full';
 }
 
 /**
@@ -31,12 +34,10 @@ export function LanguageSwitch({ variant }: LanguageSwitchProps) {
   const pathname = usePathname();
   const params = useParams();
   const href = { pathname, params } as unknown as ComponentProps<typeof Link>['href'];
-  const compact = variant === 'compact';
-
-  if (compact) {
+  if (variant !== 'full') {
     return (
       <SegmentedControl
-        variant="compact"
+        variant={variant}
         label={t('switchTo')}
         options={routing.locales.map((locale) => ({ value: locale, label: locale.toUpperCase() }))}
         value={active}

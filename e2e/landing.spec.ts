@@ -1,23 +1,39 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 import { EMPTY_SETTINGS, setEventSettings, TEST_SETTINGS, uniqueEmail } from './support/database';
 import { pageLoaded, signIn, signUp } from './support/flows';
+
+/** Switches to the dark theme from the header, or from the menu on phones. */
+async function switchToDark(page: Page) {
+  const banner = page.getByRole('banner');
+  const menu = banner.getByRole('button', { name: 'Abrir menú' });
+  if (await menu.isVisible()) {
+    await menu.click();
+    const drawer = page.getByRole('dialog', { name: 'Menú' });
+    await drawer.locator('label', { has: page.getByRole('radio', { name: 'Oscuro' }) }).click();
+    await page.keyboard.press('Escape');
+    return;
+  }
+  await banner.getByRole('button', { name: 'Cambiar a tema oscuro' }).click();
+}
 
 test.describe('landing page', () => {
   test.beforeEach(async () => {
     await setEventSettings(EMPTY_SETTINGS);
   });
 
-  test('the header controls never overlap', async ({ page }) => {
+  test('the header controls never overlap', async ({ page, isMobile }) => {
     await page.goto('/es');
     const banner = page.getByRole('banner');
     const home = await banner.getByRole('link', { name: /ir al inicio/ }).boundingBox();
-    const theme = await banner.getByRole('button', { name: /Cambiar a tema/ }).boundingBox();
+    const control = await banner
+      .getByRole('button', { name: isMobile ? 'Abrir menú' : /Cambiar a tema/ })
+      .boundingBox();
 
     expect(home).not.toBeNull();
-    expect(theme).not.toBeNull();
-    expect((home?.x ?? 0) + (home?.width ?? 0)).toBeLessThanOrEqual(theme?.x ?? 0);
+    expect(control).not.toBeNull();
+    expect((home?.x ?? 0) + (home?.width ?? 0)).toBeLessThanOrEqual(control?.x ?? 0);
   });
 
   test('a section link lands with the section right below the header', async ({ page }) => {
@@ -104,7 +120,7 @@ test.describe('landing page', () => {
     await page.goto('/es');
     await expect(page.locator('html')).not.toHaveClass(/dark/);
 
-    await page.getByRole('button', { name: 'Cambiar a tema oscuro' }).click();
+    await switchToDark(page);
     await expect(page.locator('html')).toHaveClass(/dark/);
 
     await page.reload();
@@ -123,7 +139,7 @@ test.describe('landing page', () => {
       await expect(html).toHaveCSS('color-scheme', /^(only light|light only)$/);
       await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
 
-      await page.getByRole('button', { name: 'Cambiar a tema oscuro' }).click();
+      await switchToDark(page);
       await expect(html).toHaveClass(/dark/);
       await expect(html).toHaveCSS('color-scheme', 'dark');
     });
@@ -164,7 +180,7 @@ for (const width of [320, 375, 390]) {
             .filter((box) => box.width > 0 && box.height > 0)
             .map((box) => ({ left: box.left, right: box.right, top: box.top, bottom: box.bottom })),
         );
-      expect(boxes.length).toBeGreaterThanOrEqual(3);
+      expect(boxes.length).toBeGreaterThanOrEqual(2);
       for (const box of boxes) expect(box.right).toBeLessThanOrEqual(width);
       for (const [index, a] of boxes.entries()) {
         for (const b of boxes.slice(index + 1)) {

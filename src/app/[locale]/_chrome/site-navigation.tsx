@@ -1,13 +1,24 @@
-import { getAdminUser, getSignedInUser } from '@/composition';
 import { LandingNav } from '@/modules/event/presentation';
+import { signOutAction } from '@/modules/identity/presentation/auth-actions';
+
+import { loadHeaderSession } from './session';
 
 /**
- * The landing page's navigation for every other page: its section links lead back to the
- * landing page, and the narrow-screen menu follows the session.
+ * The site navigation for every page: on the landing page its section links are in-page
+ * anchors, elsewhere they lead back to the landing page, and the phone menu follows the
+ * session.
  *
+ * @param props - Whether this is the landing page.
  * @returns The site navigation.
  */
-export async function SiteNavigation() {
-  const [user, admin] = await Promise.all([getSignedInUser(), getAdminUser()]);
-  return <LandingNav onLanding={false} signedIn={user.ok} isAdmin={admin.ok} />;
+export async function SiteNavigation({ onLanding = false }: { onLanding?: boolean }) {
+  const { isAdmin, account } = await loadHeaderSession();
+  return (
+    <LandingNav
+      onLanding={onLanding}
+      isAdmin={isAdmin}
+      account={account}
+      {...(account ? { signOut: signOutAction } : {})}
+    />
+  );
 }

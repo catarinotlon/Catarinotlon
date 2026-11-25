@@ -5,7 +5,7 @@ import { requireLocale } from '@/i18n/locale';
 import { getPathname } from '@/i18n/navigation';
 import { LegalDocument } from '@/modules/event/presentation/legal-document';
 import { PageShell } from '@/shared/ui/page-shell';
-import { SessionActions } from '@/modules/identity/presentation/session-actions';
+import { SessionActions } from '@/app/[locale]/_chrome/session-actions';
 
 import { SiteNavigation } from '../_chrome/site-navigation';
 

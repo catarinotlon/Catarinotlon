@@ -42,3 +42,17 @@ export const SmoothIconSwap: Story = {
     await expect(hidden).toHaveLength(1);
   },
 };
+
+/** In the phone menu, both themes are named choices and the active one is checked. */
+export const Segmented: Story = {
+  args: { variant: 'segmented' },
+  play: async ({ canvasElement, globals }) => {
+    const canvas = within(canvasElement);
+    const group = await canvas.findByRole('group', { name: 'Tema' });
+    const dark = within(group).getByRole('radio', { name: 'Oscuro' });
+    const light = within(group).getByRole('radio', { name: 'Claro' });
+    await expect(globals.theme === 'dark' ? dark : light).toBeChecked();
+    await expect(globals.theme === 'dark' ? light : dark).not.toBeChecked();
+    await expect(group.getBoundingClientRect().height).toBeGreaterThanOrEqual(44);
+  },
+};

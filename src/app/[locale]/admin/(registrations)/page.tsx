@@ -7,7 +7,8 @@ import { requireLocale } from '@/i18n/locale';
 import { adminTotals, filterAdminRows } from '@/modules/payments';
 import { AdminShell } from '@/modules/payments/presentation/admin-shell';
 import { RegistrationsTable } from '@/modules/payments/presentation/registrations-table';
-import { SessionActions } from '@/modules/identity/presentation/session-actions';
+import { SessionActions } from '@/app/[locale]/_chrome/session-actions';
+import { SiteNavigation } from '@/app/[locale]/_chrome/site-navigation';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,7 +38,11 @@ export default async function AdminPage({ params, searchParams }: Props) {
   const rows = await getAdminRows();
 
   return (
-    <AdminShell actions={<SessionActions />} canManageAdmins={await isOwner()}>
+    <AdminShell
+      navigation={<SiteNavigation />}
+      actions={<SessionActions />}
+      canManageAdmins={await isOwner()}
+    >
       <RegistrationsTable
         rows={filterAdminRows(rows, filter)}
         totals={adminTotals(rows)}

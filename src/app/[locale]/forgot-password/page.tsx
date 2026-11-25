@@ -5,7 +5,7 @@ import { requireLocale } from '@/i18n/locale';
 import { forgotPasswordAction } from '@/modules/identity/presentation/auth-actions';
 import { ForgotPasswordForm } from '@/modules/identity/presentation/auth-forms';
 import { Card, PageShell } from '@/shared/ui/page-shell';
-import { SessionActions } from '@/modules/identity/presentation/session-actions';
+import { SessionActions } from '@/app/[locale]/_chrome/session-actions';
 
 import { SiteNavigation } from '../_chrome/site-navigation';
 

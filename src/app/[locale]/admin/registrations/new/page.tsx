@@ -8,7 +8,8 @@ import { Link } from '@/i18n/navigation';
 import { createRegistrationAction } from '@/modules/payments/presentation/admin-actions';
 import { AdminRegistrationForm } from '@/modules/payments/presentation/admin-registration-form';
 import { AdminShell } from '@/modules/payments/presentation/admin-shell';
-import { SessionActions } from '@/modules/identity/presentation/session-actions';
+import { SessionActions } from '@/app/[locale]/_chrome/session-actions';
+import { SiteNavigation } from '@/app/[locale]/_chrome/site-navigation';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,7 +33,11 @@ export default async function NewRegistrationPage({ params }: Props) {
   ]);
 
   return (
-    <AdminShell actions={<SessionActions />} canManageAdmins={await isOwner()}>
+    <AdminShell
+      navigation={<SiteNavigation />}
+      actions={<SessionActions />}
+      canManageAdmins={await isOwner()}
+    >
       <div className="flex flex-col gap-4">
         <Link
           href="/admin"

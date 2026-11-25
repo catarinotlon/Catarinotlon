@@ -137,3 +137,15 @@ export const ShellHiddenFromRecordings: Story = {
     ).not.toBeNull();
   },
 };
+
+/** The admin pages share the site header, with its navigation, instead of a header of their own. */
+export const ShellSiteHeader: Story = {
+  render: () => (
+    <AdminShell navigation={<button type="button">Abrir menú</button>}>Contenido</AdminShell>
+  ),
+  play: async ({ canvasElement }) => {
+    const banner = within(within(canvasElement).getByRole('banner'));
+    await expect(banner.getByRole('button', { name: 'Abrir menú' })).toBeInTheDocument();
+    await expect(banner.queryByText('Admin', { exact: true })).toBeNull();
+  },
+};

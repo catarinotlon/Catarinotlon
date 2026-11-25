@@ -32,3 +32,13 @@ export const Full: Story = {
     await expect(canvas.getByText('Español')).toHaveAttribute('aria-current', 'true');
   },
 };
+
+/** The quiet header version: the same choices without an outline. */
+export const Subtle: Story = {
+  args: { variant: 'subtle' },
+  play: async ({ canvasElement }) => {
+    const group = within(within(canvasElement).getByRole('group', { name: 'Cambiar idioma' }));
+    await expect(group.getByText('ES')).toHaveAttribute('aria-current', 'true');
+    await expect(group.getByRole('link', { name: /EN/ })).toHaveAttribute('lang', 'en');
+  },
+};

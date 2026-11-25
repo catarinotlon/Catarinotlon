@@ -108,3 +108,37 @@ export const Links: Story = {
     await expect(group.queryByRole('radio')).toBeNull();
   },
 };
+
+/** The quiet header version: no outline, and a soft highlight that sits exactly on the chosen choice. */
+export const Subtle: Story = {
+  args: {
+    variant: 'subtle',
+    value: 'en',
+    label: 'Idioma',
+    options: [
+      { value: 'es', label: 'ES' },
+      { value: 'en', label: 'EN' },
+    ],
+    renderOption: (option, { selected, className }) =>
+      selected ? (
+        <span aria-current="true" className={className}>
+          {option.label}
+        </span>
+      ) : (
+        <a href={`/${option.value}`} className={className}>
+          {option.label}
+        </a>
+      ),
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await waitFor(() => {
+      const chosen = canvas.getByText('EN').getBoundingClientRect();
+      const thumb = canvas.getByTestId('segmented-thumb').getBoundingClientRect();
+      expect(Math.abs(thumb.left - chosen.left)).toBeLessThan(1);
+      expect(Math.abs(thumb.width - chosen.width)).toBeLessThan(1);
+    });
+    const track = canvas.getByRole('group', { name: 'Idioma' });
+    await expect(getComputedStyle(track).borderTopWidth).toBe('0px');
+  },
+};

@@ -7,7 +7,7 @@ import { resendVerificationAction } from '@/modules/identity/presentation/auth-a
 import { PENDING_EMAIL_COOKIE } from '@/modules/identity/presentation/legal-versions';
 import { VerifyEmailPanel } from '@/modules/identity/presentation/verify-email-panel';
 import { Card, PageShell } from '@/shared/ui/page-shell';
-import { SessionActions } from '@/modules/identity/presentation/session-actions';
+import { SessionActions } from '@/app/[locale]/_chrome/session-actions';
 
 import { SiteNavigation } from '../_chrome/site-navigation';
 

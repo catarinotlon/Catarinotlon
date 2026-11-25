@@ -11,7 +11,10 @@ import { ThemeSwitch } from './theme-switch';
 
 /** Props of {@link SiteHeader}. */
 export interface SiteHeaderProps {
-  /** Section links or other navigation, shown on wide screens. */
+  /**
+   * The site navigation: section links on wide screens and the menu button on narrow ones.
+   * With it, phones leave the language, theme, and account to that menu.
+   */
   navigation?: ReactNode;
   /** Replaces the default sign-in and register actions. */
   actions?: ReactNode;
@@ -22,6 +25,11 @@ export interface SiteHeaderProps {
 /**
  * The header on every page: logo, language, theme, and account actions.
  *
+ * @remarks
+ * On phones, a header with the site navigation shows only the logo and the menu button,
+ * whose drawer holds the rest. A header without it, such as the admin one, keeps its
+ * controls on every screen size.
+ *
  * @param props - Optional navigation and actions.
  * @returns The site header.
  */
@@ -30,36 +38,38 @@ export function SiteHeader({ navigation, actions, badge }: SiteHeaderProps) {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background px-5 md:px-10">
-      <div className="mx-auto flex min-h-16 max-w-[1200px] items-center justify-between gap-4">
-        <div className="flex min-w-0 items-center gap-3">
+      <div className="mx-auto flex min-h-16 max-w-[1200px] items-center justify-between gap-4 xl:min-h-18 xl:gap-6">
+        <div className="flex min-w-0 items-center gap-3 xl:shrink-0">
           <Link
             href="/"
             aria-label={t('homeLabel')}
-            className="flex min-h-11 items-center gap-2 text-foreground no-underline"
+            className="flex min-h-11 items-center gap-2 text-foreground no-underline xl:gap-2.5"
           >
             <Logo />
             <span
               className={cn(
-                'font-heading text-xl/none',
+                'font-heading text-xl/none whitespace-nowrap xl:text-2xl/none',
                 badge ? 'hidden sm:block' : 'hidden min-[360px]:block',
               )}
             >
-              {t('appName')} <span className="block text-primary-text">{t('year')}</span>
+              {t('appName')} <span className="block text-primary-text xl:inline">{t('year')}</span>
             </span>
           </Link>
           {badge && (
-            <span className="rounded-full bg-inverse px-3 py-1 text-sm font-bold tracking-widest text-inverse-foreground uppercase">
+            <span className="shrink-0 rounded-full bg-inverse px-3 py-1 text-sm font-bold tracking-widest text-inverse-foreground uppercase">
               {badge}
             </span>
           )}
         </div>
         {navigation}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className={cn('ml-auto items-center gap-2', navigation ? 'hidden md:flex' : 'flex')}>
           <span className="hidden md:inline-flex">
-            <LanguageSwitch variant="compact" />
+            <LanguageSwitch variant="subtle" />
           </span>
           <ThemeSwitch />
-          {actions ?? <SignedOutActions />}
+          <div className="flex items-center gap-2 before:mx-1.5 before:h-6 before:w-px before:bg-border empty:hidden">
+            {actions ?? <SignedOutActions />}
+          </div>
         </div>
       </div>
     </header>
@@ -80,10 +90,7 @@ export function SignedOutActions() {
     <>
       <Link
         href="/sign-in"
-        className={cn(
-          buttonClasses({ variant: 'outline' }),
-          'hidden min-h-11 rounded-full px-4 py-1 font-display text-base font-extrabold uppercase italic sm:inline-flex',
-        )}
+        className="hidden min-h-11 items-center px-3 text-base font-bold whitespace-nowrap text-foreground no-underline hover:underline sm:inline-flex"
       >
         {t('signIn')}
       </Link>
@@ -91,7 +98,7 @@ export function SignedOutActions() {
         href="/sign-up"
         className={cn(
           buttonClasses({ variant: 'cta' }),
-          'hidden min-h-11 px-4 py-1 text-base sm:inline-flex',
+          'hidden min-h-11 px-5 py-1 text-lg whitespace-nowrap sm:inline-flex',
         )}
       >
         {t('register')}

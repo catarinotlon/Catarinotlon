@@ -15,7 +15,7 @@ import { recordReceiptAction } from '@/modules/payments/presentation/payment-act
 import { PaymentView } from '@/modules/payments/presentation/payment-view';
 import { buttonClasses } from '@/shared/ui/button';
 import { Card, PageIntro, PageShell } from '@/shared/ui/page-shell';
-import { SessionActions } from '@/modules/identity/presentation/session-actions';
+import { SessionActions } from '@/app/[locale]/_chrome/session-actions';
 
 import { SiteNavigation } from '../_chrome/site-navigation';
 

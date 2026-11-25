@@ -8,7 +8,7 @@ import { redirect } from '@/i18n/navigation';
 import { addRunnerAction } from '@/modules/registration/presentation/runner-actions';
 import { RunnerForm } from '@/modules/registration/presentation/runner-form';
 import { Card, PageIntro, PageShell } from '@/shared/ui/page-shell';
-import { SessionActions } from '@/modules/identity/presentation/session-actions';
+import { SessionActions } from '@/app/[locale]/_chrome/session-actions';
 
 import { SiteNavigation } from '../../../_chrome/site-navigation';
 

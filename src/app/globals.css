@@ -90,6 +90,11 @@
     outline-offset: 3px;
   }
 
+  /* The page behind a modal dialog, such as the phone menu, does not scroll. */
+  html:has(dialog:modal) {
+    overflow: hidden;
+  }
+
   details > summary {
     list-style: none;
     cursor: pointer;

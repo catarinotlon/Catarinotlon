@@ -17,7 +17,7 @@ import { formatMoney } from '@/i18n/money';
 import { redirect } from '@/i18n/navigation';
 import { isPaymentOpen } from '@/modules/event';
 import { saveAccountAction, signOutAction } from '@/modules/identity/presentation/auth-actions';
-import { SessionActions } from '@/modules/identity/presentation/session-actions';
+import { SessionActions } from '@/app/[locale]/_chrome/session-actions';
 import {
   recordReceiptAction,
   replaceReceiptAction,
