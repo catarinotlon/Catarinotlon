@@ -3,6 +3,17 @@ import { expect, test } from '@playwright/test';
 test.describe('metadata', () => {
   test.skip(({ isMobile }) => isMobile, 'Metadata does not depend on the viewport.');
 
+  test('every page names its tab after the page first and the event last', async ({ page }) => {
+    await page.goto('/es/iniciar-sesion');
+    await expect(page).toHaveTitle('Inicia sesión · Catarinotlón');
+
+    await page.goto('/en/privacy');
+    await expect(page).toHaveTitle('Privacy notice · Catarinotlón');
+
+    await page.goto('/es');
+    await expect(page).toHaveTitle('Catarinotlón 2026 · Carrera 3K y 5K');
+  });
+
   test('the icons and the manifest load', async ({ page, request }) => {
     await page.goto('/es/iniciar-sesion');
     await expect(page).toHaveTitle(/Catarinotlón/);
