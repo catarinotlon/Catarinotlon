@@ -70,7 +70,7 @@ describe('registerManually', () => {
       {
         template: 'registration_confirmed',
         to: 'walkin@example.test',
-        data: { runnerName: 'Walk In', shirtSize: 'size-a', ticketPdfUrl: null, accountUrl: null },
+        data: { runnerName: 'Walk In', shirtSize: 'size-a', accountUrl: null },
       },
     ]);
   });

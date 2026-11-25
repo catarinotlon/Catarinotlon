@@ -50,7 +50,7 @@ export function createPaymentsKit() {
     account: (locale) => `https://app.test/${locale}/account`,
     payment: (locale) => `https://app.test/${locale}/payment`,
     adminPayment: (id, locale) => `https://app.test/${locale}/admin/payments/${id}`,
-    ticketPdf: (id, locale) => `https://app.test/${locale}/tickets/${id}.pdf`,
+    runner: (id, locale) => `https://app.test/${locale}/account?runner=${id}`,
   };
 
   let bib = 20000;

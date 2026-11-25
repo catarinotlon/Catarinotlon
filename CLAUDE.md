@@ -322,7 +322,7 @@ All are React Email templates sent through `EmailSender`, rendered in the runner
 | Email                             | Sent when                                                                                                                                                                                                         |
 | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Verify your email                 | An account is created with email + password                                                                                                                                                                       |
-| Registration confirmed            | A registration is confirmed. Carries the ticket summary, the QR, and a link to download the PDF                                                                                                                   |
+| Registration confirmed            | A registration is confirmed. Carries the ticket summary and the QR, and a button to that runner on the account page, where the PDF is downloaded (no direct PDF link)                                             |
 | Your race is coming up            | Three days and one day before the race date the admin set (a daily Vercel Cron at 15:00 UTC, 9:00 in Mexico City). Kit pickup is on race day, so both carry the pickup details; there is no separate kit reminder |
 | Shirt name updated                | The runner changes the shirt name from the account page                                                                                                                                                           |
 | Reset your password               | The runner requests a password reset                                                                                                                                                                              |
@@ -427,7 +427,7 @@ Run `pnpm check` before calling something done. While iterating, run only the af
 
 **Turso + Drizzle.** Schema lives in `src/shared/infrastructure/db/schema`. Never edit a migration that has been applied: generate a new one. Local development runs against `file:local.db`. Use a transaction when a use case writes to more than one table.
 
-**Resend.** Used only from the `ResendEmailSender` adapter. Templates are React Email components, each with its story, rendered in the runner's locale. Send with an idempotency key so confirmations are never duplicated.
+**Resend.** Used only from the `ResendEmailSender` adapter (Mailpit replaces it locally, see `EMAIL_TRANSPORT`). Templates are React Email components, each with its story, rendered in the runner's locale. Send with an idempotency key so confirmations are never duplicated.
 
 **Sentry.** Standard `@sentry/nextjs` setup: `instrumentation.ts` (with `onRequestError`), `instrumentation-client.ts`, `sentry.server.config.ts`, `app/global-error.tsx`, and `withSentryConfig` in `next.config.ts`. Domain and application report through the `ErrorReporter` port, never by importing Sentry. Expected domain errors (validation, a deadline that has passed) are not reported.
 
@@ -438,14 +438,14 @@ TURSO_DATABASE_URL   TURSO_AUTH_TOKEN
 BETTER_AUTH_SECRET   BETTER_AUTH_URL
 ADMIN_EMAILS
 GOOGLE_CLIENT_ID     GOOGLE_CLIENT_SECRET
-EMAIL_TRANSPORT      RESEND_API_KEY       EMAIL_FROM
+EMAIL_TRANSPORT      RESEND_API_KEY       EMAIL_FROM           MAILPIT_URL
 RECEIPT_STORAGE      RECEIPT_LOCAL_DIR    RECEIPT_MAX_BYTES    BLOB_READ_WRITE_TOKEN
 CRON_SECRET
 NEXT_PUBLIC_SENTRY_DSN   SENTRY_AUTH_TOKEN   SENTRY_ORG   SENTRY_PROJECT
 NEXT_PUBLIC_POSTHOG_KEY
 ```
 
-`EMAIL_TRANSPORT=memory` and `RECEIPT_STORAGE=memory` are for local development and E2E: they send no real email and keep receipts on the local disk. `CRON_SECRET` protects `/api/cron/race-reminders`, which stays closed without it; Vercel Cron (`vercel.json`) calls it daily and sends the secret as a bearer token. Database tooling reads its connection through `src/shared/infrastructure/database-env.ts`, so it can run without the app's other secrets.
+`EMAIL_TRANSPORT=memory` and `RECEIPT_STORAGE=memory` are for local development and E2E: they send no real email and keep receipts on the local disk. `EMAIL_TRANSPORT=mailpit` is for local development only: the `MailpitEmailSender` adapter delivers every email, rendered as Resend would send it, to the Mailpit inbox from `docker-compose.yml` (`docker compose up -d mailpit`, inbox at `http://localhost:8025`, `MAILPIT_URL` defaults to it). Never use it on Vercel. `CRON_SECRET` protects `/api/cron/race-reminders`, which stays closed without it; Vercel Cron (`vercel.json`) calls it daily and sends the secret as a bearer token. Database tooling reads its connection through `src/shared/infrastructure/database-env.ts`, so it can run without the app's other secrets.
 
 Vercel Blob credentials are added when the private store is created and connected (connected projects authenticate with short-lived OIDC credentials and a store id; follow the current Blob docs for the exact variable names). Keep `.env.example` up to date. Never commit `.env*` files with real values.
 

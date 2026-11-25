@@ -28,7 +28,6 @@ const samples: EmailMessage[] = [
       shirtSize: 'SIZE-A',
       accountUrl: 'https://app.test/account',
       ticketId: '7f1c2d3e-0000-4000-8000-000000000001',
-      ticketPdfUrl: 'https://app.test/ticket.pdf',
     },
   },
   {
@@ -167,12 +166,12 @@ describe('renderEmail', () => {
     expect(email.attachments[0]?.content.subarray(1, 4).toString()).toBe('PNG');
   });
 
-  it('omits the PDF button when there is no account to download from', async () => {
+  it('omits the download guidance when there is no account to download from', async () => {
     const message = confirmed as Extract<EmailMessage, { template: 'registration_confirmed' }>;
 
     const email = await renderEmail({
       ...message,
-      data: { ...message.data, ticketPdfUrl: null, accountUrl: null },
+      data: { ...message.data, accountUrl: null },
     });
 
     expect(email.html).not.toContain('Descargar boleto');

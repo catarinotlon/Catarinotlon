@@ -49,8 +49,8 @@ export interface PaymentLinks {
   payment(locale: string): string;
   /** @returns The admin review screen of a payment. */
   adminPayment(paymentId: string, locale: string): string;
-  /** @returns The PDF download of a ticket. */
-  ticketPdf(ticketId: string, locale: string): string;
+  /** @returns The account page with one runner's registration selected. */
+  runner(registrationId: string, locale: string): string;
 }
 
 /** Tells whether the settings needed to take payments exist. */

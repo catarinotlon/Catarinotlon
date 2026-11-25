@@ -32,9 +32,10 @@ export type EmailMessage = EmailEnvelope &
           shirtName: string;
           shirtSize: string;
           ticketId: string;
-          /** Absent for a manual registration with no account to sign in to. */
-          ticketPdfUrl: string | null;
-          /** Absent for a manual registration with no account. */
+          /**
+           * The account page with this runner selected, where the ticket PDF is
+           * downloaded. Absent for a manual registration with no account.
+           */
           accountUrl: string | null;
         };
       }
