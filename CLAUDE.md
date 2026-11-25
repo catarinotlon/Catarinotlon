@@ -229,6 +229,7 @@ Rules that follow from it:
 - **Hexagonal boundary:** `domain` and `application` never produce user-facing text. They return error codes and data; `presentation` maps them to message keys. Zod schemas return message keys too.
 - **Emails:** store the runner's locale with the registration and render the React Email template in that locale.
 - **SEO:** localized `generateMetadata`, `lang` on `<html>`, and `hreflang` alternates for both locales.
+- **Icons:** `src/app/favicon.ico` and `src/app/icon.svg` (the ladybug alone; its head turns light in a dark browser tab), `src/app/apple-icon.png`, and the manifest icons in `public/icons/`, all from the SVG sources in `design/assets/icons/`. `src/app/manifest.ts` opens the site `standalone` from the home screen.
 - **Shared links:** the locale layout sets `metadataBase` (the site origin) plus Open Graph and Twitter (`summary_large_image`) tags, so every page shares the same event card. Its 1200 × 630 image is `src/app/[locale]/opengraph-image.tsx`, which renders the `ShareCard` component from `src/shared/ui` with `ImageResponse` in each locale. Keep it free of personal data and of event facts that are still settings (date, venue, fee).
 
 ## Theming
@@ -474,7 +475,7 @@ Runner data is stored (name, email, phone). Never write it to logs, error messag
 
 - Reference mocks (private canvas): https://claude.ai/artifact/VFeXaxC6F9AiJhPPhfquS3. Eight pages: landing, sign-up and sign-in, complete registration and payment, account (confirmed, pending payment, in review, receipt rejected), emails, admin, password and verification and error screens, and legal. Most screens come in light and dark, desktop and mobile; emails are light only; admin kit pickup is mobile only.
 - The shirt photos in the mocks are retouched previews: the logo was redrawn to say "Catarinotlón". The medals in the mocks and the app are the organizer's artwork with the name corrected. Both are good enough for the website but are not production art for the manufacturer. Copy in the mocks is Spanish; bracketed text like `[FECHA DEL EVENTO]` marks facts that are still missing.
-- Source art lives in `design/assets/`: `shirt/` (front, back, and back without a name for the shirt-name preview) and `medals/` (`organizer-medals-source.png`, the organizer's original image with the misspelled name, plus the earlier SVG drawings, which the app no longer uses). Copy what the app needs into the app's static assets when scaffolding.
+- Source art lives in `design/assets/`: `icons/` (the ladybug favicon and the app icons, which the PNGs and the `.ico` are rendered from), `shirt/` (front, back, and back without a name for the shirt-name preview) and `medals/` (`organizer-medals-source.png`, the organizer's original image with the misspelled name, plus the earlier SVG drawings, which the app no longer uses). Copy what the app needs into the app's static assets when scaffolding.
 - Brand colors: ladybug red `#D42016`, black `#121212`, medal gold `#D8B25A`. They are exposed to components as semantic tokens.
 - Light theme: white background, `#F2F2F3` muted background, `#121212` text, `#4A4A4E` muted text.
 - Dark theme: `#0E0E0F` background, `#18181A` surface, `#232327` raised surface, `#34343A` border, `#F5F5F6` text, `#B9B9BF` muted text, `#FF5A4D` red for text.
