@@ -2,7 +2,12 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 
 import type { FormState } from '@/shared/ui/form-state';
-import { fakeTurnstile, installFakeTurnstile, renderedWidget } from '@/test/fake-turnstile';
+import {
+  fakeTurnstile,
+  installFakeTurnstile,
+  renderedWidget,
+  solveHumanCheck,
+} from '@/test/fake-turnstile';
 
 import { VerifyEmailPanel } from './verify-email-panel';
 
@@ -90,6 +95,7 @@ export const ResendHumanCheckFailed: Story = {
     const canvas = within(canvasElement);
     const resend = canvas.getByRole('button', { name: 'Reenviar el correo' });
     await expect((await renderedWidget()).closest('form')).toContainElement(resend);
+    solveHumanCheck();
 
     await userEvent.click(resend);
 
