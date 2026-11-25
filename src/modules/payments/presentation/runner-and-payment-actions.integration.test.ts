@@ -275,18 +275,25 @@ describe('payment server actions', () => {
       const { userId } = await signedInRunner();
       const pathname = await storeReceipt(userId);
 
-      const target = await redirectOf(() => recordReceiptAction({ pathname }));
-
-      expect(target).toBe('/es/cuenta');
+      expect(await recordReceiptAction({ pathname })).toEqual({ done: true });
       expect((await runnersOf(userId))[0]?.status).toBe('payment_in_review');
-      expect(requestContext.revalidated).toContain('/[locale]/account:page');
+    });
+
+    it('leaves the page as it is, so the card can turn before the account loads', async () => {
+      const { userId } = await signedInRunner();
+      const pathname = await storeReceipt(userId);
+      requestContext.revalidated.length = 0;
+
+      await recordReceiptAction({ pathname });
+
+      expect(requestContext.revalidated).toEqual([]);
     });
 
     it('takes the type and size from the store, not from the browser', async () => {
       const { userId } = await signedInRunner();
       const pathname = await storeReceipt(userId, 'real.png', 'image/png', 7);
 
-      await redirectOf(() => recordReceiptAction({ pathname }));
+      await recordReceiptAction({ pathname });
 
       expect(
         await sql('SELECT content_type, size_bytes FROM receipts WHERE pathname = ?', [pathname]),
@@ -353,7 +360,7 @@ describe('payment server actions', () => {
     async function paid() {
       const runner = await signedInRunner();
       const pathname = await storeReceipt(runner.userId);
-      await redirectOf(() => recordReceiptAction({ pathname }));
+      await recordReceiptAction({ pathname });
       const [payment] = await sql('SELECT id FROM payments WHERE owner_id = ?', [runner.userId]);
       return { ...runner, paymentId: String(payment?.id) };
     }

@@ -43,6 +43,34 @@ export const Upload: Story = {
   },
 };
 
+/** Once the server has recorded the receipt, the form says it is done. */
+export const Done: Story = {
+  args: { onDone: fn() },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.upload(canvas.getByLabelText(label), file);
+    await userEvent.click(canvas.getByRole('button', { name: 'Enviar comprobante' }));
+
+    await waitFor(() => expect(args.onDone).toHaveBeenCalledTimes(1));
+  },
+};
+
+/** A refusal from the server is not done. */
+export const NotDoneOnError: Story = {
+  args: {
+    onDone: fn(),
+    action: fn<RecordReceipt>(async () => ({ formError: 'payment.errors.nothing_to_pay' })),
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.upload(canvas.getByLabelText(label), file);
+    await userEvent.click(canvas.getByRole('button', { name: 'Enviar comprobante' }));
+
+    await canvas.findByRole('alert');
+    await expect(args.onDone).not.toHaveBeenCalled();
+  },
+};
+
 /** Submitting with no file asks for one and uploads nothing. */
 export const MissingFile: Story = {
   play: async ({ args, canvasElement }) => {

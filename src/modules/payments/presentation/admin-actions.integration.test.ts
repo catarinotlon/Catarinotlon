@@ -72,7 +72,7 @@ async function runnerInReview() {
   const registrationId = String(row?.id);
   const pathname = `receipts/${String(row?.owner_id)}/receipt.pdf`;
   await localReceiptStore()?.write(pathname, 'application/pdf', new Uint8Array(10));
-  await redirectOf(() => recordReceiptAction({ pathname }));
+  await recordReceiptAction({ pathname });
   const [payment] = await sql('SELECT id FROM payments WHERE owner_id = ?', [
     String(row?.owner_id),
   ]);

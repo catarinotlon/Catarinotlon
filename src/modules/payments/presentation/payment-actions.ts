@@ -53,8 +53,13 @@ async function verifiedReceipt(
 /**
  * Records an uploaded receipt, covering the account's unpaid runners.
  *
+ * @remarks
+ * It neither redirects nor revalidates, so the current page stays as it is. The
+ * upload card turns over to confirm the receipt, then the browser loads the
+ * account, which is rendered fresh on every request.
+ *
  * @param input - The path the file was uploaded to.
- * @returns An error. On success it redirects to the account.
+ * @returns The done state, or an error.
  */
 export async function recordReceiptAction(input: { pathname: string }): Promise<FormState> {
   const locale = await getLocale();
@@ -70,8 +75,7 @@ export async function recordReceiptAction(input: { pathname: string }): Promise<
   });
   if (!result.ok) return paymentError(result.error.code);
 
-  revalidatePath('/[locale]/account', 'page');
-  return redirect({ href: '/account', locale });
+  return { done: true };
 }
 
 /**

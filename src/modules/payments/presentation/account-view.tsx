@@ -14,7 +14,7 @@ import { DistancePill, StatusPill } from '@/shared/ui/status-pill';
 
 import type { RunnerStage } from '../application/use-cases/account-overview';
 import { AccountDetailsEditor, SettingForm, ShirtNameEditor } from './account-forms';
-import { ReceiptUploadForm } from './receipt-upload-form';
+import { ReceiptSubmission } from './receipt-submission';
 import { ReplaceReceiptForm } from './replace-receipt-form';
 
 const DISTANCES = ['3K', '5K'];
@@ -419,17 +419,21 @@ function PaymentPanel({
         )}
       </div>
       {paymentOpen ? (
-        <div className={uploadBox}>
-          <h4 className="m-0 font-display text-lg font-bold uppercase">{t('alreadyPaid')}</h4>
-          <ReceiptUploadForm
-            mode={uploadMode}
-            userId={userId}
-            action={recordReceipt}
-            submitLabel={paymentT('submit')}
-            submitTone="inverse"
-          />
-          <p className="m-0 text-sm text-muted-foreground">{paymentT('receiptHelpAccount')}</p>
-        </div>
+        <ReceiptSubmission
+          mode={uploadMode}
+          userId={userId}
+          action={recordReceipt}
+          submitLabel={paymentT('submit')}
+          submitTone="inverse"
+          next="refresh"
+          className={uploadBox}
+          before={
+            <h4 className="m-0 font-display text-lg font-bold uppercase">{t('alreadyPaid')}</h4>
+          }
+          after={
+            <p className="m-0 text-sm text-muted-foreground">{paymentT('receiptHelpAccount')}</p>
+          }
+        />
       ) : (
         <div role="status" className="rounded-xl bg-inverse px-4 py-3 text-inverse-foreground">
           <p className="m-0 font-bold">{common('openingSoonTitle')}</p>
