@@ -1,0 +1,19 @@
+# Local development services. Nothing here runs on Vercel.
+services:
+  # Catches every email the app sends with EMAIL_TRANSPORT=mailpit.
+  # Inbox: http://localhost:8025 · SMTP: localhost:1025
+  mailpit:
+    image: axllent/mailpit:v1.34
+    container_name: catarinotlon-mailpit
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:8025:8025'
+      - '127.0.0.1:1025:1025'
+    environment:
+      MP_MAX_MESSAGES: 500
+      MP_DATABASE: /data/mailpit.db
+    volumes:
+      - mailpit-data:/data
+
+volumes:
+  mailpit-data:
