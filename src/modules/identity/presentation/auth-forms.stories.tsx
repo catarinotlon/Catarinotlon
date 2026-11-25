@@ -3,7 +3,12 @@ import { useRef } from 'react';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 
 import type { FormAction } from '@/shared/ui/form-state';
-import { fakeTurnstile, installFakeTurnstile, renderedWidget } from '@/test/fake-turnstile';
+import {
+  fakeTurnstile,
+  installFakeTurnstile,
+  renderedWidget,
+  solveHumanCheck,
+} from '@/test/fake-turnstile';
 
 import { ForgotPasswordForm, ResetPasswordForm, SignInForm, SignUpForm } from './auth-forms';
 
@@ -90,6 +95,7 @@ export const SignUpHumanCheckFailed: Story = {
     const canvas = within(canvasElement);
     const submit = canvas.getByRole('button', { name: /Crear cuenta e inscribirme/ });
     await expect((await renderedWidget()).closest('form')).toContainElement(submit);
+    solveHumanCheck();
 
     await userEvent.click(submit);
 
@@ -114,6 +120,7 @@ export const SignInHumanCheckAfterWrongPassword: Story = {
     const canvas = within(canvasElement);
     const submit = canvas.getByRole('button', { name: 'Iniciar sesión' });
     await expect((await renderedWidget()).closest('form')).toContainElement(submit);
+    solveHumanCheck();
 
     await userEvent.click(submit);
 
@@ -135,6 +142,7 @@ export const ForgotPasswordHumanCheckFailed: Story = {
     const canvas = within(canvasElement);
     const submit = canvas.getByRole('button', { name: 'Enviar enlace' });
     await expect((await renderedWidget()).closest('form')).toContainElement(submit);
+    solveHumanCheck();
 
     await userEvent.type(canvas.getByLabelText('Correo electrónico'), 'a@example.test');
     await userEvent.click(submit);
@@ -155,6 +163,7 @@ export const ForgotPasswordResendHumanCheck: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await renderedWidget();
+    solveHumanCheck();
     await userEvent.type(canvas.getByLabelText('Correo electrónico'), 'a@example.test');
     await userEvent.click(canvas.getByRole('button', { name: 'Enviar enlace' }));
 
