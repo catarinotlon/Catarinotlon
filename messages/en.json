@@ -724,7 +724,7 @@
       "scanHint": "Point the camera at the ticket's QR code",
       "scan": "Scan ticket",
       "stopScan": "Stop camera",
-      "scanUnavailable": "This browser can't read QR codes. Search by name or bib number.",
+      "cameraUnavailable": "We couldn't open the camera. Check the browser's camera permission, or search by name or bib number.",
       "search": "Or search by name or bib number",
       "searchButton": "Search",
       "noResults": "We couldn't find that runner.",

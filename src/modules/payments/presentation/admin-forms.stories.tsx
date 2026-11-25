@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import QRCode from 'qrcode';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 
 import { EMPTY_SETTINGS } from '@/modules/event';
@@ -233,16 +234,62 @@ export const SettingsHistory: Story = {
   },
 };
 
-/** Without camera support, it explains the fallback. */
-export const ScannerUnavailable: Story = {
+const TICKET_ID = '3f2b8c1e-7a4d-4e9f-b6c2-1d5a9e8f0b37';
+const scannedTicket = fn();
+
+/**
+ * Pretends to be Safari: no native barcode detector, and a camera that films
+ * a ticket's QR code.
+ */
+async function withoutNativeDetectorFilming(ticketId: string) {
+  const original = Object.getOwnPropertyDescriptor(window, 'BarcodeDetector');
+  const getUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+  Reflect.deleteProperty(window, 'BarcodeDetector');
+
+  const camera = document.createElement('canvas');
+  await QRCode.toCanvas(camera, ticketId, { width: 480, margin: 4 });
+  // A canvas stream only emits a frame when the canvas is painted.
+  const repaint = setInterval(() => camera.getContext('2d')?.drawImage(camera, 0, 0), 100);
+  navigator.mediaDevices.getUserMedia = async () => camera.captureStream(10);
+
+  return () => {
+    clearInterval(repaint);
+    navigator.mediaDevices.getUserMedia = getUserMedia;
+    if (original) Object.defineProperty(window, 'BarcodeDetector', original);
+  };
+}
+
+/** Browsers without a native barcode detector (Safari, Firefox) still read the ticket. */
+export const ScanWithoutNativeDetector: Story = {
+  beforeEach: () => withoutNativeDetectorFilming(TICKET_ID),
+  render: () => <TicketScanner onTicket={scannedTicket} />,
+  play: async ({ canvasElement }) => {
+    const onTicket = scannedTicket;
+    await userEvent.click(within(canvasElement).getByRole('button', { name: 'Escanear boleto' }));
+    await waitFor(() => expect(onTicket).toHaveBeenCalledWith(TICKET_ID), { timeout: 5000 });
+  },
+};
+
+/** Blocks the camera, as when the admin denies the permission. */
+function withBlockedCamera() {
+  const getUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+  navigator.mediaDevices.getUserMedia = () =>
+    Promise.reject(new DOMException('Permission denied', 'NotAllowedError'));
+  return () => {
+    navigator.mediaDevices.getUserMedia = getUserMedia;
+  };
+}
+
+/** When the camera cannot be opened, it says so and points to the search. */
+export const ScannerCameraBlocked: Story = {
+  beforeEach: withBlockedCamera,
   render: () => <TicketScanner onTicket={fn()} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    Reflect.deleteProperty(window, 'BarcodeDetector');
     await userEvent.click(canvas.getByRole('button', { name: 'Escanear boleto' }));
     await expect(
       await canvas.findByText(
-        'Este navegador no puede leer códigos QR. Busca por nombre o número.',
+        'No pudimos abrir la cámara. Revisa el permiso de cámara del navegador o busca por nombre o número.',
       ),
     ).toBeVisible();
   },
