@@ -105,7 +105,7 @@ describe('auth server actions', () => {
       ).toEqual([
         {
           phone: '5500000000',
-          privacy_version: 'privacy-2026-11-24-2',
+          privacy_version: 'privacy-2026-11-24-3',
           terms_version: 'terms-2026-11-24',
         },
       ]);

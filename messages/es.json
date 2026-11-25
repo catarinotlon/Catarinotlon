@@ -902,6 +902,7 @@
                 "Proveedor de envío de correos.",
                 "Proveedor de monitoreo de errores.",
                 "Proveedor de estadísticas de navegación y grabación de visitas.",
+                "Proveedor de protección contra bots, que revisa señales técnicas de tu navegador cuando creas tu cuenta, inicias sesión o pides un correo de acceso.",
                 "Google, únicamente si eliges entrar con tu cuenta de Google.",
                 "La imprenta de las playeras, que recibe el nombre para tu playera y tu talla."
               ]

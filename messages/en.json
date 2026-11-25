@@ -902,6 +902,7 @@
                 "Email delivery provider.",
                 "Error monitoring provider.",
                 "Browsing statistics and visit recording provider.",
+                "Bot protection provider, which checks technical signals from your browser when you create your account, sign in, or ask for an access email.",
                 "Google, only if you choose to sign in with your Google account.",
                 "The shirt printer, which receives your shirt name and size."
               ]
