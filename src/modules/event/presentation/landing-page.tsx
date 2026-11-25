@@ -184,6 +184,24 @@ function RouteArt({ start, finish }: { start: string; finish: string }) {
 }
 
 /** A start time: the clock large, the half of the day smaller, so it reads at a glance. */
+function MapPin() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="size-3.5 shrink-0 text-gold"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.25}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z" />
+      <circle cx="12" cy="9.5" r="2.5" />
+    </svg>
+  );
+}
+
 function StartTime({ time, pending }: { time: string | null; pending: string }) {
   const locale = useLocale();
   if (!time) return pending;
@@ -309,14 +327,30 @@ export function LandingPage({ facts }: LandingPageProps) {
               key: 'venue',
               label: t('hero.venue'),
               value: facts.venue ?? pending,
+              action:
+                facts.venue && facts.venueMapUrl ? (
+                  <a
+                    href={facts.venueMapUrl}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    aria-label={t('hero.venueMapLabel', { venue: facts.venue })}
+                    className="relative -my-1.5 flex h-7 items-center gap-1 rounded-full border border-border px-2.5 text-[0.6875rem] leading-none tracking-wider text-foreground no-underline transition-colors before:absolute before:-inset-x-1 before:-inset-y-2 before:content-[''] hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
+                  >
+                    <MapPin />
+                    {t('hero.venueMap')}
+                  </a>
+                ) : null,
               className: 'order-2 border-b border-l pl-4 md:order-4 md:border-b-0 md:pl-6',
             },
-          ].map(({ key, label, value, className }) => (
+          ].map(({ key, label, value, action, className }) => (
             <div
               key={key}
               className={cn('flex flex-col gap-2 border-border pb-4 md:pb-1', className)}
             >
-              <dt className="text-xs font-bold tracking-widest text-gold uppercase">{label}</dt>
+              <dt className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 text-xs font-bold tracking-widest text-gold uppercase md:justify-start">
+                {label}
+                {action}
+              </dt>
               <dd className="m-0 font-display text-2xl leading-tight font-bold break-words uppercase md:text-3xl">
                 {value}
               </dd>

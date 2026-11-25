@@ -101,7 +101,9 @@
       "signIn": "Sign in",
       "date": "Date",
       "startDistance": "{distance} start",
-      "venue": "Venue"
+      "venue": "Venue",
+      "venueMap": "View map",
+      "venueMapLabel": "View map of {venue} (opens in a new tab)"
     },
     "distances": {
       "eyebrow": "Distances",
