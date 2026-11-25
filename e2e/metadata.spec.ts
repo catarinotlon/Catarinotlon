@@ -34,6 +34,14 @@ test.describe('metadata', () => {
     }
   });
 
+  test('iOS does not turn the CLABE or a bib number into a phone link', async ({ page }) => {
+    await page.goto('/es');
+    await expect(page.locator('meta[name="format-detection"]')).toHaveAttribute(
+      'content',
+      'telephone=no',
+    );
+  });
+
   test('the browser bar follows the theme the runner chose', async ({ page }) => {
     await page.goto('/es');
     const themeColor = page.locator('meta[name="theme-color"]');
