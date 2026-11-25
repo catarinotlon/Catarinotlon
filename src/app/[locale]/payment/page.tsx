@@ -13,6 +13,7 @@ import { Link, redirect } from '@/i18n/navigation';
 import { isPaymentOpen } from '@/modules/event';
 import { recordReceiptAction } from '@/modules/payments/presentation/payment-actions';
 import { PaymentView } from '@/modules/payments/presentation/payment-view';
+import { removeRunnerAction } from '@/modules/registration/presentation/runner-actions';
 import { buttonClasses } from '@/shared/ui/button';
 import { Card, PageIntro, PageShell } from '@/shared/ui/page-shell';
 import { SessionActions } from '@/app/[locale]/_chrome/session-actions';
@@ -81,6 +82,7 @@ export default async function PaymentPage({ params }: Props) {
           userId={user.value.id}
           uploadMode={receiptUploadMode}
           recordReceipt={recordReceiptAction}
+          removeRunner={removeRunnerAction}
           bank={settings.bank}
           contact={
             contact

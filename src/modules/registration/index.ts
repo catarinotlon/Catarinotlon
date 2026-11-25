@@ -34,6 +34,7 @@ export {
   changeRunnerShirtName,
   changeRunnerShirtSize,
   listAccountRunners,
+  removeAccountRunner,
   type AccountEmailLookup,
   type AccountLinks,
   type RegistrationNotFound,
@@ -54,10 +55,12 @@ export {
   changeShirtSize,
   confirmRegistration,
   createRegistration,
+  ensureRemovableByOwner,
   returnToPendingPayment,
   submitForReview,
   type AccountStage,
   type NewRegistration,
+  type NotRemovable,
   type Registration,
   type RegistrationStatus,
 } from './domain/registration';
@@ -65,4 +68,8 @@ export { nextStepAfterSignIn, type NextStep } from './domain/next-step';
 export { parseShirtName, type ShirtName } from './domain/shirt-name';
 export { InMemoryRegistrationRepository } from './infrastructure/in-memory-registration-repository';
 export { InMemoryRegistrationAuditLog } from './infrastructure/in-memory-registration-audit-log';
+export {
+  RemoveRunnerButton,
+  type RemoveRunnerButtonProps,
+} from './presentation/remove-runner-button';
 export { RunnerFields, type RunnerFieldsProps } from './presentation/runner-fields';

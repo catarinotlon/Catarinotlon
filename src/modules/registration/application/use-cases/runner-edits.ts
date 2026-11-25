@@ -8,6 +8,8 @@ import {
   changeDistance,
   changeShirtName,
   changeShirtSize,
+  ensureRemovableByOwner,
+  type NotRemovable,
   type Registration,
   type ShirtSizeDeadlinePassed,
 } from '../../domain/registration';
@@ -102,6 +104,38 @@ export async function listAccountRunners(
   input: { readonly userId: string },
 ): Promise<Registration[]> {
   return deps.registrations.listByOwner(input.userId);
+}
+
+/**
+ * Removes a runner the account holder added by mistake, before paying for them.
+ *
+ * @remarks
+ * Only a runner still waiting for payment can be removed: one covered by a
+ * receipt or already confirmed stays. The registration is soft-deleted and
+ * records the account holder as who removed it; its bib number is never reused.
+ * When the last runner is removed, the account goes back to `incomplete`.
+ *
+ * @param deps - The registration repository.
+ * @param input - The runner to remove and who is removing it.
+ * @returns Nothing, or an expected error.
+ *
+ * @example
+ * ```ts
+ * await removeAccountRunner(deps, { userId, registrationId });
+ * ```
+ */
+export async function removeAccountRunner(
+  deps: Pick<RunnerEditDeps, 'registrations'>,
+  input: RunnerEdit,
+): Promise<Result<void, RegistrationNotFound | NotRemovable>> {
+  const registration = await findOwned(deps.registrations, input);
+  if (!registration) return err('registration.not_found');
+
+  const removable = ensureRemovableByOwner(registration);
+  if (!removable.ok) return removable;
+
+  await deps.registrations.softDelete(registration.id, input.userId);
+  return ok(undefined);
 }
 
 /**

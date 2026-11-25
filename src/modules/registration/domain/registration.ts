@@ -70,6 +70,8 @@ export type AlreadyConfirmed = DomainError<'registration.already_confirmed'>;
 export type NotInReview = DomainError<'registration.not_in_review'>;
 /** Error returned when the shirt-size deadline has passed. */
 export type ShirtSizeDeadlinePassed = DomainError<'registration.shirt_size_deadline_passed'>;
+/** Error returned when the account holder tries to remove a runner who is no longer unpaid. */
+export type NotRemovable = DomainError<'registration.not_removable'>;
 
 /**
  * Creates a registration awaiting payment.
@@ -142,6 +144,23 @@ export function returnToPendingPayment(
 export function confirmRegistration(registration: Registration): Result<Registration, NotInReview> {
   if (registration.status !== 'payment_in_review') return err('registration.not_in_review');
   return ok({ ...registration, status: 'confirmed' });
+}
+
+/**
+ * Checks that the account holder may remove a runner from their account.
+ *
+ * @remarks
+ * Only a runner still waiting for payment can be removed, so a runner added by
+ * mistake can be taken out before the transfer. Once a receipt covers the
+ * runner, or the payment is confirmed, the runner stays: there are no
+ * cancellations or refunds. Removing is a soft delete, never a business state.
+ *
+ * @param registration - The registration.
+ * @returns Nothing, or `registration.not_removable`.
+ */
+export function ensureRemovableByOwner(registration: Registration): Result<void, NotRemovable> {
+  if (registration.status !== 'pending_payment') return err('registration.not_removable');
+  return ok(undefined);
 }
 
 /**

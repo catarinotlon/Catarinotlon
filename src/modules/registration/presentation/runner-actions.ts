@@ -13,6 +13,7 @@ import {
   changeShirtSizeFor,
   getSignedInUser,
   registerAccountRunner,
+  removeRunnerFor,
 } from '@/composition';
 import { redirect } from '@/i18n/navigation';
 import { PRIVACY_VERSION, TERMS_VERSION } from '@/modules/identity';
@@ -168,4 +169,25 @@ export async function saveDistanceAction(_state: FormState, data: FormData): Pro
 export async function saveShirtSizeAction(_state: FormState, data: FormData): Promise<FormState> {
   const shirtSize = String(data.get('shirtSize') ?? '');
   return editOwnRunner(data, (runner) => changeShirtSizeFor({ ...runner, shirtSize }));
+}
+
+/**
+ * Removes an unpaid runner the account holder added by mistake.
+ *
+ * @param _state - The previous form state.
+ * @param data - The submitted form: the runner and the page it was removed from.
+ * @returns The error. On success it redirects back to that page.
+ */
+export async function removeRunnerAction(_state: FormState, data: FormData): Promise<FormState> {
+  const locale = await getLocale();
+  const user = await getSignedInUser();
+  if (!user.ok) return { formError: 'errors.generic' };
+
+  const removed = await removeRunnerFor({
+    userId: user.value.id,
+    registrationId: String(data.get('registrationId') ?? ''),
+  });
+  if (!removed.ok) return stateForError(removed.error.code);
+
+  return redirect({ href: data.get('from') === 'payment' ? '/payment' : '/account', locale });
 }

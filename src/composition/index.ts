@@ -60,6 +60,7 @@ import {
   changeRunnerShirtSize,
   listAccountRunners,
   registerRunner,
+  removeAccountRunner,
   sendRaceReminders,
   type AdminEditInput,
   type RegisterRunnerInput,
@@ -313,6 +314,9 @@ export const listAllRegistrations = () => registrations.listAll();
 
 /** Finds a registration by ID, for admins. */
 export const findRegistration = (id: string) => registrations.findById(id);
+
+/** Removes an unpaid runner from the account. */
+export const removeRunnerFor = (input: RunnerEdit) => removeAccountRunner({ registrations }, input);
 
 /** Changes a runner's shirt name. */
 export const changeShirtNameFor = (input: RunnerEdit & { shirtName: string }) =>

@@ -5,6 +5,7 @@ import { signInAction, signUpAction } from '@/modules/identity/presentation/auth
 import {
   addRunnerAction,
   completeRegistrationAction,
+  removeRunnerAction,
   saveDistanceAction,
   saveShirtNameAction,
   saveShirtSizeAction,
@@ -262,6 +263,68 @@ describe('runner server actions', () => {
 
       expect(state).toEqual({ formError: 'errors.generic' });
       expect((await runnersOf(userId))[0]?.distance).toBe('3K');
+    });
+  });
+  describe('removeRunnerAction', () => {
+    const removalOf = (registrationId: string) =>
+      sql('SELECT deleted_at IS NOT NULL AS removed, deleted_by FROM registrations WHERE id = ?', [
+        registrationId,
+      ]);
+
+    async function withSecondRunner() {
+      const runner = await signedInRunner();
+      await redirectOf(() => addRunnerAction({}, form({ ...runnerFields(), intent: 'pay' })));
+      const second = (await runnersOf(runner.userId))[1];
+      return { ...runner, secondId: String(second?.id) };
+    }
+
+    it('takes an unpaid runner off the account and returns to the payment page', async () => {
+      const { userId, secondId } = await withSecondRunner();
+
+      const target = await redirectOf(() =>
+        removeRunnerAction({}, form({ registrationId: secondId, from: 'payment' })),
+      );
+
+      expect(target).toBe('/es/pago');
+      expect(await removalOf(secondId)).toEqual([{ removed: 1, deleted_by: userId }]);
+    });
+
+    it('returns to the account page when removed from there', async () => {
+      const { secondId } = await withSecondRunner();
+
+      const target = await redirectOf(() =>
+        removeRunnerAction({}, form({ registrationId: secondId, from: 'account' })),
+      );
+
+      expect(target).toBe('/es/cuenta');
+    });
+
+    it('keeps a runner whose receipt is already under review', async () => {
+      const { userId } = await signedInRunner();
+      await recordReceiptAction({ pathname: await storeReceipt(userId) });
+      const [runner] = await runnersOf(userId);
+
+      const state = await removeRunnerAction(
+        {},
+        form({ registrationId: String(runner?.id), from: 'account' }),
+      );
+
+      expect(state).toEqual({ formError: 'errors.registration.not_removable' });
+      expect(await removalOf(String(runner?.id))).toEqual([{ removed: 0, deleted_by: null }]);
+    });
+
+    it('never removes another account’s runner', async () => {
+      const victim = await signedInRunner();
+      const [runner] = await runnersOf(victim.userId);
+      await signedInRunner();
+
+      const state = await removeRunnerAction(
+        {},
+        form({ registrationId: String(runner?.id), from: 'account' }),
+      );
+
+      expect(state).toEqual({ formError: 'errors.registration.not_found' });
+      expect(await removalOf(String(runner?.id))).toEqual([{ removed: 0, deleted_by: null }]);
     });
   });
 });

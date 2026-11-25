@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { expect, fn, within } from 'storybook/test';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
+
+import type { FormAction } from '@/shared/ui/form-state';
 
 import { PaymentView, type PaymentViewProps } from './payment-view';
 
@@ -7,6 +9,7 @@ const props: PaymentViewProps = {
   userId: 'user-1',
   uploadMode: 'local',
   recordReceipt: fn(async () => ({ done: true })),
+  removeRunner: fn<FormAction>(async () => ({})),
   bank: { beneficiary: 'Sample Beneficiary', bank: 'Sample Bank', clabe: '002010077777777771' },
   contact: {
     fullName: 'Sample Contact',
@@ -63,6 +66,23 @@ export const Default: Story = {
     await expect(
       canvas.getByRole('link', { name: 'Agregar otro corredor antes de pagar' }),
     ).toHaveClass('border-dashed');
+  },
+};
+
+/** Each runner to pay can be removed, after confirming, in case they were added by mistake. */
+export const RemoveRunner: Story = {
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('button', { name: 'Quitar a Runner One' })).toBeVisible();
+    await userEvent.click(canvas.getByRole('button', { name: 'Quitar a Runner Two' }));
+    await expect(args.removeRunner).not.toHaveBeenCalled();
+    await userEvent.click(canvas.getByRole('button', { name: 'Sí, quitar' }));
+
+    await waitFor(() => expect(args.removeRunner).toHaveBeenCalledTimes(1));
+    const data = (args.removeRunner as unknown as { mock: { calls: unknown[][] } }).mock
+      .calls[0]?.[1];
+    await expect((data as FormData).get('registrationId')).toBe('b');
+    await expect((data as FormData).get('from')).toBe('payment');
   },
 };
 
