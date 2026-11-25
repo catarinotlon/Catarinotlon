@@ -26,9 +26,11 @@ import {
   requireOwner,
   requireUser,
   revokeAdmin,
+  type HumanVerifier,
 } from '@/modules/identity';
 import { BetterAuthAccounts } from '@/modules/identity/infrastructure/better-auth-accounts';
 import { BetterAuthCurrentUserProvider } from '@/modules/identity/infrastructure/better-auth-current-user-provider';
+import { CloudflareTurnstileVerifier } from '@/modules/identity/infrastructure/cloudflare-turnstile-verifier';
 import { DrizzleAccountDirectory } from '@/modules/identity/infrastructure/drizzle-account-directory';
 import { DrizzleAdminGrantRepository } from '@/modules/identity/infrastructure/drizzle-admin-grant-repository';
 import { DrizzlePersonalDataEraser } from '@/modules/identity/infrastructure/drizzle-personal-data-eraser';
@@ -260,6 +262,38 @@ export const accountDirectory = directory;
 
 /** Whether cookies must be HTTPS-only. */
 export const secureCookies = isProduction;
+
+function createHumanVerifier(): HumanVerifier | null {
+  const siteKey = env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  const secretKey = env.TURNSTILE_SECRET_KEY;
+  if (!siteKey && !secretKey) return null;
+  if (!siteKey || !secretKey) {
+    throw new Error('Set both NEXT_PUBLIC_TURNSTILE_SITE_KEY and TURNSTILE_SECRET_KEY, or neither');
+  }
+  return new CloudflareTurnstileVerifier({ secretKey });
+}
+
+const humanVerifier = createHumanVerifier();
+
+/**
+ * The Turnstile site key the sign-up form renders its challenge with.
+ *
+ * @remarks
+ * `null` while Turnstile is not configured: the form shows no challenge and
+ * {@link verifyHuman} lets every submission through.
+ */
+export const humanCheckSiteKey = humanVerifier
+  ? (env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? null)
+  : null;
+
+/**
+ * Checks that a person, not a bot, submitted a form.
+ *
+ * @param token - The challenge token the form sent, or `null`.
+ * @returns `true` when the token passes, or when Turnstile is not configured.
+ */
+export const verifyHuman = (token: string | null): Promise<boolean> =>
+  humanVerifier ? humanVerifier.verify(token) : Promise.resolve(true);
 
 /** The system clock. */
 export const appClock = clock;

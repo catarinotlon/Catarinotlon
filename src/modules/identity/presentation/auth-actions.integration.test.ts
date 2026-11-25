@@ -105,7 +105,7 @@ describe('auth server actions', () => {
       ).toEqual([
         {
           phone: '5500000000',
-          privacy_version: 'privacy-2026-11-24-2',
+          privacy_version: 'privacy-2026-11-24-3',
           terms_version: 'terms-2026-11-24',
         },
       ]);
@@ -369,7 +369,7 @@ describe('auth server actions', () => {
       // Tokens carry a one-second timestamp, and an identical token is deduplicated.
       await new Promise((resolve) => setTimeout(resolve, 1100));
 
-      expect(await resendVerificationAction({})).toEqual({ done: true });
+      expect(await resendVerificationAction({}, form({}))).toEqual({ done: true });
 
       await expect
         .poll(() => outbox().filter((item) => item.to === email).length)
@@ -379,7 +379,7 @@ describe('auth server actions', () => {
     it('sends nothing when no address is pending', async () => {
       const before = outbox().length;
 
-      expect(await resendVerificationAction({})).toEqual({ done: true });
+      expect(await resendVerificationAction({}, form({}))).toEqual({ done: true });
 
       expect(outbox()).toHaveLength(before);
     });

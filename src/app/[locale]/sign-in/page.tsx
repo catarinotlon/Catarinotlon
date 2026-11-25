@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
-import { getSignedInUser } from '@/composition';
+import { getSignedInUser, humanCheckSiteKey } from '@/composition';
 import { requireLocale } from '@/i18n/locale';
 import { getPathname, redirect } from '@/i18n/navigation';
 import { googleSignInAction, signInAction } from '@/modules/identity/presentation/auth-actions';
@@ -48,7 +48,11 @@ export default async function SignInPage({ params }: Props) {
             <h1 className="m-0 font-heading text-4xl md:text-5xl">{t('title')}</h1>
             <p className="m-0 text-muted-foreground">{t('body')}</p>
           </div>
-          <SignInForm action={signInAction} googleAction={googleSignInAction} />
+          <SignInForm
+            action={signInAction}
+            googleAction={googleSignInAction}
+            humanCheckSiteKey={humanCheckSiteKey}
+          />
         </Card>
       </div>
     </PageShell>

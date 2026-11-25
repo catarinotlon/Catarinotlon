@@ -20,28 +20,29 @@ Web app for the **Catarinotlón 2026** race (3K and 5K). Runners read about the 
 
 ## Stack
 
-| Area                  | Choice                                                                                                                                                         |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Framework             | Next.js (App Router, latest stable) + React, deployed on Vercel (Node.js runtime, not Edge)                                                                    |
-| Language              | TypeScript in `strict` mode (plus `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes`)                                                                 |
-| Package manager       | pnpm · Node 24 LTS (minimum 22)                                                                                                                                |
-| Internationalization  | next-intl, locales `en` and `es`                                                                                                                               |
-| Styling               | Tailwind CSS v4 (tokens in CSS via `@theme`), `class-variance-authority` + `tailwind-merge` for variants                                                       |
-| Theming               | next-themes, light and dark themes, light by default                                                                                                           |
-| Base components       | shadcn/ui (Radix primitives) copied into `src/shared/ui` and adapted to the brand                                                                              |
-| Validation            | Zod at the edges (forms, environment variables, external payloads)                                                                                             |
-| Environment variables | `@t3-oss/env-nextjs` (Zod schema, build fails if something is missing)                                                                                         |
-| Database              | Turso (libSQL/SQLite) with **Drizzle ORM** (`drizzle-orm/libsql`, `@libsql/client`) and `drizzle-kit` (`dialect: 'turso'`)                                     |
-| Authentication        | Better Auth with its Drizzle adapter (`provider: "sqlite"`): email + password and Google sign-in                                                               |
-| Email                 | Resend + React Email for templates                                                                                                                             |
-| Tickets               | `qrcode` (QR) and `@react-pdf/renderer` (PDF download)                                                                                                         |
-| Payments              | Bank transfer, "Transferencia (SPEI)", with a receipt upload reviewed by an admin. No payment gateway                                                          |
-| File storage          | Vercel Blob, private store, client uploads (`@vercel/blob`)                                                                                                    |
-| Error tracking        | Sentry (`@sentry/nextjs`)                                                                                                                                      |
-| Product analytics     | PostHog (`posthog-js`, US Cloud): pageviews, clicks, and session replay, through the `/ingest` proxy; off without `NEXT_PUBLIC_POSTHOG_KEY`                    |
-| Testing               | Vitest + Testing Library (unit and integration), MSW (external HTTP), Storybook Vitest addon (components), Playwright + axe (E2E)                              |
-| Documentation         | TypeDoc (code API) and Storybook (components)                                                                                                                  |
-| Quality               | ESLint (flat config, `eslint-config-next`, `eslint-plugin-boundaries`), Prettier (`prettier-plugin-tailwindcss`), lefthook + lint-staged, Conventional Commits |
+| Area                  | Choice                                                                                                                                                                                       |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Framework             | Next.js (App Router, latest stable) + React, deployed on Vercel (Node.js runtime, not Edge)                                                                                                  |
+| Language              | TypeScript in `strict` mode (plus `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes`)                                                                                               |
+| Package manager       | pnpm · Node 24 LTS (minimum 22)                                                                                                                                                              |
+| Internationalization  | next-intl, locales `en` and `es`                                                                                                                                                             |
+| Styling               | Tailwind CSS v4 (tokens in CSS via `@theme`), `class-variance-authority` + `tailwind-merge` for variants                                                                                     |
+| Theming               | next-themes, light and dark themes, light by default                                                                                                                                         |
+| Base components       | shadcn/ui (Radix primitives) copied into `src/shared/ui` and adapted to the brand                                                                                                            |
+| Validation            | Zod at the edges (forms, environment variables, external payloads)                                                                                                                           |
+| Environment variables | `@t3-oss/env-nextjs` (Zod schema, build fails if something is missing)                                                                                                                       |
+| Database              | Turso (libSQL/SQLite) with **Drizzle ORM** (`drizzle-orm/libsql`, `@libsql/client`) and `drizzle-kit` (`dialect: 'turso'`)                                                                   |
+| Authentication        | Better Auth with its Drizzle adapter (`provider: "sqlite"`): email + password and Google sign-in                                                                                             |
+| Email                 | Resend + React Email for templates                                                                                                                                                           |
+| Tickets               | `qrcode` (QR) and `@react-pdf/renderer` (PDF download)                                                                                                                                       |
+| Payments              | Bank transfer, "Transferencia (SPEI)", with a receipt upload reviewed by an admin. No payment gateway                                                                                        |
+| File storage          | Vercel Blob, private store, client uploads (`@vercel/blob`)                                                                                                                                  |
+| Bot protection        | Cloudflare Turnstile on the email sign-up, sign-in, password reset request, and verification resend forms (managed widget, `interaction-only`), verified on the server; off without its keys |
+| Error tracking        | Sentry (`@sentry/nextjs`)                                                                                                                                                                    |
+| Product analytics     | PostHog (`posthog-js`, US Cloud): pageviews, clicks, and session replay, through the `/ingest` proxy; off without `NEXT_PUBLIC_POSTHOG_KEY`                                                  |
+| Testing               | Vitest + Testing Library (unit and integration), MSW (external HTTP), Storybook Vitest addon (components), Playwright + axe (E2E)                                                            |
+| Documentation         | TypeDoc (code API) and Storybook (components)                                                                                                                                                |
+| Quality               | ESLint (flat config, `eslint-config-next`, `eslint-plugin-boundaries`), Prettier (`prettier-plugin-tailwindcss`), lefthook + lint-staged, Conventional Commits                               |
 
 When scaffolding, install the latest stable versions and pin them in `package.json`. Do not add new dependencies without a reason; prefer the platform and what is already in the stack.
 
@@ -257,6 +258,7 @@ Rules that follow from it:
 - **Placement:** the Better Auth instance lives in `src/shared/infrastructure/auth` and is mounted at `app/api/auth/[...all]/route.ts` with `toNextJsHandler`. It uses the Drizzle adapter on the same Turso database; its tables are part of the Drizzle schema and change only through generated migrations.
 - **Hexagonal boundary:** Better Auth is infrastructure. The `identity` module exposes a `CurrentUserProvider` port (adapter: `BetterAuthCurrentUserProvider`, which reads the session with `auth.api.getSession` and the request headers). Use cases receive a `UserId`; they never import Better Auth. Other modules reference users only by `UserId`.
 - **Authorization:** every use case that reads or changes a registration or ticket checks ownership against the current `UserId`. Protecting a page in the UI is not enough. The account route redirects signed-out visitors to sign-in.
+- **Bot protection:** every email form that creates an account, tries a password, or sends an email carries Cloudflare Turnstile (`HumanCheck`, loaded from Cloudflare's script with no npm package): sign-up, sign-in, the password reset request (and its resend), and the verification resend. The widget is "Managed" in the Cloudflare dashboard and rendered `interaction-only`, so most people never see it and only a suspicious visitor gets a checkbox. Each server action validates the fields first and then checks the token through the `HumanVerifier` port (`CloudflareTurnstileVerifier`, which sends only the secret and the token); nothing happens until it passes. A checked token is spent, so the form starts a fresh challenge after every server answer. Better Auth's matching HTTP routes (`/sign-up/email`, `/sign-in/email`, `/request-password-reset`, `/send-verification-email`) are closed with `disabledPaths`, so the forms are the only way in; a new form of this kind adds its check and closes its route in the same change. Google sign-in needs no extra check. Without `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and `TURNSTILE_SECRET_KEY` the check is off; setting only one fails at startup.
 - **Emails:** the verification and password-reset hooks send through the `EmailSender` port, with the templates listed under "Transactional emails".
 - **UI:** the Google button follows Google's sign-in branding guidelines (official button and logo; the mocks use a neutral placeholder).
 - **Tests:** unit and integration tests use an in-memory `CurrentUserProvider`. E2E signs in with email + password against the local database. Never automate the real Google consent screen.
@@ -447,6 +449,7 @@ RECEIPT_STORAGE      RECEIPT_LOCAL_DIR    RECEIPT_MAX_BYTES    BLOB_READ_WRITE_T
 CRON_SECRET
 NEXT_PUBLIC_SENTRY_DSN   SENTRY_AUTH_TOKEN   SENTRY_ORG   SENTRY_PROJECT
 NEXT_PUBLIC_POSTHOG_KEY
+NEXT_PUBLIC_TURNSTILE_SITE_KEY   TURNSTILE_SECRET_KEY
 ```
 
 `EMAIL_TRANSPORT=memory` and `RECEIPT_STORAGE=memory` are for local development and E2E: they send no real email and keep receipts on the local disk. `EMAIL_TRANSPORT=mailpit` is for local development only: the `MailpitEmailSender` adapter delivers every email, rendered as Resend would send it, to the Mailpit inbox from `docker-compose.yml` (`docker compose up -d mailpit`, inbox at `http://localhost:8025`, `MAILPIT_URL` defaults to it). Never use it on Vercel. `CRON_SECRET` protects `/api/cron/race-reminders`, which stays closed without it; Vercel Cron (`vercel.json`) calls it daily and sends the secret as a bearer token. Database tooling reads its connection through `src/shared/infrastructure/database-env.ts`, so it can run without the app's other secrets.

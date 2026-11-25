@@ -320,6 +320,7 @@
     "acceptLegal": "Debes aceptar los términos y el aviso de privacidad.",
     "invalidCredentials": "El correo o la contraseña no son correctos.",
     "emailNotVerified": "Confirma tu correo antes de iniciar sesión.",
+    "humanCheckFailed": "No pudimos confirmar que eres una persona. Espera a que termine la verificación arriba del botón e inténtalo de nuevo.",
     "invalidResetLink": "Este enlace ya no es válido. Pide uno nuevo.",
     "registration": {
       "not_open": "Las inscripciones todavía no están abiertas.",
@@ -901,6 +902,7 @@
                 "Proveedor de envío de correos.",
                 "Proveedor de monitoreo de errores.",
                 "Proveedor de estadísticas de navegación y grabación de visitas.",
+                "Proveedor de protección contra bots, que revisa señales técnicas de tu navegador cuando creas tu cuenta, inicias sesión o pides un correo de acceso.",
                 "Google, únicamente si eliges entrar con tu cuenta de Google.",
                 "La imprenta de las playeras, que recibe el nombre para tu playera y tu talla."
               ]

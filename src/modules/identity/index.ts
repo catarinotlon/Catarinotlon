@@ -1,4 +1,5 @@
 export type { CurrentUser, CurrentUserProvider } from './application/ports/current-user-provider';
+export type { HumanVerifier } from './application/ports/human-verifier';
 export type {
   ErasureRequest,
   ManualRegistrationEraser,
