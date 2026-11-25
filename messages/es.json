@@ -666,7 +666,7 @@
       "scanHint": "Apunta la cámara al código QR del boleto",
       "scan": "Escanear boleto",
       "stopScan": "Detener cámara",
-      "scanUnavailable": "Este navegador no puede leer códigos QR. Busca por nombre o número.",
+      "cameraUnavailable": "No pudimos abrir la cámara. Revisa el permiso de cámara del navegador o busca por nombre o número.",
       "search": "O busca por nombre o número de corredor",
       "searchButton": "Buscar",
       "noResults": "No encontramos a ese corredor.",
