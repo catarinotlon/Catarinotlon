@@ -14,6 +14,8 @@ import { ShirtPreview } from '@/shared/ui/shirt-preview';
 import { IconBadge } from '@/shared/ui/status-pill';
 import { useStickyForm } from '@/shared/ui/use-sticky-form';
 
+import { HumanCheck } from './human-check';
+
 function useFormMessages(state: FormState) {
   const root = useTranslations();
   return {
@@ -75,15 +77,28 @@ export interface SignUpFormProps {
   open: boolean;
   /** The page's introduction, shown beside the form with the live shirt. */
   intro?: ReactNode;
+  /** The Turnstile site key for the "are you a person?" check. Omitted or `null`, there is none. */
+  humanCheckSiteKey?: string | null;
 }
 
 /**
  * Creates an account and, while registration is open, registers the runner.
  *
- * @param props - The actions, the sizes, and whether registration is open.
+ * @remarks
+ * With a site key, Cloudflare Turnstile checks that a person fills it in. It stays
+ * invisible unless Cloudflare needs the visitor to tick a box.
+ *
+ * @param props - The actions, the sizes, whether registration is open, and the site key.
  * @returns The form.
  */
-export function SignUpForm({ action, googleAction, shirtSizes, open, intro }: SignUpFormProps) {
+export function SignUpForm({
+  action,
+  googleAction,
+  shirtSizes,
+  open,
+  intro,
+  humanCheckSiteKey = null,
+}: SignUpFormProps) {
   const t = useTranslations('auth');
   const common = useTranslations('common');
   const legal = useTranslations('registrationForm');
@@ -179,15 +194,18 @@ export function SignUpForm({ action, googleAction, shirtSizes, open, intro }: Si
             </p>
           )}
         </div>
-        <Button
-          type="submit"
-          variant="cta"
-          fullWidth
-          pending={pending}
-          pendingLabel={busy('creatingAccount')}
-        >
-          {open ? t('signUp.submit', { distance }) : t('signUp.submitClosed')}
-        </Button>
+        <div className="flex flex-col">
+          <HumanCheck siteKey={humanCheckSiteKey} resetSignal={state} />
+          <Button
+            type="submit"
+            variant="cta"
+            fullWidth
+            pending={pending}
+            pendingLabel={busy('creatingAccount')}
+          >
+            {open ? t('signUp.submit', { distance }) : t('signUp.submitClosed')}
+          </Button>
+        </div>
       </form>
       <p className="m-0 text-center">
         {t('signUp.haveAccount')}{' '}
@@ -227,15 +245,21 @@ export interface SignInFormProps {
   action: FormAction;
   /** Starts the Google sign-in flow. */
   googleAction: () => Promise<void>;
+  /** The Turnstile site key for the "are you a person?" check. Omitted or `null`, there is none. */
+  humanCheckSiteKey?: string | null;
 }
 
 /**
  * Signs in with Google or with email and password.
  *
- * @param props - The actions.
+ * @remarks
+ * With a site key, Cloudflare Turnstile checks that a person signs in. The server
+ * spends the token on every attempt, so each answer starts a fresh challenge.
+ *
+ * @param props - The actions and the site key.
  * @returns The form.
  */
-export function SignInForm({ action, googleAction }: SignInFormProps) {
+export function SignInForm({ action, googleAction, humanCheckSiteKey = null }: SignInFormProps) {
   const t = useTranslations('auth');
   const busy = useTranslations('busy');
   const { state, formAction, onSubmit, pending } = useStickyForm(action);
@@ -269,15 +293,18 @@ export function SignInForm({ action, googleAction }: SignInFormProps) {
             </Link>
           }
         />
-        <Button
-          type="submit"
-          variant="cta"
-          fullWidth
-          pending={pending}
-          pendingLabel={busy('signingIn')}
-        >
-          {t('signIn.submit')}
-        </Button>
+        <div className="flex flex-col">
+          <HumanCheck siteKey={humanCheckSiteKey} resetSignal={state} />
+          <Button
+            type="submit"
+            variant="cta"
+            fullWidth
+            pending={pending}
+            pendingLabel={busy('signingIn')}
+          >
+            {t('signIn.submit')}
+          </Button>
+        </div>
       </form>
       <p className="m-0 text-center">
         {t('signIn.noAccount')}{' '}
@@ -289,16 +316,25 @@ export function SignInForm({ action, googleAction }: SignInFormProps) {
   );
 }
 
+/** Props of {@link ForgotPasswordForm}. */
+export interface ForgotPasswordFormProps {
+  /** The reset request server action. */
+  action: FormAction;
+  /** The Turnstile site key for the "are you a person?" check. Omitted or `null`, there is none. */
+  humanCheckSiteKey?: string | null;
+}
+
 /**
  * Requests a password reset link.
  *
  * @remarks
- * The confirmation is the same whether or not the email has an account.
+ * The confirmation is the same whether or not the email has an account. With a
+ * site key, both the request and the resend carry Cloudflare Turnstile's check.
  *
- * @param props - The server action.
+ * @param props - The server action and the site key.
  * @returns The form, or the confirmation once sent.
  */
-export function ForgotPasswordForm({ action }: { action: FormAction }) {
+export function ForgotPasswordForm({ action, humanCheckSiteKey = null }: ForgotPasswordFormProps) {
   const t = useTranslations('auth.forgot');
   const auth = useTranslations('auth');
   const busy = useTranslations('busy');
@@ -320,8 +356,10 @@ export function ForgotPasswordForm({ action }: { action: FormAction }) {
         <Link href="/sign-in" className={buttonClasses({ variant: 'cta', fullWidth: true })}>
           {t('back')}
         </Link>
-        <form action={formAction} onSubmit={onSubmit} className="self-center">
+        {messages.form && <FormAlert>{messages.form}</FormAlert>}
+        <form action={formAction} onSubmit={onSubmit} className="flex flex-col items-center">
           <input type="hidden" name="email" value={sent.email} />
+          <HumanCheck siteKey={humanCheckSiteKey} resetSignal={state} />
           <Button
             type="submit"
             variant="link"
@@ -347,6 +385,7 @@ export function ForgotPasswordForm({ action }: { action: FormAction }) {
       <h1 className="m-0 font-heading text-[clamp(36px,9vw,44px)]">{t('title')}</h1>
       <p className="m-0 text-muted-foreground">{t('body')}</p>
       <form action={formAction} onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
+        {messages.form && <FormAlert>{messages.form}</FormAlert>}
         <TextField
           label={auth('email')}
           name="email"
@@ -354,15 +393,18 @@ export function ForgotPasswordForm({ action }: { action: FormAction }) {
           autoComplete="email"
           error={messages.field('email')}
         />
-        <Button
-          type="submit"
-          variant="cta"
-          fullWidth
-          pending={pending}
-          pendingLabel={busy('sendingLink')}
-        >
-          {t('submit')}
-        </Button>
+        <div className="flex flex-col">
+          <HumanCheck siteKey={humanCheckSiteKey} resetSignal={state} />
+          <Button
+            type="submit"
+            variant="cta"
+            fullWidth
+            pending={pending}
+            pendingLabel={busy('sendingLink')}
+          >
+            {t('submit')}
+          </Button>
+        </div>
       </form>
       <p className="m-0 rounded-lg bg-muted p-3 text-sm text-foreground">{t('googleNote')}</p>
       <Link

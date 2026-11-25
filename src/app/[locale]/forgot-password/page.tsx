@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
+import { humanCheckSiteKey } from '@/composition';
 import { requireLocale } from '@/i18n/locale';
 import { forgotPasswordAction } from '@/modules/identity/presentation/auth-actions';
 import { ForgotPasswordForm } from '@/modules/identity/presentation/auth-forms';
@@ -24,7 +25,7 @@ export default async function ForgotPasswordPage({ params }: Props) {
   return (
     <PageShell width="narrow" centered navigation={<SiteNavigation />} actions={<SessionActions />}>
       <Card>
-        <ForgotPasswordForm action={forgotPasswordAction} />
+        <ForgotPasswordForm action={forgotPasswordAction} humanCheckSiteKey={humanCheckSiteKey} />
       </Card>
     </PageShell>
   );

@@ -52,6 +52,9 @@ const tokenKey = (token: string): string => createHash('sha256').update(token).d
  *
  * @remarks
  * Email and password require a verified address. Account deletion stays disabled.
+ * Email sign-up, email sign-in, the password reset request, and the verification
+ * resend are closed over HTTP: they only run from the forms' server actions, which
+ * check that a person submitted the form.
  *
  * @param options - The database, email ports, secrets, and URLs.
  * @returns The auth instance.
@@ -67,6 +70,13 @@ export function createAuth(options: CreateAuthOptions) {
     database: drizzleAdapter(options.db, { provider: 'sqlite', schema }),
     advanced: { database: { generateId: 'uuid' } },
     user: { deleteUser: { enabled: false } },
+    // These run only through the forms' server actions, which check for a person first.
+    disabledPaths: [
+      '/sign-up/email',
+      '/sign-in/email',
+      '/request-password-reset',
+      '/send-verification-email',
+    ],
     emailAndPassword: {
       enabled: true,
       requireEmailVerification: true,

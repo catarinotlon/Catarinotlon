@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
-import { getEventSettings, getSignedInUser } from '@/composition';
+import { getEventSettings, getSignedInUser, humanCheckSiteKey } from '@/composition';
 import { requireLocale } from '@/i18n/locale';
 import { getPathname, redirect } from '@/i18n/navigation';
 import { isPaymentOpen } from '@/modules/event';
@@ -49,6 +49,7 @@ export default async function SignUpPage({ params }: Props) {
         googleAction={googleSignInAction}
         shirtSizes={settings.shirtSizes}
         open={isPaymentOpen(settings) && settings.shirtSizes.length > 0}
+        humanCheckSiteKey={humanCheckSiteKey}
         intro={<PageIntro eyebrow={t('eyebrow')} title={t('title')} body={t('body')} />}
       />
     </PageShell>
