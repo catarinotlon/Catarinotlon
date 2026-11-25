@@ -3,11 +3,14 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { getSignedInUser } from '@/composition';
 import { requireLocale } from '@/i18n/locale';
-import { getPathname, Link, redirect } from '@/i18n/navigation';
+import { getPathname, redirect } from '@/i18n/navigation';
 import { googleSignInAction, signInAction } from '@/modules/identity/presentation/auth-actions';
 import { SignInForm } from '@/modules/identity/presentation/auth-forms';
 import { KitStage } from '@/modules/event/presentation/kit-stage';
 import { Card, PageShell } from '@/shared/ui/page-shell';
+import { SessionActions } from '@/modules/identity/presentation/session-actions';
+
+import { SiteNavigation } from '../_chrome/site-navigation';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,16 +40,7 @@ export default async function SignInPage({ params }: Props) {
   const t = await getTranslations({ locale, namespace: 'auth.signIn' });
 
   return (
-    <PageShell
-      actions={
-        <span className="hidden text-sm sm:inline">
-          {t('noAccount')}{' '}
-          <Link href="/sign-up" className="font-semibold underline underline-offset-2">
-            {t('signUp')}
-          </Link>
-        </span>
-      }
-    >
+    <PageShell navigation={<SiteNavigation />} actions={<SessionActions />}>
       <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
         <KitStage className="hidden lg:grid" />
         <Card className="flex flex-col gap-5">

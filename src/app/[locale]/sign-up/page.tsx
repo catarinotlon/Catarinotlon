@@ -3,11 +3,14 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { getEventSettings, getSignedInUser } from '@/composition';
 import { requireLocale } from '@/i18n/locale';
-import { getPathname, Link, redirect } from '@/i18n/navigation';
+import { getPathname, redirect } from '@/i18n/navigation';
 import { isPaymentOpen } from '@/modules/event';
 import { googleSignInAction, signUpAction } from '@/modules/identity/presentation/auth-actions';
 import { SignUpForm } from '@/modules/identity/presentation/auth-forms';
 import { PageIntro, PageShell } from '@/shared/ui/page-shell';
+import { SessionActions } from '@/modules/identity/presentation/session-actions';
+
+import { SiteNavigation } from '../_chrome/site-navigation';
 
 export const dynamic = 'force-dynamic';
 
@@ -40,16 +43,7 @@ export default async function SignUpPage({ params }: Props) {
   ]);
 
   return (
-    <PageShell
-      actions={
-        <span className="hidden text-sm sm:inline">
-          {t('haveAccount')}{' '}
-          <Link href="/sign-in" className="font-semibold underline underline-offset-2">
-            {t('signIn')}
-          </Link>
-        </span>
-      }
-    >
+    <PageShell navigation={<SiteNavigation />} actions={<SessionActions />}>
       <SignUpForm
         action={signUpAction}
         googleAction={googleSignInAction}

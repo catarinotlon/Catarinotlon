@@ -3,6 +3,7 @@
 import * as Sentry from '@sentry/nextjs';
 import { useEffect } from 'react';
 
+import { LandingNav } from '@/modules/event/presentation';
 import { PageShell } from '@/shared/ui/page-shell';
 import { ErrorScreen } from '@/shared/ui/status-screen';
 
@@ -18,7 +19,12 @@ export default function LocaleError({
   }, [error]);
 
   return (
-    <PageShell width="medium" centered actions={<></>}>
+    <PageShell
+      width="medium"
+      centered
+      navigation={<LandingNav onLanding={false} />}
+      actions={<></>}
+    >
       <ErrorScreen onRetry={reset} />
     </PageShell>
   );

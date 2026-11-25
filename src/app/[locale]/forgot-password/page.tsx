@@ -5,6 +5,9 @@ import { requireLocale } from '@/i18n/locale';
 import { forgotPasswordAction } from '@/modules/identity/presentation/auth-actions';
 import { ForgotPasswordForm } from '@/modules/identity/presentation/auth-forms';
 import { Card, PageShell } from '@/shared/ui/page-shell';
+import { SessionActions } from '@/modules/identity/presentation/session-actions';
+
+import { SiteNavigation } from '../_chrome/site-navigation';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -19,7 +22,7 @@ export default async function ForgotPasswordPage({ params }: Props) {
   setRequestLocale(locale);
 
   return (
-    <PageShell width="narrow" centered actions={<></>}>
+    <PageShell width="narrow" centered navigation={<SiteNavigation />} actions={<SessionActions />}>
       <Card>
         <ForgotPasswordForm action={forgotPasswordAction} />
       </Card>

@@ -9,6 +9,8 @@ import { VerifyEmailPanel } from '@/modules/identity/presentation/verify-email-p
 import { Card, PageShell } from '@/shared/ui/page-shell';
 import { SessionActions } from '@/modules/identity/presentation/session-actions';
 
+import { SiteNavigation } from '../_chrome/site-navigation';
+
 type Props = {
   params: Promise<{ locale: string }>;
   searchParams: Promise<{ verified?: string }>;
@@ -27,7 +29,7 @@ export default async function VerifyEmailPage({ params, searchParams }: Props) {
   const email = (await cookies()).get(PENDING_EMAIL_COOKIE)?.value ?? null;
 
   return (
-    <PageShell width="narrow" centered actions={<SessionActions signedOut="none" />}>
+    <PageShell width="narrow" centered navigation={<SiteNavigation />} actions={<SessionActions />}>
       <Card>
         <VerifyEmailPanel
           email={email}

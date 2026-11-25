@@ -1,6 +1,5 @@
-import { getSignedInUser } from '@/composition';
-import { AccountAvatar } from '@/shared/ui/account-avatar';
-import { SignOutForm } from '@/shared/ui/sign-out-form';
+import { getAdminUser, getSignedInUser } from '@/composition';
+import { AccountMenu } from '@/shared/ui/account-menu';
 import { SignedOutActions } from '@/shared/ui/site-header';
 
 import { signOutAction } from './auth-actions';
@@ -10,23 +9,19 @@ import { signOutAction } from './auth-actions';
  *
  * @remarks
  * This reads the session on the server, so it is rendered by pages and passed to
- * the header. A story covers the header's signed-out default.
+ * the header. A signed-in visitor gets the avatar with the account menu, which also
+ * signs out; a story covers the header's signed-out default.
  *
  * @param props - `signedOut` hides the sign-in links on pages that do not need them.
- * @returns The avatar and sign-out, or sign-in and register links.
+ * @returns The account menu, or sign-in and register links.
  */
 export async function SessionActions({ signedOut = 'links' }: { signedOut?: 'links' | 'none' }) {
-  const user = await getSignedInUser();
+  const [user, admin] = await Promise.all([getSignedInUser(), getAdminUser()]);
 
   if (!user.ok) {
     if (signedOut === 'none') return null;
     return <SignedOutActions />;
   }
 
-  return (
-    <>
-      <SignOutForm action={signOutAction} className="hidden sm:block" />
-      <AccountAvatar name={user.value.name} />
-    </>
-  );
+  return <AccountMenu name={user.value.name} isAdmin={admin.ok} signOut={signOutAction} />;
 }

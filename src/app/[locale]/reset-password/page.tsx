@@ -7,6 +7,9 @@ import { resetPasswordAction } from '@/modules/identity/presentation/auth-action
 import { ResetPasswordForm } from '@/modules/identity/presentation/auth-forms';
 import { FormAlert } from '@/shared/ui/form-fields';
 import { Card, PageShell } from '@/shared/ui/page-shell';
+import { SessionActions } from '@/modules/identity/presentation/session-actions';
+
+import { SiteNavigation } from '../_chrome/site-navigation';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -29,7 +32,7 @@ export default async function ResetPasswordPage({ params, searchParams }: Props)
   ]);
 
   return (
-    <PageShell width="narrow" centered actions={<></>}>
+    <PageShell width="narrow" centered navigation={<SiteNavigation />} actions={<SessionActions />}>
       <Card className="flex flex-col gap-4">
         {token ? (
           <ResetPasswordForm action={resetPasswordAction} token={token} />

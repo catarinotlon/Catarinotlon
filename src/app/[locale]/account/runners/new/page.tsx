@@ -10,6 +10,8 @@ import { RunnerForm } from '@/modules/registration/presentation/runner-form';
 import { Card, PageIntro, PageShell } from '@/shared/ui/page-shell';
 import { SessionActions } from '@/modules/identity/presentation/session-actions';
 
+import { SiteNavigation } from '../../../_chrome/site-navigation';
+
 export const dynamic = 'force-dynamic';
 
 type Props = { params: Promise<{ locale: string }> };
@@ -44,7 +46,11 @@ export default async function AddRunnerPage({ params }: Props) {
   const intro = <PageIntro eyebrow={t('eyebrow')} title={t('title')} body={t('body')} />;
 
   return (
-    <PageShell width={open ? 'wide' : 'narrow'} actions={<SessionActions />}>
+    <PageShell
+      width={open ? 'wide' : 'narrow'}
+      navigation={<SiteNavigation />}
+      actions={<SessionActions />}
+    >
       {open ? (
         <RunnerForm
           action={addRunnerAction}

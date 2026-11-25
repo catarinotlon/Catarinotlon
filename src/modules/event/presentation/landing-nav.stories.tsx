@@ -117,3 +117,21 @@ export const MenuAdminLink: Story = {
     ).toBeVisible();
   },
 };
+
+/** On every other page, the same sections link back to the landing page. */
+export const SectionsFromOtherPages: Story = {
+  args: { onLanding: false },
+  play: async ({ canvasElement }) => {
+    const nav = within(
+      within(canvasElement).getByRole('navigation', { name: 'Navegación principal', hidden: true }),
+    );
+    await expect(nav.getByRole('link', { name: 'Distancias', hidden: true })).toHaveAttribute(
+      'href',
+      '/es#distancias',
+    );
+    await expect(nav.getByRole('link', { name: 'Preguntas', hidden: true })).toHaveAttribute(
+      'href',
+      '/es#preguntas',
+    );
+  },
+};
