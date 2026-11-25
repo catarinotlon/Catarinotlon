@@ -7,6 +7,8 @@ import { LegalDocument } from '@/modules/event/presentation/legal-document';
 import { PageShell } from '@/shared/ui/page-shell';
 import { SessionActions } from '@/modules/identity/presentation/session-actions';
 
+import { SiteNavigation } from '../_chrome/site-navigation';
+
 type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -28,7 +30,12 @@ export default async function PrivacyPage({ params }: Props) {
   setRequestLocale(locale);
 
   return (
-    <PageShell width="medium" background="plain" actions={<SessionActions signedOut="none" />}>
+    <PageShell
+      width="medium"
+      background="plain"
+      navigation={<SiteNavigation />}
+      actions={<SessionActions />}
+    >
       <LegalDocument document="privacy" />
     </PageShell>
   );

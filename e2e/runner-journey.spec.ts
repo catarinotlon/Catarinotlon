@@ -126,15 +126,19 @@ test.describe('runner journey', () => {
     ]) {
       await page.goto(path);
       await expect(banner.getByRole('link', { name: 'Iniciar sesión' })).toHaveCount(0);
-      await expect(banner.getByRole('link', { name: 'Mi cuenta' })).toBeVisible();
+      await expect(banner.getByRole('button', { name: 'Menú de tu cuenta' })).toBeVisible();
       expect(
         await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
       ).toBe(true);
     }
 
     await page.goto('/es/cuenta');
-    const signOutArea = isMobile ? page.getByRole('main') : banner;
-    await signOutArea.getByRole('button', { name: 'Cerrar sesión' }).click();
+    await banner.getByRole('button', { name: 'Menú de tu cuenta' }).click();
+    await banner
+      .getByRole('navigation', { name: 'Menú de tu cuenta' })
+      .getByRole('button', { name: 'Cerrar sesión' })
+      .click();
+    await expect(page).toHaveURL(/\/es$/);
     if (isMobile) await banner.getByRole('button', { name: 'Abrir menú' }).click();
     await expect(page.getByRole('banner').getByRole('link', { name: 'Inscríbete' })).toBeVisible();
   });

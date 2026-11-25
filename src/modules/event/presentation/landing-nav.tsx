@@ -1,33 +1,45 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
 
-import { Link } from '@/i18n/navigation';
+import { getPathname, Link } from '@/i18n/navigation';
 
 import { LANDING_SECTIONS as SECTIONS } from './landing-sections';
 
+/** Props of {@link LandingNav}. */
+export interface LandingNavProps {
+  /** Whether the visitor is signed in. If not, the menu offers sign-in and registration. */
+  signedIn?: boolean;
+  /** Whether the visitor is an admin, who also gets a link to the panel. */
+  isAdmin?: boolean;
+  /** Whether it is rendered on the landing page itself, where the links are in-page anchors. */
+  onLanding?: boolean;
+}
+
 /**
- * Links to the landing page's sections, inline on wide screens and in a menu on
- * narrow ones.
+ * The site navigation: links to the landing page's sections, inline on wide screens and
+ * in a menu on narrow ones.
  *
  * @remarks
- * An admin also gets a link to the panel, in both places.
+ * Every page shows it. On the landing page the links are in-page anchors; elsewhere they
+ * lead back to those sections. An admin also gets a link to the panel. On narrow screens,
+ * where the header has no room for them, the menu also offers a signed-out visitor to sign
+ * in or register; a signed-in one uses the account menu on the avatar.
  *
- * @param props - Whether the visitor is signed in (if not, the menu offers the
- * account links) and whether they are an admin.
+ * @param props - The visitor's session and role, and whether this is the landing page.
  * @returns The navigation.
  */
 export function LandingNav({
   signedIn = false,
   isAdmin = false,
-}: {
-  signedIn?: boolean;
-  isAdmin?: boolean;
-}) {
+  onLanding = true,
+}: LandingNavProps) {
   const t = useTranslations('nav');
   const common = useTranslations('common');
+  const locale = useLocale();
   const [open, setOpen] = useState(false);
+  const home = onLanding ? '' : getPathname({ locale, href: '/' });
 
   return (
     <>
@@ -35,7 +47,7 @@ export function LandingNav({
         {SECTIONS.map(({ href, key }) => (
           <a
             key={key}
-            href={href}
+            href={`${home}${href}`}
             className="inline-flex min-h-11 items-center font-semibold text-foreground no-underline hover:underline"
           >
             {t(key)}
@@ -79,7 +91,7 @@ export function LandingNav({
             {SECTIONS.map(({ href, key }) => (
               <a
                 key={key}
-                href={href}
+                href={`${home}${href}`}
                 onClick={() => setOpen(false)}
                 className="inline-flex min-h-11 items-center font-semibold text-foreground no-underline"
               >

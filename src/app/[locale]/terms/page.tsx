@@ -9,6 +9,8 @@ import { toLegalFacts } from '@/modules/event/presentation/legal-facts';
 import { PageShell } from '@/shared/ui/page-shell';
 import { SessionActions } from '@/modules/identity/presentation/session-actions';
 
+import { SiteNavigation } from '../_chrome/site-navigation';
+
 /** The terms show the event settings, which take effect on save. */
 export const dynamic = 'force-dynamic';
 
@@ -34,7 +36,12 @@ export default async function TermsPage({ params }: Props) {
   const facts = toLegalFacts(await getEventSettings(), locale);
 
   return (
-    <PageShell width="medium" background="plain" actions={<SessionActions signedOut="none" />}>
+    <PageShell
+      width="medium"
+      background="plain"
+      navigation={<SiteNavigation />}
+      actions={<SessionActions />}
+    >
       <LegalDocument document="terms" facts={facts} />
     </PageShell>
   );

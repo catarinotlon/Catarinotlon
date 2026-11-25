@@ -17,6 +17,8 @@ import { buttonClasses } from '@/shared/ui/button';
 import { Card, PageIntro, PageShell } from '@/shared/ui/page-shell';
 import { SessionActions } from '@/modules/identity/presentation/session-actions';
 
+import { SiteNavigation } from '../_chrome/site-navigation';
+
 export const dynamic = 'force-dynamic';
 
 type Props = { params: Promise<{ locale: string }> };
@@ -46,7 +48,7 @@ export default async function PaymentPage({ params }: Props) {
 
   if (!isPaymentOpen(settings) || !settings.bank) {
     return (
-      <PageShell width="narrow" actions={<SessionActions />}>
+      <PageShell width="narrow" navigation={<SiteNavigation />} actions={<SessionActions />}>
         <Card className="flex flex-col gap-3">
           <h1 className="m-0 font-heading text-4xl">{common('openingSoonTitle')}</h1>
           <p className="m-0 text-muted-foreground">{common('openingSoonBody')}</p>
@@ -57,7 +59,7 @@ export default async function PaymentPage({ params }: Props) {
 
   if (summary.runners.length === 0) {
     return (
-      <PageShell width="narrow" actions={<SessionActions />}>
+      <PageShell width="narrow" navigation={<SiteNavigation />} actions={<SessionActions />}>
         <Card className="flex flex-col gap-3">
           <h1 className="m-0 font-heading text-4xl">{t('nothingTitle')}</h1>
           <p className="m-0 text-muted-foreground">{t('nothingBody')}</p>
@@ -72,7 +74,7 @@ export default async function PaymentPage({ params }: Props) {
   const contact = settings.contact;
 
   return (
-    <PageShell actions={<SessionActions />}>
+    <PageShell navigation={<SiteNavigation />} actions={<SessionActions />}>
       <div className="flex flex-col gap-6">
         <PaymentView
           intro={<PageIntro title={t('title')} body={t('body')} />}

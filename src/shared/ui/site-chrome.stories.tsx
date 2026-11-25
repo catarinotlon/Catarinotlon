@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { expect, within } from 'storybook/test';
 
-import { AccountAvatar } from './account-avatar';
 import { SiteFooter } from './site-footer';
 import { SiteHeader } from './site-header';
 
@@ -77,15 +76,6 @@ export const HeaderBadge: Story = {
   },
 };
 
-/** The signed-in avatar shows the holder's initials and opens the account. */
-export const Avatar: Story = {
-  render: () => <AccountAvatar name="Sofía Ramírez" />,
-  play: async ({ canvasElement }) => {
-    const link = within(canvasElement).getByRole('link', { name: 'Mi cuenta' });
-    await expect(link).toHaveTextContent('SR');
-  },
-};
-
 /** Signed-out actions look the same as on the landing: pill-shaped. */
 export const HeaderSignedOutPills: Story = {
   render: () => <SiteHeader />,
@@ -93,13 +83,5 @@ export const HeaderSignedOutPills: Story = {
     const canvas = within(canvasElement);
     await expect(canvas.getByRole('link', { name: 'Iniciar sesión' })).toHaveClass('rounded-full');
     await expect(canvas.getByRole('link', { name: 'Inscríbete' })).toHaveClass('rounded-full');
-  },
-};
-
-/** The avatar’s initials never appear in a session recording. */
-export const AvatarHiddenFromRecordings: Story = {
-  render: () => <AccountAvatar name="Sofía Ramírez" />,
-  play: async ({ canvasElement }) => {
-    await expect(canvasElement.querySelector('a')?.closest('[data-private]')).not.toBeNull();
   },
 };

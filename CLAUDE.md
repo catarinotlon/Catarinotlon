@@ -195,6 +195,12 @@ Rules that follow from it:
 - The medals are the organizer's artwork, with their ribbons, as eight transparent images in `public/images/medals` served by one component parameterized by type, distance, and place. The organizer's source image misspells the name ("CATARINOTÓN", "CATARINOLÓN", "206"); the images in the app have the lettering corrected and always read "CATARINOTLÓN 2026".
 - The app only shows the medals. It does not record race results or who won a podium: do not model timing, rankings, or medal assignment unless asked.
 
+### Site header
+
+- Every page shows the same header as the landing page: the section links (Distances, Runner kit, Race day, FAQ), which lead back to the landing sections from any other page, plus the language and theme switches.
+- Signed out, it offers sign in and register (in the menu on narrow screens). Signed in, the avatar opens the account menu on every screen size: the account, add another runner, the admin panel for admins, and sign out. There is no separate sign-out button in the header.
+- Every time shown to users says whether it is morning or afternoon (`7:00 a. m.`, `7:00 AM`), through the shared formats in `src/i18n/start-time.ts`.
+
 ### Language switch
 
 - Every page offers the language switch: an `ES | EN` control in the header on wide screens, and a language link in the footer on every screen size.

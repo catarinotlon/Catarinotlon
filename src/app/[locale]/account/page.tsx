@@ -31,6 +31,8 @@ import {
 } from '@/modules/registration/presentation/runner-actions';
 import { PageShell } from '@/shared/ui/page-shell';
 
+import { SiteNavigation } from '../_chrome/site-navigation';
+
 export const dynamic = 'force-dynamic';
 
 type Props = {
@@ -95,7 +97,7 @@ export default async function AccountPage({ params, searchParams }: Props) {
   const deadline = settings.shirtSizeDeadline ? new Date(settings.shirtSizeDeadline) : null;
 
   return (
-    <PageShell actions={<SessionActions />}>
+    <PageShell navigation={<SiteNavigation />} actions={<SessionActions />}>
       <AccountView
         holder={{ name: user.value.name, email: user.value.email, phone }}
         signInMethod={signInMethod}
