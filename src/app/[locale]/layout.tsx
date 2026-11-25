@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Barlow, Barlow_Condensed } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
@@ -8,21 +7,9 @@ import type { ReactNode } from 'react';
 
 import { siteUrl } from '@/composition';
 import { routing } from '@/i18n/routing';
+import { fontVariables } from '@/shared/ui/fonts';
 
 import '../globals.css';
-
-const barlow = Barlow({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-barlow',
-});
-
-const barlowCondensed = Barlow_Condensed({
-  subsets: ['latin'],
-  weight: ['600', '700', '800', '900'],
-  style: ['normal', 'italic'],
-  variable: '--font-barlow-condensed',
-});
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -72,11 +59,7 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   return (
-    <html
-      lang={locale}
-      suppressHydrationWarning
-      className={`${barlow.variable} ${barlowCondensed.variable}`}
-    >
+    <html lang={locale} suppressHydrationWarning className={fontVariables}>
       <body>
         {/* The color scheme comes from globals.css: next-themes would set a plain "light". */}
         <ThemeProvider

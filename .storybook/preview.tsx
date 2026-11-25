@@ -5,6 +5,7 @@ import { useEffect, type ReactNode } from 'react';
 
 import en from '../messages/en.json';
 import es from '../messages/es.json';
+import { fontVariables } from '../src/shared/ui/fonts';
 import '../src/app/globals.css';
 
 const messages = { en, es };
@@ -21,6 +22,7 @@ function AppProviders({
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
     document.documentElement.lang = locale;
+    document.documentElement.classList.add(...fontVariables.split(' '));
   }, [theme, locale]);
 
   return (
