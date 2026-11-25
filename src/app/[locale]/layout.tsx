@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
@@ -8,12 +8,19 @@ import type { ReactNode } from 'react';
 import { siteUrl } from '@/composition';
 import { routing } from '@/i18n/routing';
 import { fontVariables } from '@/shared/ui/fonts';
+import { ThemeColorSync } from '@/shared/ui/theme-color-sync';
 
 import '../globals.css';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
+
+/**
+ * The phone's browser bar starts with the light background, the default theme; `ThemeColorSync`
+ * switches it when the runner picks the dark theme.
+ */
+export const viewport: Viewport = { themeColor: '#ffffff' };
 
 /** Open Graph locale codes, which name a region as well as a language. */
 const OPEN_GRAPH_LOCALES = { es: 'es_MX', en: 'en_US' } as const;
@@ -68,6 +75,7 @@ export default async function LocaleLayout({
           enableSystem={false}
           enableColorScheme={false}
         >
+          <ThemeColorSync />
           <NextIntlClientProvider>{children}</NextIntlClientProvider>
         </ThemeProvider>
       </body>

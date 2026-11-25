@@ -243,6 +243,7 @@ Rules that follow from it:
   - Contrast is at least 4.5:1 for text in both themes. Brand red `#D42016` fails as small text on dark surfaces: use the `#FF5A4D` token for red text there.
   - Images, illustrations, and the logo have a variant that works on dark backgrounds.
   - No flash of the wrong theme on load.
+  - The phone's browser bar matches the page: the layout's `viewport.themeColor` is the light background, and `ThemeColorSync` (`src/shared/ui`) copies the active theme's `--background` token into `<meta name="theme-color">` when the theme changes or a navigation rewrites the head. A `prefers-color-scheme` media query cannot do it, because the runner picks the theme in the app.
   - E2E covers the theme switch (toggle, persistence across reloads and navigation) and runs the axe check in both themes.
   - A component that only works in one theme is not done.
 - **Email templates are light-only** unless asked otherwise.
