@@ -135,6 +135,12 @@ describe('renderEmail', () => {
     expect(email.text).not.toContain('●');
   });
 
+  it('says whether a receipt was sent in the morning or the afternoon', async () => {
+    const email = await renderEmail(samples[5] as EmailMessage);
+
+    expect(email.text.replace(/[\u00a0\u202f]/g, ' ')).toContain('12:00 p. m.');
+  });
+
   it('links to the action', async () => {
     const email = await renderEmail(samples[0] as EmailMessage);
 

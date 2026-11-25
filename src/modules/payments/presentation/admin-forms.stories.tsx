@@ -229,6 +229,7 @@ export const SettingsHistory: Story = {
   ),
   play: async ({ canvasElement }) => {
     await expect(within(canvasElement).getByText(/Admin One: Precio, Sede/)).toBeVisible();
+    await expect(within(canvasElement).getByText(/12:00\sp\.\sm\./)).toBeVisible();
   },
 };
 

@@ -5,6 +5,7 @@ import { useFormatter, useLocale, useTranslations } from 'next-intl';
 import { useId } from 'react';
 
 import { formatMoney } from '@/i18n/money';
+import { DATE_AND_TIME_FORMAT } from '@/i18n/start-time';
 import { Button } from '@/shared/ui/button';
 import { FormAlert } from '@/shared/ui/form-fields';
 import type { FormAction } from '@/shared/ui/form-state';
@@ -102,7 +103,7 @@ export function PaymentReviewPanel({ data, confirmAction, rejectAction }: Paymen
         )}
         <p className="m-0 text-sm text-muted-foreground">
           {t('sentAt', {
-            date: format.dateTime(data.uploadedAt, { dateStyle: 'medium', timeStyle: 'short' }),
+            date: format.dateTime(data.uploadedAt, DATE_AND_TIME_FORMAT),
           })}
         </p>
         <a
@@ -211,10 +212,7 @@ export function PaymentReviewPanel({ data, confirmAction, rejectAction }: Paymen
             {data.reviewedAt && (
               <p className="m-0 text-sm text-muted-foreground">
                 {t('reviewedBy', {
-                  date: format.dateTime(data.reviewedAt, {
-                    dateStyle: 'medium',
-                    timeStyle: 'short',
-                  }),
+                  date: format.dateTime(data.reviewedAt, DATE_AND_TIME_FORMAT),
                 })}
               </p>
             )}

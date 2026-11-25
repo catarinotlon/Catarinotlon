@@ -1,13 +1,12 @@
 import { createFormatter, createTranslator } from 'next-intl';
 
 import { formatMoney } from '@/i18n/money';
+import { DATE_AND_TIME_FORMAT, formatStartTime } from '@/i18n/start-time';
 import type { EmailMessage, EmailRunner } from '@/shared/domain/email';
 import { firstName } from '@/shared/domain/person-name';
 
 import en from '../../../../messages/en.json';
 import es from '../../../../messages/es.json';
-
-const MEXICO_CITY_UTC_OFFSET_HOURS = 6;
 
 /** The event facts an email can show. It never includes the bank data. */
 export interface EmailEventContext {
@@ -127,13 +126,9 @@ export function buildEmailContent(
   const startOf = (distance: string) => {
     const time = context.startTimes[distance === '3K' ? '3K' : '5K'];
     if (!time) return pending;
-    const [hours = 0, minutes = 0] = time.split(':').map(Number);
-    return format.dateTime(
-      new Date(Date.UTC(2026, 0, 1, hours + MEXICO_CITY_UTC_OFFSET_HOURS, minutes)),
-      { hour: 'numeric', minute: '2-digit' },
-    );
+    return formatStartTime(time, locale);
   };
-  const sentAt = (date: Date) => format.dateTime(date, { dateStyle: 'medium', timeStyle: 'short' });
+  const sentAt = (date: Date) => format.dateTime(date, DATE_AND_TIME_FORMAT);
   const contactLine = context.contact
     ? {
         contactLine: t('common.questions', {

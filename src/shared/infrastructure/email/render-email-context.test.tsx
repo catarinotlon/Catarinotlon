@@ -105,6 +105,15 @@ describe('renderEmail with the event facts', () => {
       expect(text).not.toContain('7:30');
     });
 
+    it('says whether the start is in the morning or the afternoon', async () => {
+      const { text } = await renderEmail(
+        { ...confirmed, data: { ...confirmed.data, distance: '3K' } },
+        context,
+      );
+
+      expect(text.replace(/[  ]/g, ' ')).toContain('7:00 a. m.');
+    });
+
     it('uses the free text of the recipient’s locale', async () => {
       const { text } = await renderEmail({ ...confirmed, locale: 'en' }, context);
 
