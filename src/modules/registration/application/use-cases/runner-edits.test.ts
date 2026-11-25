@@ -12,6 +12,7 @@ import {
   changeRunnerShirtName,
   changeRunnerShirtSize,
   listAccountRunners,
+  removeAccountRunner,
 } from './runner-edits';
 
 const NOW = new Date('2026-06-02T12:00:00.000Z');
@@ -193,6 +194,51 @@ describe('runner edits', () => {
         ok: false,
         error: { code: 'registration.not_found' },
       });
+    });
+  });
+  describe('removeAccountRunner', () => {
+    const unpaid: Registration = {
+      ...base,
+      id: 'reg-2',
+      bibNumber: '23456' as BibNumber,
+      status: 'pending_payment',
+    };
+
+    beforeEach(async () => {
+      await registrations.insert(unpaid);
+    });
+
+    it('takes an unpaid runner off the account but keeps the row', async () => {
+      const result = await removeAccountRunner(deps(), {
+        userId: 'owner',
+        registrationId: 'reg-2',
+      });
+
+      expect(result).toEqual({ ok: true, value: undefined });
+      expect((await listAccountRunners(deps(), { userId: 'owner' })).map((r) => r.id)).toEqual([
+        'reg-1',
+      ]);
+      expect(registrations.hasStoredRow('reg-2')).toBe(true);
+    });
+
+    it('refuses a runner whose payment is already confirmed', async () => {
+      const result = await removeAccountRunner(deps(), {
+        userId: 'owner',
+        registrationId: 'reg-1',
+      });
+
+      expect(result).toEqual({ ok: false, error: { code: 'registration.not_removable' } });
+      expect(await registrations.findById('reg-1')).not.toBeNull();
+    });
+
+    it('never removes another account’s runner', async () => {
+      const result = await removeAccountRunner(deps(), {
+        userId: 'intruder',
+        registrationId: 'reg-2',
+      });
+
+      expect(result).toEqual({ ok: false, error: { code: 'registration.not_found' } });
+      expect(await registrations.findById('reg-2')).not.toBeNull();
     });
   });
 });

@@ -330,7 +330,8 @@
       "runner_name_required": "Enter the runner's name.",
       "bib_number_exhausted": "We couldn't assign your number. Please try again.",
       "not_found": "We couldn't find that registration.",
-      "shirt_size_deadline_passed": "The deadline to change the size has passed."
+      "shirt_size_deadline_passed": "The deadline to change the size has passed.",
+      "not_removable": "You can no longer remove this runner: their payment is already in review or confirmed."
     }
   },
   "auth": {
@@ -440,6 +441,14 @@
     "submit": "Save and continue to payment",
     "submitAnother": "Save and add one more runner",
     "back": "Back to my account"
+  },
+  "removeRunner": {
+    "button": "Remove",
+    "label": "Remove {name}",
+    "question": "Remove {name} from your account?",
+    "body": "They will no longer appear in your account or your payment. You can add this person again at any time.",
+    "confirm": "Yes, remove",
+    "cancel": "Cancel"
   },
   "ticket": {
     "title": "Catarinotlón 2026 ticket",

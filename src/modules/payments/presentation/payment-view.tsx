@@ -3,10 +3,11 @@ import type { ReactNode } from 'react';
 
 import { formatMoney } from '@/i18n/money';
 import { Link } from '@/i18n/navigation';
+import { RemoveRunnerButton } from '@/modules/registration';
 import { buttonClasses } from '@/shared/ui/button';
 import { cn } from '@/shared/ui/cn';
 import { CopyButton } from '@/shared/ui/copy-button';
-import type { FormState } from '@/shared/ui/form-state';
+import type { FormAction, FormState } from '@/shared/ui/form-state';
 import { Card } from '@/shared/ui/page-shell';
 import { RegistrationSteps } from '@/shared/ui/registration-steps';
 
@@ -54,6 +55,8 @@ export interface PaymentViewProps {
   totalCents: number;
   /** The unpaid runners. */
   runners: readonly PaymentRunner[];
+  /** Removes an unpaid runner added by mistake, from the submitted `registrationId`. */
+  removeRunner: FormAction;
   /** The page's title and opening paragraph. */
   intro?: ReactNode;
 }
@@ -106,6 +109,7 @@ export function PaymentView({
   concept,
   totalCents,
   runners,
+  removeRunner,
   intro,
 }: PaymentViewProps) {
   const t = useTranslations('payment');
@@ -190,21 +194,27 @@ export function PaymentView({
           <p className="m-0 text-sm text-muted-foreground">{t('summaryBody')}</p>
           <ul className="m-0 flex list-none flex-col gap-3 p-0">
             {runners.map((runner) => (
-              <li
-                key={runner.id}
-                className="flex items-center justify-between gap-3 rounded-lg bg-surface-raised p-3"
-              >
-                <span className="min-w-0">
-                  <span className="block font-bold break-words">
-                    {runner.distance} · {runner.runnerName}
+              <li key={runner.id} className="flex flex-col gap-1 rounded-lg bg-surface-raised p-3">
+                <span className="flex items-center justify-between gap-3">
+                  <span className="min-w-0">
+                    <span className="block font-bold break-words">
+                      {runner.distance} · {runner.runnerName}
+                    </span>
+                    <span className="block text-sm break-words text-muted-foreground">
+                      {t('shirtLine', { name: runner.shirtName, size: runner.shirtSize })}
+                    </span>
                   </span>
-                  <span className="block text-sm break-words text-muted-foreground">
-                    {t('shirtLine', { name: runner.shirtName, size: runner.shirtSize })}
+                  <span className="shrink-0 font-semibold">
+                    {formatMoney(runner.feeCents, locale)}
                   </span>
                 </span>
-                <span className="shrink-0 font-semibold">
-                  {formatMoney(runner.feeCents, locale)}
-                </span>
+                <RemoveRunnerButton
+                  registrationId={runner.id}
+                  runnerName={runner.runnerName}
+                  from="payment"
+                  action={removeRunner}
+                  className="-ml-1"
+                />
               </li>
             ))}
           </ul>
