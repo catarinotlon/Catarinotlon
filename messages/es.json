@@ -330,7 +330,8 @@
       "runner_name_required": "Escribe el nombre del corredor.",
       "bib_number_exhausted": "No pudimos asignar tu número. Inténtalo de nuevo.",
       "not_found": "No encontramos esa inscripción.",
-      "shirt_size_deadline_passed": "Ya pasó la fecha límite para cambiar de talla."
+      "shirt_size_deadline_passed": "Ya pasó la fecha límite para cambiar de talla.",
+      "not_removable": "Ya no puedes quitar a este corredor: su pago ya está en revisión o confirmado."
     }
   },
   "auth": {
@@ -440,6 +441,14 @@
     "submit": "Guardar y continuar al pago",
     "submitAnother": "Guardar y agregar otro corredor más",
     "back": "Volver a mi cuenta"
+  },
+  "removeRunner": {
+    "button": "Quitar",
+    "label": "Quitar a {name}",
+    "question": "¿Quitar a {name} de tu cuenta?",
+    "body": "Dejará de aparecer en tu cuenta y en tu pago. Puedes volver a agregar a esta persona cuando quieras.",
+    "confirm": "Sí, quitar",
+    "cancel": "Cancelar"
   },
   "ticket": {
     "title": "Boleto Catarinotlón 2026",

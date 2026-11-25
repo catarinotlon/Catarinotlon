@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { expect, userEvent, waitFor, within } from 'storybook/test';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
+
+import type { FormAction } from '@/shared/ui/form-state';
 
 import { AccountView, type AccountRunner, type AccountViewProps } from './account-view';
 
@@ -38,6 +40,7 @@ const props: AccountViewProps = {
   saveShirtSize: async () => ({ done: true }),
   recordReceipt: async () => ({ done: true }),
   replaceReceipt: async () => ({ done: true }),
+  removeRunner: fn<FormAction>(async () => ({})),
 };
 
 const meta = {
@@ -184,6 +187,60 @@ export const PendingPayment: Story = {
     await expect(canvas.getByText('$100.00')).toBeVisible();
     await expect(canvas.getAllByText('Pago pendiente').at(-1)).toHaveClass('bg-gold');
     await expect(canvas.getByRole('button', { name: 'Enviar comprobante' })).toBeVisible();
+  },
+};
+
+/** An unpaid runner added by mistake can be removed, after confirming. */
+export const RemoveUnpaidRunner: Story = {
+  args: {
+    runners: [
+      runner(),
+      runner({ id: 'b', runnerName: 'Mateo Ramírez', stage: 'pending_payment', ticket: null }),
+    ],
+    selectedId: 'b',
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Quitar a Mateo Ramírez' }));
+    await userEvent.click(canvas.getByRole('button', { name: 'Sí, quitar' }));
+
+    await waitFor(() => expect(args.removeRunner).toHaveBeenCalledTimes(1));
+    const data = (args.removeRunner as unknown as { mock: { calls: unknown[][] } }).mock
+      .calls[0]?.[1];
+    await expect((data as FormData).get('registrationId')).toBe('b');
+    await expect((data as FormData).get('from')).toBe('account');
+  },
+};
+
+/** A runner after a rejected receipt is unpaid again, so they can still be removed. */
+export const RemoveAfterRejection: Story = {
+  args: { runners: [runner({ stage: 'receipt_rejected', ticket: null })] },
+  play: async ({ canvasElement }) => {
+    await expect(
+      within(canvasElement).getByRole('button', { name: 'Quitar a Sofía Ramírez' }),
+    ).toBeVisible();
+  },
+};
+
+/** Once a receipt covers the runner, or the payment is confirmed, the runner stays. */
+export const NoRemovalOncePaid: Story = {
+  args: {
+    runners: [
+      runner(),
+      runner({
+        id: 'b',
+        runnerName: 'Mateo Ramírez',
+        stage: 'payment_in_review',
+        ticket: null,
+        receipt: { paymentId: 'p', url: '/r', uploadedAt: new Date('2026-01-15T18:00:00.000Z') },
+      }),
+    ],
+    selectedId: 'b',
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByTestId('selected-runner')).toHaveTextContent('Mateo Ramírez');
+    await expect(canvas.queryByRole('button', { name: /^Quitar a/ })).toBeNull();
   },
 };
 

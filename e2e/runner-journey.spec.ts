@@ -2,7 +2,15 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
 import { setEventSettings, TEST_SETTINGS, uniqueEmail } from './support/database';
-import { asAdmin, openReview, pageLoaded, signIn, signUp, uploadReceipt } from './support/flows';
+import {
+  AFTER_SUBMIT,
+  asAdmin,
+  openReview,
+  pageLoaded,
+  signIn,
+  signUp,
+  uploadReceipt,
+} from './support/flows';
 
 test.describe('runner journey', () => {
   test.beforeEach(async () => {
@@ -78,6 +86,46 @@ test.describe('runner journey', () => {
 
     await expect(page).toHaveURL(/\/es\/pago/);
     await expect(page.getByTestId('payment-total')).toHaveText('$200.00');
+  });
+
+  test('removes a runner added by mistake from the payment page', async ({ page }) => {
+    const email = uniqueEmail('mistake');
+    await signUp(page, email);
+    await signIn(page, email);
+    await page.getByRole('link', { name: 'Agregar otro corredor antes de pagar' }).click();
+    await page.getByLabel('Nombre completo del corredor').fill('Mateo Prueba');
+    await page.getByLabel('Talla de playera').selectOption('TEST-S');
+    await page.getByLabel('Nombre para tu playera').fill('Mateo');
+    await page.getByRole('button', { name: 'Guardar y continuar al pago' }).click();
+    await expect(page.getByTestId('payment-total')).toHaveText('$200.00');
+
+    await page.getByRole('button', { name: 'Quitar a Mateo Prueba' }).click();
+    await page.getByRole('button', { name: 'Sí, quitar' }).click();
+
+    await expect(page.getByTestId('payment-total')).toHaveText('$100.00', AFTER_SUBMIT);
+    await expect(page.getByText('Mateo Prueba')).toHaveCount(0);
+  });
+
+  test('removes the selected unpaid runner from the account page', async ({ page }) => {
+    const email = uniqueEmail('remove');
+    await signUp(page, email);
+    await signIn(page, email);
+    await page.goto('/es/cuenta/corredores/nuevo');
+    await page.getByLabel('Nombre completo del corredor').fill('Mateo Prueba');
+    await page.getByLabel('Talla de playera').selectOption('TEST-S');
+    await page.getByLabel('Nombre para tu playera').fill('Mateo');
+    await page.getByRole('button', { name: 'Guardar y continuar al pago' }).click();
+    await expect(page).toHaveURL(/\/es\/pago/);
+
+    await page.goto('/es/cuenta');
+    await page.getByRole('link', { name: /Mateo Prueba/ }).click();
+    await expect(page.getByTestId('selected-runner')).toHaveText('Mateo Prueba');
+    await page.getByRole('button', { name: 'Quitar a Mateo Prueba' }).click();
+    await page.getByRole('button', { name: 'Sí, quitar' }).click();
+
+    await expect(page).toHaveURL(/\/es\/cuenta$/, AFTER_SUBMIT);
+    await expect(page.getByTestId('selected-runner')).toHaveText('Sofia Prueba');
+    await expect(page.getByRole('link', { name: /Mateo Prueba/ })).toHaveCount(0);
   });
 
   test('keeps runners apart on the account page and edits the shirt name', async ({ page }) => {

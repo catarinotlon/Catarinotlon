@@ -8,6 +8,7 @@ import {
   changeShirtSize,
   confirmRegistration,
   createRegistration,
+  ensureRemovableByOwner,
   returnToPendingPayment,
   submitForReview,
   type NewRegistration,
@@ -167,4 +168,23 @@ describe('changeShirtSize', () => {
 
     expect(result.ok && result.value.shirtSize).toBe('size-b');
   });
+});
+
+describe('ensureRemovableByOwner', () => {
+  it('allows removing a runner who is still waiting for payment', () => {
+    expect(ensureRemovableByOwner(withStatus('pending_payment'))).toEqual({
+      ok: true,
+      value: undefined,
+    });
+  });
+
+  it.each(['payment_in_review', 'confirmed'] as const)(
+    'refuses a runner whose payment is %s',
+    (status) => {
+      expect(ensureRemovableByOwner(withStatus(status))).toEqual({
+        ok: false,
+        error: { code: 'registration.not_removable' },
+      });
+    },
+  );
 });

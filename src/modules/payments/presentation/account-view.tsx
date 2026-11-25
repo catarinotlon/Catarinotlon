@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 
 import { Link } from '@/i18n/navigation';
 import { DATE_AND_TIME_FORMAT } from '@/i18n/start-time';
+import { RemoveRunnerButton } from '@/modules/registration';
 import { buttonClasses } from '@/shared/ui/button';
 import { cn } from '@/shared/ui/cn';
 import type { FormAction, FormState } from '@/shared/ui/form-state';
@@ -165,6 +166,8 @@ export interface AccountViewProps {
   recordReceipt: (input: { pathname: string }) => Promise<FormState>;
   /** Replaces a receipt under review. */
   replaceReceipt: (input: { pathname: string; paymentId: string }) => Promise<FormState>;
+  /** Removes an unpaid runner added by mistake, from the submitted `registrationId`. */
+  removeRunner: FormAction;
 }
 
 function StatCard({ label, value }: { label: string; value: string }) {
@@ -484,6 +487,16 @@ export function AccountView(props: AccountViewProps) {
               <StatusPill tone={STAGE_TONES[runner.stage]}>
                 {t(`status.${runner.stage}`)}
               </StatusPill>
+              {(runner.stage === 'pending_payment' || runner.stage === 'receipt_rejected') && (
+                <RemoveRunnerButton
+                  key={runner.id}
+                  registrationId={runner.id}
+                  runnerName={runner.runnerName}
+                  from="account"
+                  action={props.removeRunner}
+                  className="-ml-1"
+                />
+              )}
             </div>
             <dl className="m-0 grid grid-cols-2 gap-3 sm:grid-cols-3">
               <StatCard label={t('distance')} value={runner.distance} />

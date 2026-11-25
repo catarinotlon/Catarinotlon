@@ -25,6 +25,7 @@ import {
 import { AccountView, type AccountRunner } from '@/modules/payments/presentation/account-view';
 import { whatsappUrl } from '@/modules/payments/presentation/whatsapp-url';
 import {
+  removeRunnerAction,
   saveDistanceAction,
   saveShirtNameAction,
   saveShirtSizeAction,
@@ -118,6 +119,7 @@ export default async function AccountPage({ params, searchParams }: Props) {
         saveShirtSize={saveShirtSizeAction}
         recordReceipt={recordReceiptAction}
         replaceReceipt={replaceReceiptAction}
+        removeRunner={removeRunnerAction}
       />
     </PageShell>
   );
