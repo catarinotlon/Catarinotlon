@@ -66,11 +66,19 @@ export const Default: Story = {
   },
 };
 
-/** The WhatsApp button opens a chat with the contact. */
+/**
+ * The WhatsApp button opens a chat with the contact, and the phone is a call link: the site turns
+ * off the browser's own phone detection so it never grabs the CLABE.
+ */
 export const ContactCard: Story = {
   play: async ({ canvasElement }) => {
-    const link = within(canvasElement).getByRole('link', { name: 'Chatear por WhatsApp' });
+    const canvas = within(canvasElement);
+    const link = canvas.getByRole('link', { name: 'Chatear por WhatsApp' });
     await expect(link).toHaveAttribute('href', 'https://wa.me/520000000000');
+    await expect(canvas.getByRole('link', { name: '0000000000' })).toHaveAttribute(
+      'href',
+      'tel:0000000000',
+    );
   },
 };
 

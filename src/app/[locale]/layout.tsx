@@ -41,6 +41,8 @@ export async function generateMetadata({
   return {
     metadataBase: siteUrl,
     title: { default: share.title, template: '%s' },
+    // iOS would turn the CLABE or a bib number into a phone link; phones are linked by hand.
+    formatDetection: { telephone: false },
     openGraph: {
       ...share,
       type: 'website',

@@ -11,6 +11,7 @@ import { Card } from '@/shared/ui/page-shell';
 import { RegistrationSteps } from '@/shared/ui/registration-steps';
 
 import { ReceiptSubmission } from './receipt-submission';
+import { telUrl } from './tel-url';
 import { whatsappUrl } from './whatsapp-url';
 
 /** One runner on the payment page. */
@@ -238,7 +239,14 @@ export function PaymentView({
             <p className="m-0 text-sm text-muted-foreground">{t('contactBody')}</p>
             <div>
               <Row label={t('contactName')} value={contact.fullName} />
-              <Row label={t('contactPhone')} value={contact.phone} />
+              <Row
+                label={t('contactPhone')}
+                value={
+                  <a href={telUrl(contact.phone)} className="underline underline-offset-2">
+                    {contact.phone}
+                  </a>
+                }
+              />
               <Row label={t('contactEmail')} value={contact.email} />
               <Row label={t('contactHours')} value={contact.hours} />
             </div>

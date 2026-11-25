@@ -230,6 +230,7 @@ Rules that follow from it:
 - **Emails:** store the runner's locale with the registration and render the React Email template in that locale.
 - **SEO:** localized `generateMetadata`, `lang` on `<html>`, and `hreflang` alternates for both locales.
 - **Icons:** `src/app/favicon.ico` and `src/app/icon.svg` (the ladybug alone; its head turns light in a dark browser tab), `src/app/apple-icon.png`, and the manifest icons in `public/icons/`, all from the SVG sources in `design/assets/icons/`. `src/app/manifest.ts` opens the site `standalone` from the home screen.
+- **Phones:** the layout turns off iOS phone detection (`formatDetection.telephone`), which would turn the CLABE or a bib number into a call link. A phone that must be tappable gets an explicit `tel:` link (`telUrl`).
 - **Shared links:** the locale layout sets `metadataBase` (the site origin) plus Open Graph and Twitter (`summary_large_image`) tags, so every page shares the same event card. Its 1200 × 630 image is `src/app/[locale]/opengraph-image.tsx`, which renders the `ShareCard` component from `src/shared/ui` with `ImageResponse` in each locale. Keep it free of personal data and of event facts that are still settings (date, venue, fee).
 
 ## Theming
