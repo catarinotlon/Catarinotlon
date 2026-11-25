@@ -22,7 +22,8 @@ export async function generateMetadata({
   const locale = requireLocale((await params).locale);
   const t = await getTranslations({ locale, namespace: 'landing' });
   return {
-    title: t('metaTitle'),
+    // The landing title already names the event, so the layout's template does not apply.
+    title: { absolute: t('metaTitle') },
     description: t('metaDescription'),
     alternates: { languages: { es: '/es', en: '/en' } },
   };

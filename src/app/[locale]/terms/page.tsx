@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = requireLocale((await params).locale);
   const t = await getTranslations({ locale, namespace: 'legal' });
   return {
-    title: `${t('terms.title')} · Catarinotlón 2026`,
+    title: t('terms.title'),
     alternates: {
       languages: {
         es: getPathname({ href: '/terms', locale: 'es' }),

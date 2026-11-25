@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = requireLocale((await params).locale);
   const t = await getTranslations({ locale, namespace: 'legal' });
   return {
-    title: `${t('privacy.title')} · Catarinotlón 2026`,
+    title: t('privacy.title'),
     alternates: {
       languages: {
         es: getPathname({ href: '/privacy', locale: 'es' }),

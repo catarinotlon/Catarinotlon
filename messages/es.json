@@ -340,7 +340,7 @@
     "phone": "Teléfono",
     "passwordHelp": "Al menos 8 caracteres.",
     "signUp": {
-      "metaTitle": "Crea tu cuenta · Catarinotlón 2026",
+      "metaTitle": "Crea tu cuenta",
       "eyebrow": "Crea tu cuenta",
       "title": "Inscríbete y ponle nombre a tu playera",
       "body": "Con tu cuenta guardas tu inscripción, ves cómo quedará tu playera y descargas tu boleto para el día de la carrera.",
@@ -352,7 +352,7 @@
       "signIn": "Inicia sesión"
     },
     "signIn": {
-      "metaTitle": "Inicia sesión · Catarinotlón 2026",
+      "metaTitle": "Inicia sesión",
       "title": "Inicia sesión",
       "body": "Entra para ver tu boleto, tu playera y los detalles de tu carrera.",
       "divider": "o entra con tu correo",
@@ -362,7 +362,7 @@
       "signUp": "Crea tu cuenta"
     },
     "forgot": {
-      "metaTitle": "Olvidé mi contraseña · Catarinotlón 2026",
+      "metaTitle": "Olvidé mi contraseña",
       "title": "¿Olvidaste tu contraseña?",
       "body": "Escribe el correo de tu cuenta y te enviamos un enlace para crear una nueva.",
       "submit": "Enviar enlace",
@@ -374,14 +374,14 @@
       "resent": "Te enviamos otro enlace."
     },
     "reset": {
-      "metaTitle": "Nueva contraseña · Catarinotlón 2026",
+      "metaTitle": "Nueva contraseña",
       "title": "Crea tu nueva contraseña",
       "password": "Nueva contraseña",
       "confirm": "Confirma tu nueva contraseña",
       "submit": "Guardar contraseña"
     },
     "verify": {
-      "metaTitle": "Confirma tu correo · Catarinotlón 2026",
+      "metaTitle": "Confirma tu correo",
       "title": "Confirma tu correo",
       "body": "Te enviamos un enlace a {email}. Ábrelo para activar tu cuenta y seguir con tu inscripción.",
       "bodyGeneric": "Te enviamos un enlace a tu correo. Ábrelo para activar tu cuenta y seguir con tu inscripción.",
@@ -419,7 +419,7 @@
     "submitWithDistance": "{label} · {distance}"
   },
   "register": {
-    "metaTitle": "Completa tu inscripción · Catarinotlón 2026",
+    "metaTitle": "Completa tu inscripción",
     "eyebrow": "Paso 2 de 3",
     "title": "Completa tu inscripción",
     "body": "Ya tienes cuenta, {name}. Ahora elige tu carrera y el nombre que irá en tu playera.",
@@ -427,7 +427,7 @@
     "submitAnother": "Guardar y agregar otro corredor"
   },
   "addRunner": {
-    "metaTitle": "Agrega otro corredor · Catarinotlón 2026",
+    "metaTitle": "Agrega otro corredor",
     "eyebrow": "Otro corredor",
     "title": "Agrega otro corredor",
     "body": "Inscribe a un familiar o a un amigo desde tu cuenta. Tendrá su propia playera, su número y su boleto.",
@@ -458,7 +458,7 @@
     "shirtLine": "{name} · Talla {size}"
   },
   "payment": {
-    "metaTitle": "Pago · Catarinotlón 2026",
+    "metaTitle": "Pago",
     "title": "Paga con Transferencia (SPEI)",
     "body": "Transfiere desde la app de tu banco y sube tu comprobante. Cuando lo validemos, tu lugar queda confirmado y recibes tu boleto.",
     "transferHeading": "1. Transfiere a esta cuenta",
@@ -513,7 +513,7 @@
     "receiptHelpAccount": "Imagen o PDF del comprobante de tu Transferencia (SPEI)."
   },
   "account": {
-    "metaTitle": "Mi cuenta · Catarinotlón 2026",
+    "metaTitle": "Mi cuenta",
     "eyebrow": "Mi cuenta",
     "greeting": "Hola, {name}",
     "body": "Con esta cuenta puedes inscribirte tú e inscribir a tu familia o amigos. Cada corredor tiene su propia playera, su número y su boleto.",

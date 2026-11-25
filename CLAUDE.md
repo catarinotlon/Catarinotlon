@@ -228,7 +228,10 @@ Rules that follow from it:
 - **Formatting:** dates, times, numbers, and currency go through the next-intl formatters with an explicit time zone. No `toLocaleString` or manual formatting.
 - **Hexagonal boundary:** `domain` and `application` never produce user-facing text. They return error codes and data; `presentation` maps them to message keys. Zod schemas return message keys too.
 - **Emails:** store the runner's locale with the registration and render the React Email template in that locale.
-- **SEO:** localized `generateMetadata`, `lang` on `<html>`, and `hreflang` alternates for both locales.
+- **Page metadata:** localized `generateMetadata`, `lang` on `<html>`, and `hreflang` alternates for both locales. Page titles name only the page ("Mi cuenta"); the locale layout's template adds `· Catarinotlón`, and only the landing sets an `absolute` title. A test fails if a page title message repeats the event name.
+- **No bots, no AI:** the site is closed to every crawler, search engines and AI tools included, by decision of the organizer. Three layers say so: `src/app/robots.ts` (`Disallow: /` for everyone except the link-preview bots in `LINK_PREVIEW_BOTS`, which only draw the share card and never read `/api/`), the locale layout's `robots` metadata (`noindex, nofollow, noarchive, nosnippet, noimageindex`) for every page, and an `X-Robots-Tag` header on every path from `next.config.ts` (the same plus `noai, noimageai`). Pages never set their own `robots`, because it would replace the layout's. There is no sitemap, canonical, or structured data. Never add an AI crawler to `LINK_PREVIEW_BOTS`; a test checks it.
+- **Icons:** `src/app/favicon.ico` and `src/app/icon.svg` (the ladybug alone; its head turns light in a dark browser tab), `src/app/apple-icon.png`, and the manifest icons in `public/icons/`, all from the SVG sources in `design/assets/icons/`. `src/app/manifest.ts` opens the site `standalone` from the home screen.
+- **Phones:** the layout turns off iOS phone detection (`formatDetection.telephone`), which would turn the CLABE or a bib number into a call link. A phone that must be tappable gets an explicit `tel:` link (`telUrl`).
 - **Shared links:** the locale layout sets `metadataBase` (the site origin) plus Open Graph and Twitter (`summary_large_image`) tags, so every page shares the same event card. Its 1200 × 630 image is `src/app/[locale]/opengraph-image.tsx`, which renders the `ShareCard` component from `src/shared/ui` with `ImageResponse` in each locale. Keep it free of personal data and of event facts that are still settings (date, venue, fee).
 
 ## Theming
@@ -242,6 +245,7 @@ Rules that follow from it:
   - Contrast is at least 4.5:1 for text in both themes. Brand red `#D42016` fails as small text on dark surfaces: use the `#FF5A4D` token for red text there.
   - Images, illustrations, and the logo have a variant that works on dark backgrounds.
   - No flash of the wrong theme on load.
+  - The phone's browser bar matches the page: the layout's `viewport.themeColor` is the light background, and `ThemeColorSync` (`src/shared/ui`) copies the active theme's `--background` token into `<meta name="theme-color">` when the theme changes or a navigation rewrites the head. A `prefers-color-scheme` media query cannot do it, because the runner picks the theme in the app.
   - E2E covers the theme switch (toggle, persistence across reloads and navigation) and runs the axe check in both themes.
   - A component that only works in one theme is not done.
 - **Email templates are light-only** unless asked otherwise.
@@ -474,7 +478,7 @@ Runner data is stored (name, email, phone). Never write it to logs, error messag
 
 - Reference mocks (private canvas): https://claude.ai/artifact/VFeXaxC6F9AiJhPPhfquS3. Eight pages: landing, sign-up and sign-in, complete registration and payment, account (confirmed, pending payment, in review, receipt rejected), emails, admin, password and verification and error screens, and legal. Most screens come in light and dark, desktop and mobile; emails are light only; admin kit pickup is mobile only.
 - The shirt photos in the mocks are retouched previews: the logo was redrawn to say "Catarinotlón". The medals in the mocks and the app are the organizer's artwork with the name corrected. Both are good enough for the website but are not production art for the manufacturer. Copy in the mocks is Spanish; bracketed text like `[FECHA DEL EVENTO]` marks facts that are still missing.
-- Source art lives in `design/assets/`: `shirt/` (front, back, and back without a name for the shirt-name preview) and `medals/` (`organizer-medals-source.png`, the organizer's original image with the misspelled name, plus the earlier SVG drawings, which the app no longer uses). Copy what the app needs into the app's static assets when scaffolding.
+- Source art lives in `design/assets/`: `icons/` (the ladybug favicon and the app icons, which the PNGs and the `.ico` are rendered from), `shirt/` (front, back, and back without a name for the shirt-name preview) and `medals/` (`organizer-medals-source.png`, the organizer's original image with the misspelled name, plus the earlier SVG drawings, which the app no longer uses). Copy what the app needs into the app's static assets when scaffolding.
 - Brand colors: ladybug red `#D42016`, black `#121212`, medal gold `#D8B25A`. They are exposed to components as semantic tokens.
 - Light theme: white background, `#F2F2F3` muted background, `#121212` text, `#4A4A4E` muted text.
 - Dark theme: `#0E0E0F` background, `#18181A` surface, `#232327` raised surface, `#34343A` border, `#F5F5F6` text, `#B9B9BF` muted text, `#FF5A4D` red for text.
