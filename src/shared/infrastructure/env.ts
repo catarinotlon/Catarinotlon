@@ -30,14 +30,17 @@ export const env = createEnv({
     RECEIPT_STORAGE: z.enum(['blob', 'memory']).default('blob'),
     RECEIPT_LOCAL_DIR: z.string().min(1).default('.data/receipts'),
     RECEIPT_MAX_BYTES: z.coerce.number().int().positive().default(5_242_880),
+    TURNSTILE_SECRET_KEY: z.string().min(1).optional(),
   },
   client: {
     NEXT_PUBLIC_SENTRY_DSN: z.url().optional(),
     NEXT_PUBLIC_POSTHOG_KEY: z.string().min(1).optional(),
+    NEXT_PUBLIC_TURNSTILE_SITE_KEY: z.string().min(1).optional(),
   },
   experimental__runtimeEnv: {
     NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
     NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
+    NEXT_PUBLIC_TURNSTILE_SITE_KEY: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
   },
   emptyStringAsUndefined: true,
   skipValidation: process.env.SKIP_ENV_VALIDATION === '1',

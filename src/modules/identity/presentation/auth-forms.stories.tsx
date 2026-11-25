@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 
 import type { FormAction } from '@/shared/ui/form-state';
+import { fakeTurnstile, installFakeTurnstile, renderedWidget } from '@/test/fake-turnstile';
 
 import { ForgotPasswordForm, ResetPasswordForm, SignInForm, SignUpForm } from './auth-forms';
 
@@ -70,6 +71,96 @@ export const SignUpErrors: Story = {
     await expect(
       canvas.getByText('Debes aceptar los términos y el aviso de privacidad.'),
     ).toBeVisible();
+  },
+};
+
+/** With Turnstile on, the challenge sits inside the form, and a refused check starts a new one. */
+export const SignUpHumanCheckFailed: Story = {
+  beforeEach: installFakeTurnstile,
+  render: () => (
+    <SignUpForm
+      action={async () => ({ formError: 'errors.humanCheckFailed' })}
+      googleAction={google}
+      shirtSizes={['Size A']}
+      open
+      humanCheckSiteKey="story-site-key"
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const submit = canvas.getByRole('button', { name: /Crear cuenta e inscribirme/ });
+    await expect((await renderedWidget()).closest('form')).toContainElement(submit);
+
+    await userEvent.click(submit);
+
+    await expect(
+      await canvas.findByText(/No pudimos confirmar que eres una persona/),
+    ).toBeVisible();
+    await waitFor(() => expect(fakeTurnstile.reset).toHaveBeenCalledWith('widget-1'));
+  },
+};
+
+/** The server checked the token before the password, so a wrong password needs a new one. */
+export const SignInHumanCheckAfterWrongPassword: Story = {
+  beforeEach: installFakeTurnstile,
+  render: () => (
+    <SignInForm
+      action={async () => ({ formError: 'errors.invalidCredentials' })}
+      googleAction={google}
+      humanCheckSiteKey="story-site-key"
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const submit = canvas.getByRole('button', { name: 'Iniciar sesión' });
+    await expect((await renderedWidget()).closest('form')).toContainElement(submit);
+
+    await userEvent.click(submit);
+
+    await expect(await canvas.findByRole('alert')).toBeVisible();
+    await waitFor(() => expect(fakeTurnstile.reset).toHaveBeenCalledWith('widget-1'));
+  },
+};
+
+/** A reset request that fails the human check says so, and starts a new challenge. */
+export const ForgotPasswordHumanCheckFailed: Story = {
+  beforeEach: installFakeTurnstile,
+  render: () => (
+    <ForgotPasswordForm
+      action={async () => ({ formError: 'errors.humanCheckFailed' })}
+      humanCheckSiteKey="story-site-key"
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const submit = canvas.getByRole('button', { name: 'Enviar enlace' });
+    await expect((await renderedWidget()).closest('form')).toContainElement(submit);
+
+    await userEvent.type(canvas.getByLabelText('Correo electrónico'), 'a@example.test');
+    await userEvent.click(submit);
+
+    await expect(await canvas.findByRole('alert')).toHaveTextContent(
+      /No pudimos confirmar que eres una persona/,
+    );
+    await waitFor(() => expect(fakeTurnstile.reset).toHaveBeenCalledWith('widget-1'));
+  },
+};
+
+/** Resending the link also carries the human check. */
+export const ForgotPasswordResendHumanCheck: Story = {
+  beforeEach: installFakeTurnstile,
+  render: () => (
+    <ForgotPasswordForm action={async () => ({ done: true })} humanCheckSiteKey="story-site-key" />
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await renderedWidget();
+    await userEvent.type(canvas.getByLabelText('Correo electrónico'), 'a@example.test');
+    await userEvent.click(canvas.getByRole('button', { name: 'Enviar enlace' }));
+
+    const resend = await canvas.findByRole('button', { name: 'Reenviar el enlace' });
+    await waitFor(() => expect(fakeTurnstile.render).toHaveBeenCalledTimes(2));
+    await expect(fakeTurnstile.render.mock.calls[1]![0].closest('form')).toContainElement(resend);
   },
 };
 

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
+import { humanCheckSiteKey } from '@/composition';
 import { requireLocale } from '@/i18n/locale';
 import { resendVerificationAction } from '@/modules/identity/presentation/auth-actions';
 import { PENDING_EMAIL_COOKIE } from '@/modules/identity/presentation/legal-versions';
@@ -35,6 +36,7 @@ export default async function VerifyEmailPage({ params, searchParams }: Props) {
           email={email}
           verified={verified === '1'}
           resendAction={resendVerificationAction}
+          humanCheckSiteKey={humanCheckSiteKey}
         />
       </Card>
     </PageShell>

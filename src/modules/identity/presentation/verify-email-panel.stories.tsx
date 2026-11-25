@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { expect, userEvent, within } from 'storybook/test';
+import { expect, userEvent, waitFor, within } from 'storybook/test';
+
+import type { FormState } from '@/shared/ui/form-state';
+import { fakeTurnstile, installFakeTurnstile, renderedWidget } from '@/test/fake-turnstile';
 
 import { VerifyEmailPanel } from './verify-email-panel';
 
@@ -10,7 +13,7 @@ const meta = {
   args: {
     email: 'sofia@example.test',
     verified: false,
-    resendAction: async () => ({ done: true }),
+    resendAction: async (): Promise<FormState> => ({ done: true }),
   },
 } satisfies Meta<typeof VerifyEmailPanel>;
 
@@ -53,13 +56,18 @@ async function expectBusy(button: HTMLElement) {
   await expect(button).toBeDisabled();
 }
 
+// The pending action is released when the story ends: React keeps every unfinished
+// action of the page in one transition, which would hold back the stories after it.
+const held: Array<() => void> = [];
+
 /** Resending the email shows that it is working. */
 export const ResendPending: Story = {
-  args: { resendAction: () => new Promise<never>(() => {}) },
+  args: { resendAction: () => new Promise((resolve) => held.push(() => resolve({}))) },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByRole('button', { name: 'Reenviar el correo' }));
     await expectBusy(await canvas.findByRole('button', { name: 'Reenviando…' }));
+    held.splice(0).forEach((release) => release());
   },
 };
 
@@ -68,5 +76,26 @@ export const EmailHiddenFromRecordings: Story = {
   play: async ({ canvasElement }) => {
     const text = within(canvasElement).getByText(/sofia@example\.test/);
     await expect(text.closest('[data-private]')).not.toBeNull();
+  },
+};
+
+/** Resending carries the human check; a refused check says so and starts a new challenge. */
+export const ResendHumanCheckFailed: Story = {
+  args: {
+    humanCheckSiteKey: 'story-site-key',
+    resendAction: async () => ({ formError: 'errors.humanCheckFailed' }),
+  },
+  beforeEach: installFakeTurnstile,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const resend = canvas.getByRole('button', { name: 'Reenviar el correo' });
+    await expect((await renderedWidget()).closest('form')).toContainElement(resend);
+
+    await userEvent.click(resend);
+
+    await expect(await canvas.findByRole('alert')).toHaveTextContent(
+      /No pudimos confirmar que eres una persona/,
+    );
+    await waitFor(() => expect(fakeTurnstile.reset).toHaveBeenCalledWith('widget-1'));
   },
 };

@@ -16,6 +16,7 @@ import {
   listRunners,
   registerAccountRunner,
   secureCookies,
+  verifyHuman,
 } from '@/composition';
 import { getPathname, redirect } from '@/i18n/navigation';
 import { isPaymentOpen } from '@/modules/event';
@@ -53,6 +54,19 @@ const AFTER_SIGN_IN = {
 
 const formValues = (data: FormData) => Object.fromEntries(data.entries());
 
+/** The field the Turnstile widget adds to the form with its token. */
+const HUMAN_CHECK_FIELD = 'cf-turnstile-response';
+
+const humanCheckToken = (data: FormData): string | null => {
+  const token = data.get(HUMAN_CHECK_FIELD);
+  return typeof token === 'string' && token ? token : null;
+};
+
+/** Whether a person, not a bot, submitted the form. The check spends the token. */
+const passesHumanCheck = (data: FormData) => verifyHuman(humanCheckToken(data));
+
+const HUMAN_CHECK_FAILED: FormState = { formError: 'errors.humanCheckFailed' };
+
 const verifiedLanding = (locale: 'es' | 'en') =>
   `${getPathname({ href: '/verify-email', locale })}?verified=1`;
 
@@ -61,7 +75,8 @@ const verifiedLanding = (locale: 'es' | 'en') =>
  *
  * @remarks
  * The answer is the same when the email already has an account, so sign-up cannot
- * reveal who is registered.
+ * reveal who is registered. The fields are validated before the human check, so a
+ * typo does not spend the challenge token; nothing is created until the check passes.
  *
  * @param _state - The previous form state.
  * @param data - The submitted form.
@@ -85,6 +100,8 @@ export async function signUpAction(_state: FormState, data: FormData): Promise<F
       },
     };
   }
+
+  if (!(await passesHumanCheck(data))) return HUMAN_CHECK_FAILED;
 
   const { name, email, password, phone } = account.data;
   const { userId } = await accounts.signUp({
@@ -123,6 +140,9 @@ export async function signUpAction(_state: FormState, data: FormData): Promise<F
 /**
  * Signs in and continues to the account's next step.
  *
+ * @remarks
+ * The human check runs after the fields are valid and before the password is tried.
+ *
  * @param _state - The previous form state.
  * @param data - The submitted form.
  * @returns Errors. On success it redirects.
@@ -131,6 +151,7 @@ export async function signInAction(_state: FormState, data: FormData): Promise<F
   const locale = await getLocale();
   const credentials = signInSchema.safeParse(formValues(data));
   if (!credentials.success) return { fieldErrors: toFieldErrors(credentials.error) };
+  if (!(await passesHumanCheck(data))) return HUMAN_CHECK_FAILED;
 
   const result = await accounts.signIn(credentials.data);
   if (!result.ok) {
@@ -145,6 +166,9 @@ export async function signInAction(_state: FormState, data: FormData): Promise<F
 /**
  * Requests a password reset. The answer is the same for any email.
  *
+ * @remarks
+ * Nothing is sent unless the form passes the human check.
+ *
  * @param _state - The previous form state.
  * @param data - The submitted form.
  * @returns The done state, or a format error.
@@ -153,6 +177,7 @@ export async function forgotPasswordAction(_state: FormState, data: FormData): P
   const locale = await getLocale();
   const request = forgotPasswordSchema.safeParse(formValues(data));
   if (!request.success) return { fieldErrors: toFieldErrors(request.error) };
+  if (!(await passesHumanCheck(data))) return HUMAN_CHECK_FAILED;
 
   await accounts.requestPasswordReset(
     request.data.email,
@@ -185,10 +210,18 @@ export async function resetPasswordAction(_state: FormState, data: FormData): Pr
 /**
  * Sends the verification email again to the address that just signed up.
  *
+ * @remarks
+ * Nothing is sent unless the form passes the human check.
+ *
  * @param _state - The previous form state.
- * @returns The done state.
+ * @param data - The submitted form, with the human check's token.
+ * @returns The done state, or the failed human check.
  */
-export async function resendVerificationAction(_state: FormState): Promise<FormState> {
+export async function resendVerificationAction(
+  _state: FormState,
+  data: FormData,
+): Promise<FormState> {
+  if (!(await passesHumanCheck(data))) return HUMAN_CHECK_FAILED;
   const locale = (await getLocale()) as 'es' | 'en';
   const email = (await cookies()).get(PENDING_EMAIL_COOKIE)?.value;
   if (email) await accounts.resendVerification(email, verifiedLanding(locale));

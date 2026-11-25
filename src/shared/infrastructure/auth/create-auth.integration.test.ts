@@ -135,4 +135,41 @@ describe('createAuth', () => {
     const rows = await database.db.select().from(user).where(eq(user.email, credentials.email));
     expect(rows).toHaveLength(1);
   });
+
+  it('refuses email sign-up over HTTP, so bots cannot skip the human check of the form', async () => {
+    const response = await auth.handler(
+      new Request('http://localhost:3000/api/auth/sign-up/email', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', origin: 'http://localhost:3000' },
+        body: JSON.stringify(credentials),
+      }),
+    );
+
+    expect(response.status).toBe(404);
+    const rows = await database.db.select().from(user).where(eq(user.email, credentials.email));
+    expect(rows).toEqual([]);
+  });
+
+  it.each([
+    ['/sign-in/email', { email: credentials.email, password: credentials.password }],
+    ['/request-password-reset', { email: credentials.email, redirectTo: '/reset-password' }],
+    ['/send-verification-email', { email: credentials.email }],
+  ])(
+    'refuses %s over HTTP, so bots cannot skip the human check of the form',
+    async (path, body) => {
+      await signUp();
+      const sentBefore = emails.sent.length;
+
+      const response = await auth.handler(
+        new Request(`http://localhost:3000/api/auth${path}`, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json', origin: 'http://localhost:3000' },
+          body: JSON.stringify(body),
+        }),
+      );
+
+      expect(response.status).toBe(404);
+      expect(emails.sent.length).toBe(sentBefore);
+    },
+  );
 });
