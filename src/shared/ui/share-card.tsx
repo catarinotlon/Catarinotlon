@@ -282,7 +282,7 @@ function RibbonDots() {
   );
 }
 
-/** The dotted route that ends in the ladybug pin, as printed on the shirt. */
+/** The dotted route that ends in the ladybug pin, a brand motif. */
 function Route() {
   return (
     <svg width={460} height={24} viewBox="0 0 460 24" fill="none" aria-hidden="true">
