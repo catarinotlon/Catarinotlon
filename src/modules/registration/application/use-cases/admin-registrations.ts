@@ -107,11 +107,15 @@ function csvCell(value: string): string {
 const csvRows = (rows: readonly (readonly string[])[]): string =>
   rows.map((row) => `${row.map(csvCell).join(',')}\r\n`).join('');
 
+const confirmedOnly = (all: readonly Registration[]): Registration[] =>
+  all.filter((item) => item.status === 'confirmed');
+
 /**
  * Builds the registrations export.
  *
  * @remarks
- * Names are untrusted, so cells that a spreadsheet would run as a formula are
+ * Only runners whose payment an admin confirmed are exported. Names are
+ * untrusted, so cells that a spreadsheet would run as a formula are
  * neutralized. The file is generated on request and never stored.
  *
  * @param all - The registrations.
@@ -133,7 +137,7 @@ export function buildRegistrationsCsv(
       headers.shirtName,
       headers.status,
     ],
-    ...all.map((item) => [
+    ...confirmedOnly(all).map((item) => [
       item.bibNumber,
       item.runnerName,
       item.distance,
@@ -146,6 +150,10 @@ export function buildRegistrationsCsv(
 
 /**
  * Builds the shirt names export for the printer, grouped by size.
+ *
+ * @remarks
+ * Only runners whose payment an admin confirmed are exported, so the printer
+ * never makes a shirt that was not paid for.
  *
  * @param all - The registrations.
  * @param sizes - The sizes on offer, in print order.
@@ -161,7 +169,7 @@ export function buildShirtNamesCsv(
     const index = sizes.indexOf(size);
     return index === -1 ? sizes.length : index;
   };
-  const ordered = [...all].sort((a, b) => rank(a.shirtSize) - rank(b.shirtSize));
+  const ordered = confirmedOnly(all).sort((a, b) => rank(a.shirtSize) - rank(b.shirtSize));
   return csvRows([
     [headers.shirtSize, headers.shirtName, headers.runnerName],
     ...ordered.map((item) => [item.shirtSize, item.shirtName, item.runnerName]),

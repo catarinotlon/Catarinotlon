@@ -53,6 +53,12 @@ const mateo = runner({
   shirtSize: 'size-b',
 });
 
+const paidMateo: Registration = { ...mateo, status: 'confirmed' };
+const unpaid = [
+  runner({ id: 'pending', runnerName: 'Pending Runner', status: 'pending_payment' }),
+  runner({ id: 'review', runnerName: 'Review Runner', status: 'payment_in_review' }),
+];
+
 describe('searchRegistrations', () => {
   const all = [sofia, mateo];
 
@@ -112,15 +118,21 @@ describe('buildRegistrationsCsv', () => {
   });
 
   it('quotes commas and doubles quotes', () => {
-    const tricky = runner({ id: 'x', runnerName: 'Cruz, "Teo"' });
+    const tricky = runner({ id: 'x', runnerName: 'Cruz, "Teo"', status: 'confirmed' });
 
     expect(buildRegistrationsCsv([tricky], headers)).toContain('"Cruz, ""Teo"""');
+  });
+
+  it('leaves out runners whose payment is not confirmed', () => {
+    expect(buildRegistrationsCsv([sofia, ...unpaid], headers)).toBe(
+      'Bib,Name,Distance,Size,Shirt,Status\r\n48213,Sofía Ramírez,5K,size-a,SOFI,confirmed\r\n',
+    );
   });
 
   it.each(['=1+1', '+1', '-1', '@SUM(A1)', '\tcmd'])(
     'neutralizes the spreadsheet formula %j in untrusted text',
     (shirtName) => {
-      const hostile = runner({ id: 'x', shirtName: shirtName as ShirtName });
+      const hostile = runner({ id: 'x', shirtName: shirtName as ShirtName, status: 'confirmed' });
 
       const row = buildRegistrationsCsv([hostile], headers).split('\r\n')[1] ?? '';
 
@@ -131,7 +143,7 @@ describe('buildRegistrationsCsv', () => {
 
 describe('buildShirtNamesCsv', () => {
   it('groups shirt names by size for the printer, in size order', () => {
-    const csv = buildShirtNamesCsv([sofia, mateo], ['size-b', 'size-a'], {
+    const csv = buildShirtNamesCsv([sofia, paidMateo], ['size-b', 'size-a'], {
       shirtSize: 'Size',
       shirtName: 'Shirt',
       runnerName: 'Name',
@@ -140,8 +152,18 @@ describe('buildShirtNamesCsv', () => {
     expect(csv).toBe('Size,Shirt,Name\r\nsize-b,TEO,Mateo Cruz\r\nsize-a,SOFI,Sofía Ramírez\r\n');
   });
 
+  it('leaves out runners whose payment is not confirmed', () => {
+    const csv = buildShirtNamesCsv([sofia, ...unpaid], ['size-a'], {
+      shirtSize: 'Size',
+      shirtName: 'Shirt',
+      runnerName: 'Name',
+    });
+
+    expect(csv).toBe('Size,Shirt,Name\r\nsize-a,SOFI,Sofía Ramírez\r\n');
+  });
+
   it('keeps runners whose size is no longer on offer, at the end', () => {
-    const csv = buildShirtNamesCsv([sofia, mateo], ['size-b'], {
+    const csv = buildShirtNamesCsv([sofia, paidMateo], ['size-b'], {
       shirtSize: 'Size',
       shirtName: 'Shirt',
       runnerName: 'Name',
