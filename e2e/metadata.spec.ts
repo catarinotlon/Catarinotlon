@@ -33,4 +33,20 @@ test.describe('metadata', () => {
       expect((await request.get(icon.src)).ok(), icon.src).toBe(true);
     }
   });
+
+  test('the browser bar follows the theme the runner chose', async ({ page }) => {
+    await page.goto('/es');
+    const themeColor = page.locator('meta[name="theme-color"]');
+    await expect(themeColor).toHaveAttribute('content', '#ffffff');
+
+    await page.getByRole('button', { name: 'Cambiar a tema oscuro' }).click();
+    await expect(themeColor).toHaveAttribute('content', '#0e0e0f');
+
+    await page.reload();
+    await expect(themeColor).toHaveAttribute('content', '#0e0e0f');
+
+    await page.getByRole('link', { name: 'Iniciar sesión', exact: true }).first().click();
+    await expect(page).toHaveURL(/\/es\/iniciar-sesion$/);
+    await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', '#0e0e0f');
+  });
 });
