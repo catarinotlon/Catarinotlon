@@ -8,6 +8,7 @@ import { Link, usePathname } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 
 import { cn } from './cn';
+import { SegmentedControl } from './segmented-control';
 
 /** Props of {@link LanguageSwitch}. */
 export interface LanguageSwitchProps {
@@ -34,30 +35,32 @@ export function LanguageSwitch({ variant }: LanguageSwitchProps) {
 
   if (compact) {
     return (
-      <span className="inline-flex items-center rounded-full border-2 border-input-border p-0.5">
-        {routing.locales.map((locale) =>
-          locale === active ? (
-            <span
-              key={locale}
-              aria-current="true"
-              className="inline-flex h-9 min-w-11 items-center justify-center rounded-full bg-inverse px-3 text-sm font-bold text-inverse-foreground"
-            >
-              {locale.toUpperCase()}
+      <SegmentedControl
+        variant="compact"
+        label={t('switchTo')}
+        options={routing.locales.map((locale) => ({ value: locale, label: locale.toUpperCase() }))}
+        value={active}
+        renderOption={(option, { selected, className }) =>
+          selected ? (
+            <span aria-current="true" className={className}>
+              {option.label}
             </span>
           ) : (
             <Link
-              key={locale}
               href={href}
-              locale={locale}
-              lang={locale}
-              className="inline-flex h-9 min-w-11 items-center justify-center rounded-full px-3 text-sm font-bold text-foreground no-underline hover:bg-muted"
+              locale={option.value as (typeof routing.locales)[number]}
+              lang={option.value}
+              className={className}
             >
-              {locale.toUpperCase()}
-              <span className="sr-only"> {t(locale)}</span>
+              {option.label}
+              <span className="sr-only">
+                {' '}
+                {t(option.value as (typeof routing.locales)[number])}
+              </span>
             </Link>
-          ),
-        )}
-      </span>
+          )
+        }
+      />
     );
   }
 

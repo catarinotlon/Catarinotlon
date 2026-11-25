@@ -9,6 +9,7 @@ import { cn } from '@/shared/ui/cn';
 import { FormAlert, SelectField, TextField } from '@/shared/ui/form-fields';
 import type { FormAction } from '@/shared/ui/form-state';
 import { Card } from '@/shared/ui/page-shell';
+import { SegmentedControl } from '@/shared/ui/segmented-control';
 import { ShirtPreview } from '@/shared/ui/shirt-preview';
 import { StatusPill } from '@/shared/ui/status-pill';
 import { useStickyForm } from '@/shared/ui/use-sticky-form';
@@ -109,32 +110,16 @@ export function AdminRegistrationForm({
         autoComplete="off"
         error={fieldError('runnerName')}
       />
-      <fieldset className="m-0 flex flex-col gap-1 border-0 p-0">
-        <legend className="mb-1 p-0 font-semibold">{t('distance')}</legend>
-        <div className="grid grid-cols-2 gap-3">
-          {DISTANCES.map((option) => (
-            <label
-              key={option}
-              className={cn(
-                'flex min-h-12 cursor-pointer items-center justify-center rounded-lg border-2 font-heading text-2xl focus-within:outline-3 focus-within:outline-offset-3 focus-within:outline-focus',
-                option === distance
-                  ? 'border-inverse bg-inverse text-inverse-foreground'
-                  : 'border-input-border bg-input text-foreground',
-              )}
-            >
-              <input
-                type="radio"
-                name="distance"
-                value={option}
-                checked={option === distance}
-                onChange={() => setDistance(option)}
-                className="sr-only"
-              />
-              {option}
-            </label>
-          ))}
-        </div>
-      </fieldset>
+      <SegmentedControl
+        variant="block"
+        legend={t('distance')}
+        legendClassName="mb-1 font-semibold"
+        className="flex flex-col gap-1"
+        name="distance"
+        options={DISTANCES.map((option) => ({ value: option, label: option }))}
+        value={distance}
+        onChange={(option) => setDistance(option as (typeof DISTANCES)[number])}
+      />
       <div className="grid items-start gap-4 sm:grid-cols-2">
         <SelectField
           label={t('size')}
