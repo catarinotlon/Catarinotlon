@@ -3,6 +3,7 @@ import { useFormatter, useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 
 import { Link } from '@/i18n/navigation';
+import { DATE_AND_TIME_FORMAT } from '@/i18n/start-time';
 import { buttonClasses } from '@/shared/ui/button';
 import { cn } from '@/shared/ui/cn';
 import type { FormAction, FormState } from '@/shared/ui/form-state';
@@ -365,10 +366,7 @@ function PaymentPanel({
             <p className="m-0 text-sm text-muted-foreground">{t('receiptSent')}</p>
             <p className="m-0 font-semibold">
               {t('sentAt', {
-                date: format.dateTime(runner.receipt.uploadedAt, {
-                  dateStyle: 'medium',
-                  timeStyle: 'short',
-                }),
+                date: format.dateTime(runner.receipt.uploadedAt, DATE_AND_TIME_FORMAT),
               })}
             </p>
             <a
@@ -572,6 +570,9 @@ export function AccountView(props: AccountViewProps) {
                 </DetailRow>
                 <DetailRow icon="kit" label={t('kitPickup')}>
                   {facts.kitPickup ?? pending}
+                  <span className="mt-1 block text-sm font-normal text-muted-foreground">
+                    {t('kitPickupNote', { bib: runner.bibNumber })}
+                  </span>
                 </DetailRow>
                 <DetailRow icon="route" label={t('route')}>
                   {facts.routeMapUrl ? (
