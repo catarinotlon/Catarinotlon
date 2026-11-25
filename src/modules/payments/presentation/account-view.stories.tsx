@@ -68,8 +68,20 @@ export const TicketAndShirtDetails: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(canvas.getByText('Corredor n.º')).toBeVisible();
-    await expect(canvas.getByText('Con tu kit')).toBeVisible();
+    await expect(canvas.getByText('Con tu kit, el día de la carrera')).toBeVisible();
     await expect(canvas.getByText('Correo y contraseña')).toBeVisible();
+  },
+};
+
+/** The race details say the kit is collected on race day and carries the runner's bib. */
+export const KitOnRaceDay: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(
+      canvas.getByText(
+        'Es el mismo día de la carrera. Ahí recibes tu playera y tu número de corredor, el 48213.',
+      ),
+    ).toBeVisible();
   },
 };
 
@@ -205,6 +217,7 @@ export const InReview: Story = {
     const canvas = within(canvasElement);
     await expect(canvas.getByRole('heading', { name: 'Estamos validando tu pago' })).toBeVisible();
     await expect(canvas.getByRole('link', { name: 'Ver comprobante' })).toBeVisible();
+    await expect(canvas.getByText(/12:00\sp\.\sm\./)).toBeVisible();
     const replace = canvas.getByRole('button', { name: 'Reemplazar comprobante' });
     await expect(replace).toBeVisible();
     await expect(replace).not.toHaveClass('bg-primary');

@@ -166,6 +166,7 @@ e2e/                          Playwright tests
 - **There is no capacity limit**, neither in total nor per distance. Do not model "sold out".
 - **The only deadline is for changing the shirt size**; its date is an event setting and not set yet. Distance and shirt name can be changed at any time, even after paying. There is no registration closing date and unpaid registrations never expire. Because the fee is the same for both distances, changing distance never affects the payment.
 - **The shirt name has no restrictions for now**: no length limit, no character rules, no approval step. Treat it as untrusted text everywhere it is rendered.
+- **The runner kit is the personalized shirt and the race bib** (the runner's `BibNumber`, worn on the shirt during the race), and it is collected **on race day**. The medal is not in the kit: it is handed out at the finish line. Wherever the app mentions the kit or its pickup (landing, FAQ, account, ticket, emails), it says both things.
 - **Anyone can collect a kit by showing the runner's ticket.** Do not require the runner or an ID; kit pickup may record who collected it.
 - A rejected receipt keeps the registration (and the runner's place); the account page shows the admin's reason and asks for a new receipt.
 

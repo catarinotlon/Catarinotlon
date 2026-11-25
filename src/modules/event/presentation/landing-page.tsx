@@ -3,17 +3,20 @@ import { useFormatter, useLocale, useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 
 import { formatMoney } from '@/i18n/money';
+import { formatStartTime, formatStartTimeParts } from '@/i18n/start-time';
 import { Link } from '@/i18n/navigation';
 import { buttonClasses } from '@/shared/ui/button';
 import { cn } from '@/shared/ui/cn';
 import { Eyebrow } from '@/shared/ui/page-shell';
+import { RaceBib } from '@/shared/ui/race-bib';
 
 import type { LandingFacts } from './landing-facts';
 import { KitStage } from './kit-stage';
 import { MedalShowcase } from './medal-showcase';
 import { ShirtTryOn } from './shirt-try-on';
 
-const MEXICO_CITY_UTC_OFFSET_HOURS = 6;
+/** An illustrative bib for the kit section, for either distance; real numbers are assigned per registration. */
+const SAMPLE_BIB = { number: '48213', distance: '3K/5K' } as const;
 
 /** Props of {@link LandingPage}. */
 export interface LandingPageProps {
@@ -174,6 +177,21 @@ function RouteArt({ start, finish }: { start: string; finish: string }) {
   );
 }
 
+/** A start time: the clock large, the half of the day smaller, so it reads at a glance. */
+function StartTime({ time, pending }: { time: string | null; pending: string }) {
+  const locale = useLocale();
+  if (!time) return pending;
+  const { clock, period } = formatStartTimeParts(time, locale);
+  return (
+    <span className="text-4xl leading-none md:text-5xl">
+      {clock}{' '}
+      <span className="text-lg font-semibold text-muted-foreground normal-case md:text-2xl">
+        {period}
+      </span>
+    </span>
+  );
+}
+
 /**
  * The public landing page. It has no registration form of its own.
  *
@@ -190,14 +208,7 @@ export function LandingPage({ facts }: LandingPageProps) {
   const locale = useLocale();
   const pending = common('pending');
 
-  const time = (value: string | null) => {
-    if (!value) return pending;
-    const [hours = 0, minutes = 0] = value.split(':').map(Number);
-    return format.dateTime(
-      new Date(Date.UTC(2026, 0, 1, hours + MEXICO_CITY_UTC_OFFSET_HOURS, minutes)),
-      { hour: 'numeric', minute: '2-digit' },
-    );
-  };
+  const time = (value: string | null) => (value ? formatStartTime(value, locale) : pending);
   const date = facts.eventDate
     ? format.dateTime(new Date(`${facts.eventDate}T12:00:00Z`), { dateStyle: 'long' })
     : pending;
@@ -264,17 +275,45 @@ export function LandingPage({ facts }: LandingPageProps) {
         </div>
       </section>
 
-      <div data-testid="facts-band" className="dark bg-ink px-5 py-6 text-foreground md:px-10">
-        <dl className="m-0 mx-auto grid max-w-[1200px] grid-cols-2 gap-6 md:grid-cols-4">
+      <div
+        data-testid="facts-band"
+        className="dark bg-ink px-5 py-6 text-foreground md:px-10 md:py-10"
+      >
+        <dl className="m-0 mx-auto grid max-w-[1200px] grid-cols-2 md:grid-cols-4">
           {[
-            [t('hero.date'), date],
-            [t('hero.start'), start],
-            [t('hero.venue'), facts.venue ?? pending],
-            [t('hero.distances'), '3K · 5K'],
-          ].map(([label, value]) => (
-            <div key={label}>
+            {
+              key: 'date',
+              label: t('hero.date'),
+              value: date,
+              className: 'order-1 border-b pr-4 md:border-b-0 md:pr-6',
+            },
+            {
+              key: 'startThree',
+              label: t('hero.startDistance', { distance: '3K' }),
+              value: <StartTime time={facts.startThree} pending={pending} />,
+              className: 'order-3 pt-4 pr-4 md:order-2 md:border-l md:px-6 md:pt-1',
+            },
+            {
+              key: 'startFive',
+              label: t('hero.startDistance', { distance: '5K' }),
+              value: <StartTime time={facts.startFive} pending={pending} />,
+              className: 'order-4 border-l pt-4 pl-4 md:order-3 md:px-6 md:pt-1',
+            },
+            {
+              key: 'venue',
+              label: t('hero.venue'),
+              value: facts.venue ?? pending,
+              className: 'order-2 border-b border-l pl-4 md:order-4 md:border-b-0 md:pl-6',
+            },
+          ].map(({ key, label, value, className }) => (
+            <div
+              key={key}
+              className={cn('flex flex-col gap-2 border-border pb-4 md:pb-1', className)}
+            >
               <dt className="text-xs font-bold tracking-widest text-gold uppercase">{label}</dt>
-              <dd className="m-0 font-display text-2xl font-bold break-words uppercase">{value}</dd>
+              <dd className="m-0 font-display text-2xl leading-tight font-bold break-words uppercase md:text-3xl">
+                {value}
+              </dd>
             </div>
           ))}
         </dl>
@@ -352,6 +391,27 @@ export function LandingPage({ facts }: LandingPageProps) {
             </ul>
           </div>
         </div>
+        <div className="grid items-center gap-8 rounded-2xl border border-border bg-background p-6 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:p-8">
+          <RaceBib
+            number={SAMPLE_BIB.number}
+            distance={SAMPLE_BIB.distance}
+            brand={common('appName')}
+            year={common('year')}
+            label={t('kit.bibLabel', SAMPLE_BIB)}
+            className="mx-auto max-w-[360px]"
+          />
+          <div className="flex flex-col gap-4">
+            <h3 className="m-0 font-heading text-3xl">{t('kit.bibTitle')}</h3>
+            <p className="m-0 text-muted-foreground">{t('kit.bibBody')}</p>
+            <dl className="m-0 border-t border-border pt-3">
+              <dt className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
+                {t('kit.pickup')}
+              </dt>
+              <dd className="m-0 font-bold">{facts.kitPickup ?? pending}</dd>
+              <dd className="m-0 text-sm text-muted-foreground">{t('kit.pickupNote')}</dd>
+            </dl>
+          </div>
+        </div>
       </Section>
 
       <Section
@@ -386,10 +446,10 @@ export function LandingPage({ facts }: LandingPageProps) {
             className="m-0 flex list-none flex-col gap-7 border-l-3 border-dotted border-inverse p-0 pl-8"
           >
             {[
-              [t('raceDay.kitPickup'), facts.kitPickup ?? pending],
+              [t('raceDay.kitPickup'), facts.kitPickup ?? pending, t('raceDay.kitPickupNote')],
               [t('raceDay.start'), start],
               [t('raceDay.finish'), t('raceDay.finishBody')],
-            ].map(([label, value], index) => (
+            ].map(([label, value, note], index) => (
               <li key={label} className="relative">
                 {index === 2 ? (
                   <svg
@@ -418,6 +478,7 @@ export function LandingPage({ facts }: LandingPageProps) {
                   {label}
                 </p>
                 <p className="m-0 text-muted-foreground">{value}</p>
+                {note && <p className="m-0 mt-1 text-sm font-semibold">{note}</p>}
               </li>
             ))}
           </ol>
@@ -436,7 +497,7 @@ export function LandingPage({ facts }: LandingPageProps) {
             </h2>
             <p className="m-0 max-w-[480px] text-lg">{t('signup.body')}</p>
             <ul className="m-0 flex list-none flex-col gap-2 p-0 font-semibold">
-              {[t('signup.shirtPerk'), t('signup.medalPerk')].map((perk) => (
+              {[t('signup.shirtPerk'), t('signup.bibPerk'), t('signup.medalPerk')].map((perk) => (
                 <li key={perk} className="flex items-center gap-2">
                   <Check />
                   {perk}
