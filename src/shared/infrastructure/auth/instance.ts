@@ -6,6 +6,7 @@ import { InMemoryEmailSender, type EmailSender } from '@/shared/domain/email';
 
 import { db } from '../db/client';
 import { readEmailContext } from '../email/email-context';
+import { MailpitEmailSender } from '../email/mailpit-email-sender';
 import { ResendEmailSender } from '../email/resend-email-sender';
 import { env } from '../env';
 import { SentryErrorReporter } from '../sentry-error-reporter';
@@ -13,6 +14,13 @@ import { createAuth } from './create-auth';
 
 function createEmailSender(): EmailSender {
   if (env.EMAIL_TRANSPORT === 'memory') return new InMemoryEmailSender();
+  if (env.EMAIL_TRANSPORT === 'mailpit') {
+    return new MailpitEmailSender({
+      url: env.MAILPIT_URL,
+      from: env.EMAIL_FROM ?? 'Catarinotlón <noreply@localhost>',
+      context: () => readEmailContext(db),
+    });
+  }
   if (!env.RESEND_API_KEY || !env.EMAIL_FROM) {
     throw new Error('RESEND_API_KEY and EMAIL_FROM are required when EMAIL_TRANSPORT is resend');
   }
