@@ -14,6 +14,7 @@ const storybookProject = (theme: 'light' | 'dark') => ({
     include: [
       '@vercel/blob/client',
       'class-variance-authority',
+      'jsqr',
       'next-intl',
       'next-intl/navigation',
       'next-intl/routing',
