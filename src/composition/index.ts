@@ -141,8 +141,8 @@ const links: PaymentLinks = {
   payment: (locale) => absolute('/payment', locale),
   adminPayment: (paymentId, locale) =>
     absolute({ pathname: '/admin/payments/[id]', params: { id: paymentId } }, locale),
-  ticketPdf: (ticketId, locale) =>
-    `${env.BETTER_AUTH_URL}/api/tickets/${ticketId}/pdf?locale=${locale}`,
+  runner: (registrationId, locale) =>
+    absolute({ pathname: '/account', query: { runner: registrationId } }, locale),
 };
 
 const contacts: PaymentContacts = {

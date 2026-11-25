@@ -66,11 +66,27 @@ export const RegistrationConfirmed: Story = {
         shirtSize: 'SIZE-A',
         accountUrl: url,
         ticketId: '00000000-0000-4000-8000-000000000000',
-        ticketPdfUrl: url,
       },
     },
   },
-  play: showsAction('Descargar boleto (PDF)'),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('link', { name: 'Ver mi boleto y mi playera' })).toBeVisible();
+    await expect(canvas.queryByRole('link', { name: /PDF/ })).toBeNull();
+    await expect(canvas.getByText(/Para descargar tu boleto en PDF/)).toBeVisible();
+  },
+};
+
+/** The confirmation on the narrowest phone: each ticket column keeps at least 100 px. */
+export const RegistrationConfirmedOnPhone: Story = {
+  ...RegistrationConfirmed,
+  globals: { viewport: { value: 'mobile1' } },
+  play: async ({ canvasElement }) => {
+    const venue = within(canvasElement).getByText('Sede');
+    await expect(venue.parentElement?.getBoundingClientRect().width ?? 0).toBeGreaterThanOrEqual(
+      100,
+    );
+  },
 };
 
 /** The scheduled reminder before kit pickup and race day. */

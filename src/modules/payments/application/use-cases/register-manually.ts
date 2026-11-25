@@ -136,7 +136,6 @@ export async function registerManually(
         shirtName: registration.shirtName,
         shirtSize: registration.shirtSize,
         ticketId: ticket.id,
-        ticketPdfUrl: null,
         accountUrl: null,
       },
     });

@@ -59,6 +59,8 @@ export interface EmailTicket {
   distance: string;
   /** Label and value pairs. */
   rows: readonly (readonly [string, string])[];
+  /** The bib, shown next to the QR on the ticket's stub. */
+  stub: { label: string; value: string };
 }
 
 /** The localized content of one email, independent of its layout. */
@@ -87,8 +89,6 @@ export interface EmailContent {
   lead?: string;
   /** The main action. */
   cta?: { label: string; url: string };
-  /** A second, lower-emphasis action. */
-  secondaryCta?: { label: string; url: string };
   /** A closing note. */
   note?: string;
   /** Who to contact about a payment. */
@@ -185,6 +185,7 @@ export function buildEmailContent(
             [t('common.size'), message.data.shirtSize],
             [t('registration_confirmed.shirt'), message.data.shirtName],
           ],
+          stub: { label: t('registration_confirmed.bibStub'), value: message.data.bibNumber },
         },
         qrAlt: t('registration_confirmed.qrAlt'),
         sectionsAfterActions: true,
@@ -196,14 +197,9 @@ export function buildEmailContent(
           },
         ],
         ...(message.data.accountUrl
-          ? { cta: { label: t('registration_confirmed.viewTicket'), url: message.data.accountUrl } }
-          : {}),
-        ...(message.data.ticketPdfUrl
           ? {
-              secondaryCta: {
-                label: t('registration_confirmed.cta'),
-                url: message.data.ticketPdfUrl,
-              },
+              lead: t('registration_confirmed.pdfHowTo'),
+              cta: { label: t('registration_confirmed.viewTicket'), url: message.data.accountUrl },
             }
           : {}),
         footer: t('common.footerRunner'),
