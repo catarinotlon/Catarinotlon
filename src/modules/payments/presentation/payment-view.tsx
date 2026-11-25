@@ -10,7 +10,7 @@ import type { FormState } from '@/shared/ui/form-state';
 import { Card } from '@/shared/ui/page-shell';
 import { RegistrationSteps } from '@/shared/ui/registration-steps';
 
-import { ReceiptUploadForm } from './receipt-upload-form';
+import { ReceiptSubmission } from './receipt-submission';
 import { whatsappUrl } from './whatsapp-url';
 
 /** One runner on the payment page. */
@@ -159,20 +159,27 @@ export function PaymentView({
               }
             />
           </div>
-          <h2 className="m-0 font-display text-2xl font-bold uppercase">{t('uploadHeading')}</h2>
-          <ReceiptUploadForm
+          <ReceiptSubmission
             mode={uploadMode}
             userId={userId}
             action={recordReceipt}
             submitLabel={t('submit')}
             dashed
+            next="account"
+            before={
+              <h2 className="m-0 font-display text-2xl font-bold uppercase">
+                {t('uploadHeading')}
+              </h2>
+            }
+            after={
+              <Link
+                href="/account"
+                className="inline-flex min-h-11 items-center justify-center font-semibold underline underline-offset-2"
+              >
+                {t('later')}
+              </Link>
+            }
           />
-          <Link
-            href="/account"
-            className="inline-flex min-h-11 items-center justify-center font-semibold underline underline-offset-2"
-          >
-            {t('later')}
-          </Link>
         </Card>
       </div>
 

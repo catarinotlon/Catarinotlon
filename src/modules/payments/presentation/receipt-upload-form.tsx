@@ -69,6 +69,8 @@ export interface ReceiptUploadFormProps {
   dashed?: boolean;
   /** The submit button's look. */
   submitTone?: keyof typeof SUBMIT_TONES;
+  /** Called once the server has recorded the receipt. */
+  onDone?: () => void;
 }
 
 /**
@@ -90,6 +92,7 @@ export function ReceiptUploadForm({
   maxBytes = DEFAULT_MAX_BYTES,
   submitTone = 'primary',
   dashed = false,
+  onDone,
 }: ReceiptUploadFormProps) {
   const t = useTranslations('payment');
   const root = useTranslations();
@@ -118,6 +121,7 @@ export function ReceiptUploadForm({
       const { pathname } = await (uploader ?? ((item) => uploadToStore(mode, userId, item)))(file);
       const state = await action({ pathname });
       if (state.formError) setError(state.formError);
+      else if (state.done) onDone?.();
     } catch {
       setError('payment.errors.upload_failed');
     } finally {

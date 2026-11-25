@@ -29,7 +29,8 @@
     "signingOut": "Signing out…",
     "searching": "Searching…",
     "adding": "Adding…",
-    "removing": "Removing…"
+    "removing": "Removing…",
+    "loadingAccount": "Loading your account…"
   },
   "theme": {
     "toDark": "Switch to dark theme",
@@ -479,6 +480,9 @@
     "submit": "Send receipt",
     "sending": "Sending…",
     "later": "Upload it later from my account",
+    "receivedTitle": "Receipt received",
+    "receivedBody": "We are validating it. We will email you as soon as your payment is confirmed.",
+    "receivedContinue": "Continue",
     "summaryHeading": "What you are paying for",
     "summaryBody": "One transfer covers all your unpaid runners.",
     "shirtLine": "Shirt {name} · {size}",
