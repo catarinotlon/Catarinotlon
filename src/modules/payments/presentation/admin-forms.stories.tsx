@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import QRCode from 'qrcode';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 
 import { EMPTY_SETTINGS } from '@/modules/event';
 import type { FormAction } from '@/shared/ui/form-state';
+import { blockCamera, filmQrCode } from '@/test/fake-camera';
 
 import { AdminRegistrationForm } from './admin-registration-form';
 import { EventSettingsForm } from './event-settings-form';
@@ -235,55 +235,57 @@ export const SettingsHistory: Story = {
 };
 
 const TICKET_ID = '3f2b8c1e-7a4d-4e9f-b6c2-1d5a9e8f0b37';
-const scannedTicket = fn();
-
-/**
- * Pretends to be Safari: no native barcode detector, and a camera that films
- * a ticket's QR code.
- */
-async function withoutNativeDetectorFilming(ticketId: string) {
-  const original = Object.getOwnPropertyDescriptor(window, 'BarcodeDetector');
-  const getUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
-  Reflect.deleteProperty(window, 'BarcodeDetector');
-
-  const camera = document.createElement('canvas');
-  await QRCode.toCanvas(camera, ticketId, { width: 480, margin: 4 });
-  // A canvas stream only emits a frame when the canvas is painted.
-  const repaint = setInterval(() => camera.getContext('2d')?.drawImage(camera, 0, 0), 100);
-  navigator.mediaDevices.getUserMedia = async () => camera.captureStream(10);
-
-  return () => {
-    clearInterval(repaint);
-    navigator.mediaDevices.getUserMedia = getUserMedia;
-    if (original) Object.defineProperty(window, 'BarcodeDetector', original);
-  };
-}
+const acceptCode = fn(() => 'accepted' as const);
 
 /** Browsers without a native barcode detector (Safari, Firefox) still read the ticket. */
 export const ScanWithoutNativeDetector: Story = {
-  beforeEach: () => withoutNativeDetectorFilming(TICKET_ID),
-  render: () => <TicketScanner onTicket={scannedTicket} />,
+  beforeEach: () => {
+    acceptCode.mockClear();
+    return filmQrCode(TICKET_ID, { withoutNativeDetector: true });
+  },
+  render: () => <TicketScanner onCode={acceptCode} />,
   play: async ({ canvasElement }) => {
-    const onTicket = scannedTicket;
     await userEvent.click(within(canvasElement).getByRole('button', { name: 'Escanear boleto' }));
-    await waitFor(() => expect(onTicket).toHaveBeenCalledWith(TICKET_ID), { timeout: 5000 });
+    await waitFor(() => expect(acceptCode).toHaveBeenCalledWith(TICKET_ID), { timeout: 5000 });
   },
 };
 
-/** Blocks the camera, as when the admin denies the permission. */
-function withBlockedCamera() {
-  const getUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
-  navigator.mediaDevices.getUserMedia = () =>
-    Promise.reject(new DOMException('Permission denied', 'NotAllowedError'));
-  return () => {
-    navigator.mediaDevices.getUserMedia = getUserMedia;
-  };
-}
+/** After a read the camera stays on, ready for the next runner. */
+export const ScannerStaysOn: Story = {
+  beforeEach: () => {
+    acceptCode.mockClear();
+    return filmQrCode(TICKET_ID);
+  },
+  render: () => <TicketScanner onCode={acceptCode} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Escanear boleto' }));
+    await waitFor(() => expect(acceptCode).toHaveBeenCalled(), { timeout: 5000 });
+    await expect(await canvas.findByText('Boleto leído')).toBeVisible();
+    await expect(canvas.getByRole('button', { name: 'Detener cámara' })).toBeVisible();
+  },
+};
+
+const ignoreCode = fn(() => 'accepted' as const);
+
+/** While paused (a result is open), the scanner reads nothing. */
+export const ScannerPaused: Story = {
+  beforeEach: () => {
+    ignoreCode.mockClear();
+    return filmQrCode(TICKET_ID);
+  },
+  render: () => <TicketScanner onCode={ignoreCode} paused />,
+  play: async ({ canvasElement }) => {
+    await userEvent.click(within(canvasElement).getByRole('button', { name: 'Escanear boleto' }));
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await expect(ignoreCode).not.toHaveBeenCalled();
+  },
+};
 
 /** When the camera cannot be opened, it says so and points to the search. */
 export const ScannerCameraBlocked: Story = {
-  beforeEach: withBlockedCamera,
-  render: () => <TicketScanner onTicket={fn()} />,
+  beforeEach: blockCamera,
+  render: () => <TicketScanner onCode={acceptCode} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByRole('button', { name: 'Escanear boleto' }));
@@ -350,7 +352,7 @@ export const SettingsSavePending: Story = {
 
 /** The scanner’s camera view never appears in a session recording. */
 export const ScannerHiddenFromRecordings: Story = {
-  render: () => <TicketScanner onTicket={fn()} />,
+  render: () => <TicketScanner onCode={acceptCode} />,
   play: async ({ canvasElement }) => {
     const button = within(canvasElement).getByRole('button', { name: 'Escanear boleto' });
     await expect(button.closest('.ph-no-capture')).not.toBeNull();

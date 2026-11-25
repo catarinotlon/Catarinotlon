@@ -739,13 +739,34 @@
       "delivered": "Kit delivered",
       "collectedLine": "Collected by: {name}",
       "undo": "Undo",
-      "notConfirmed": "This runner's payment is not confirmed yet.",
       "errors": {
         "registration_not_confirmed": "Only confirmed registrations can collect a kit.",
         "kit_already_delivered": "This kit was already delivered.",
         "kit_not_delivered": "This kit is not marked as delivered.",
         "not_found": "We couldn't find that registration."
-      }
+      },
+      "verdict": {
+        "ready": "Hand over the kit",
+        "delivered": "Already handed over",
+        "unpaid": "Do not hand over",
+        "notFound": "Ticket not found",
+        "validating": "Checking ticket…",
+        "done": "Kit handed over"
+      },
+      "resultLabel": "Ticket result",
+      "deliveredAt": "Handed over on {when}",
+      "unpaidBody": "Their payment is {state, select, in_review {under review} other {pending}}. Kits are only handed over once the payment is confirmed.",
+      "notFoundBody": "The code is a ticket, but it matches no active registration.",
+      "ticketCode": "Ticket",
+      "scanNext": "Scan next",
+      "cancelScan": "Cancel and scan another",
+      "undoDelivery": "Undo handover",
+      "returning": "Back to the camera…",
+      "deliveredToast": "{name}'s kit handed over",
+      "notTicket": "That QR code isn't a Catarinotlón ticket",
+      "pointAtTicket": "Point at the ticket's QR code",
+      "searchInstead": "Search by name or number",
+      "empty": "Scan a ticket or search for a runner to see their kit."
     },
     "settings": {
       "metaTitle": "Settings · Admin",
